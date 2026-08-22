@@ -11,10 +11,11 @@ category:
 
 - Minecraft 1.21.1、匹配版本的 NeoForge 和 GWO。
 - Blender 3.3，用于模型、骨架与动画。
+- [GWO 手臂制作模板（Blender 3.3）](/gwo-wiki/downloads/gwo_arms_template_blender33.blend)，用于建立与示例骨架一致的第一人称手臂。
 - 能保存 UTF-8 无 BOM JSON 的编辑器，例如 VS Code。
 - PNG 图片编辑工具。
 - 能输出 OGG Vorbis 的音频工具。
-- 一份当前版本的 `work/example-contentpack`，新内容优先从相同武器类型的现有文件复制。
+- 一份与当前模组版本匹配的[官方示例内容包](https://github.com/Sgr792/gwo/tree/main/work/example-contentpack)，新内容优先从相同武器类型的现有文件复制。
 
 GWO 使用以下主要资源格式：
 
@@ -63,7 +64,7 @@ my_pack.zip
    └─ ...
 ```
 
-普通文件夹缺少 `pack.mcmeta` 时加载器能够自动生成，但正式发布前仍应主动提供。
+普通文件夹和 ZIP 都必须主动提供正确的 `pack.mcmeta`。
 
 ## 3. 推荐的完整目录结构
 

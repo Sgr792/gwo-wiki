@@ -21,4 +21,4 @@ category:
 | 扩容弹匣 | `attachments/magazines/m4_xmaglrg.json` | `attachments/render/magazines/m4_xmaglrg.render.json` |
 | 弹药 | `bullets/5_56x45.json` | 同一文件包含模型材质定义 |
 
-这些路径均相对于 `work/example-contentpack/`。字段与结构以当前版本自带示例和加载器校验结果为准。
+这些路径均相对于[官方示例内容包](https://github.com/Sgr792/gwo/tree/main/work/example-contentpack)根目录。字段与结构以当前版本示例和加载器校验结果为准。

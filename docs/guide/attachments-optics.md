@@ -178,9 +178,4 @@ Weapon Sway 在倍镜模式下会通过镜内投影参考参与画面与准心�
 
 玩家头像挂饰可使用 `player_avatar` 异步读取玩家最新皮肤，并在 `nameplate_face` 上程序化绘制名字。链条网格使用普通材质，头像节点和名字面不要读取链条贴图。
 
-玩家头像挂饰的完整结构参考：
-
-```text
-attachments/cosmetics/afdian_player_yinlisuo.json
-attachments/render/cosmetics/afdian_player_yinlisuo.render.json
-```
+玩家头像挂饰应使用通用资源 ID，并在自己的行为文件和渲染文件中配置玩家名称、UUID、头像节点及名字面；不要依赖默认内容包中的特定玩家示例。
