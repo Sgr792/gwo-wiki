@@ -1,6 +1,8 @@
 import { hopeTheme } from "vuepress-theme-hope";
 import navbar from "./navbar.js";
+import navbarEn from "./navbar.en.js";
 import sidebar from "./sidebar.js";
+import sidebarEn from "./sidebar.en.js";
 
 export default hopeTheme({
   hostname: "https://sgr792.github.io/gwo-wiki/",
@@ -10,8 +12,18 @@ export default hopeTheme({
   },
   repo: "Sgr792/gwo-wiki",
   docsDir: "docs",
-  navbar,
-  sidebar,
+  locales: {
+    "/": {
+      lang: "zh-CN",
+      navbar,
+      sidebar,
+    },
+    "/en/": {
+      lang: "en-US",
+      navbar: navbarEn,
+      sidebar: sidebarEn,
+    },
+  },
   displayFooter: true,
   footer: "Guns Workshop Origins",
   copyright: "GWO Wiki",
