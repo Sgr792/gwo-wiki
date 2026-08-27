@@ -170,6 +170,30 @@ Weapon Sway 在倍镜模式下会通过镜内投影参考参与画面与准心�
 
 可变倍率瞄具需要在行为配置中声明可用倍率/模式，游戏内按当前绑定键切换。不要把多个倍率做成多份重复模型；镜片、准心与倍率状态应共享同一瞄具定义。
 
+### 14.5 程序化侧瞄（战术姿态）
+
+侧瞄属于枪械渲染配置，不属于瞄具动画。推荐从当前 RM277 或 M4 的渲染文件复制：
+
+```json
+"canted_aim": {
+  "enabled": true,
+  "pose_node": "tag_ads",
+  "pivot_node": "tag_weapon",
+  "translation": {"x": 0, "y": 0, "z": 0},
+  "rotation": {"x": -55, "y": 0, "z": 0},
+  "response": 22.0,
+  "damping": 0.62,
+  "fov_multiplier": 1.0
+}
+```
+
+- 玩家必须先按住瞄准键，再按 V 在普通瞄准和侧瞄之间切换；V 的选择按武器实例保存。
+- 装有增倍镜或双用瞄具时不能切换侧瞄；普通机瞄、红点和全息可以使用。
+- 侧瞄不要求安装激光。进入侧瞄时第一人称激光显示由运行时处理，退出时恢复原来的激光开关状态。
+- `pose_node` 是被施加侧瞄变换的节点，`pivot_node` 是旋转枢轴；两者必须真实存在于枪械 GLB 中。
+- `rotation` 控制倾斜角度，`translation` 只用于必要的局部校正，`response` 和 `damping` 控制进入/退出力度，`fov_multiplier: 1.0` 表示侧瞄不保留倍镜放大。
+- 不要再制作或绑定 `canted_aim_in`、`canted_aim_out`，也不要复用夜视瞄准动画。普通瞄准与侧瞄之间由运行时从当前姿态直接交接。
+
 ## 15. 挂饰
 
 枪必须拥有 `tag_cosmetic`。挂饰行为放 `attachments/cosmetics/`，模型放 `gltf/attachments/`。

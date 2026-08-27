@@ -41,9 +41,11 @@ category:
 ```text
 static_idle
 draw
+draw_first
 holster
 aim_in
 aim_out
+fire_pre
 fire
 aim_fire
 fire_last
@@ -110,6 +112,10 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 8. 动画开始帧、结束帧、事件帧、提交帧和声音帧必须在同一个时间基准上。
 9. 动画文件只负责姿态。弹量、伤害、换弹提交和服务器判定仍由配置与游戏逻辑决定。
 
+`draw_first` 是可选的首次装备动作。它按武器实例身份记录：同一客户端会话中，该实例第一次被成功装备时播放一次，之后播放 `draw`；离开世界、玩家死亡或客户端运行时重置后会重新允许首次装备。预览、改装界面和资源预热不会消耗 `draw_first`。如果只配置 `draw`，所有装备都播放 `draw`；如果希望普通装备也有动作，应同时提供 `draw`，不要只留下 `draw_first`。
+
+`fire_pre` 也是可选动作，用于需要在真正开火动作之前执行极短准备段的武器。它应通过 `animation_machine.actions.fire.sequences` 接到 `fire`、`aim_fire` 或最后一发动作之前；普通武器不需要为了凑齐名称而添加它。
+
 ### 8.3.2 骨架、父子层级与坐标空间
 
 推荐第一人称层级：
@@ -144,7 +150,7 @@ root
 
 | 动画类型 | 允许控制的主要通道 | 禁止或应删除的通道 |
 |---|---|---|
-| `aim_in`、`aim_out`、`aim_down_settle`、`canted_aim_in/out` | 仅 `tag_ads` | `tag_weapon`、`tag_camera`、`tag_view`、`arms_root`、左右手、枪机、弹匣、`j_ammo_*` |
+| `aim_in`、`aim_out`、`aim_down_settle` | 仅 `tag_ads` | `tag_weapon`、`tag_camera`、`tag_view`、`arms_root`、左右手、枪机、弹匣、`j_ammo_*` |
 | `aim_additive` / `aim_up_additive` | 仅 `tag_weapon` | `tag_ads`、`tag_camera`、`tag_view`、左右手、弹药、弹匣和无关机构 |
 | `bullet_additive` | `j_ammo_*` 与配置指定的 follower | 枪身、手臂、瞄准、相机、枪机和配件挂点 |
 | `shell_additive_*` | 管式弹仓的弹壳节点与 follower | 枪身、手臂、瞄准、相机、护木和枪机 |
@@ -156,6 +162,8 @@ root
 | `static_idle` | 基础持枪姿态 | 空仓、弹量、射击模式和临时动作状态 |
 
 `bullet_additive` / `shell_additive_*` 只控制配置中的弹药节点与 follower，`aim_in` / `aim_out` 只控制 `tag_ads`，`aim_additive` 只控制 `tag_weapon`。内容作者修改 `bone_mask` 后，动画通道必须同步服从新的所有权范围。
+
+当前侧瞄由运行时根据 `canted_aim` 配置程序化生成，不需要制作 `canted_aim_in` / `canted_aim_out`。不要用旧侧瞄动画重复旋转 `tag_ads`，否则会与程序化姿态叠加。
 
 ### 8.3.4 基础姿态 `static_idle`
 

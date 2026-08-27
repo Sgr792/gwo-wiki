@@ -15,7 +15,7 @@ Export the static weapon model separately from the animation-only `.anim.glb`. B
 |---|---|
 | Base | `static_idle`, `draw`, `draw_first`, `holster` |
 | ADS | `aim_in`, `aim_out`, `aim_up_additive`, `aim_fire` |
-| Fire | `fire`, `fire_last`, `fire_last_ads`, `dry_fire`, `fire_rechamber`, `aim_fire_rechamber` |
+| Fire | `fire_pre`, `fire`, `fire_last`, `fire_last_ads`, `dry_fire`, `fire_rechamber`, `aim_fire_rechamber` |
 | Reload | `reload`, `reload_empty`, `aim_reload`, `aim_reload_empty` |
 | Tube reload | `reload_start`, `reload_loop`, `reload_end`, `reload_empty_chamber_start`, `reload_empty_start` |
 | State layers | `empty_additive`, `bullet_additive`, `shell_additive_*` |
@@ -40,13 +40,19 @@ Only export actions that the weapon actually uses.
 
 `draw`/`draw_first` start from the intended off-screen pose and end exactly at the base pose. `holster` starts at the base pose and ends off-screen. Do not insert an idle frame after the holster endpoint.
 
+`draw_first` is optional and is consumed only when that weapon identity successfully begins its first authored equip in the client session. Preview, modification-screen, and warm-up rendering do not consume it. Later equips use `draw`; world leave, player death, or a client runtime reset clears the first-draw record. Provide both actions when the weapon needs a distinct normal equip animation.
+
 ### ADS
 
 `aim_in` and `aim_out` own the transition. An additive ADS action must contain only its correction channels and must use a stable reference pose. Do not duplicate the same correction on `tag_ads`, `tag_weapon`, and the hands.
 
+Programmatic tactical stance is configured with `canted_aim`; it does not require `canted_aim_in` or `canted_aim_out` clips. Do not layer legacy canted or NVG ADS animations on top of the runtime transform.
+
 ### Fire and reload
 
 Keep authored weapon and hand channels in the same reference space. `fire_last` must hand directly to the empty state. Magazine/shell visibility events must match the frame at which the model leaves or enters the hand/weapon.
+
+`fire_pre` is optional. Use it only as an explicit short entry step in `animation_machine.actions.fire.sequences` before the selected fire action; do not add a dummy clip to weapons that have no authored pre-fire motion.
 
 ### Tube-fed reload and rechamber
 

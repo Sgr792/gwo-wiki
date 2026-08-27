@@ -24,6 +24,8 @@ Start from the closest official example: magazine-fed rifle, pistol, tube-fed sh
 
 Do not copy shotgun shell-loop rules into a detachable-magazine weapon, or automatic scheduling into a bolt-action weapon.
 
+Use `creative_category` to select both the creative-tab group and the weapon-type label shown in the modification screen. Standard values are `assault_rifle`, `battle_rifle`, `submachine_gun`, `shotgun`, `light_machine_gun`, `marksman_rifle`, `sniper_rifle`, `pistol`, `launcher`, and `melee`. `creative_sort` controls ordering within a category. Unknown values fall back to `assault_rifle`.
+
 ## 18. Firearm render JSON
 
 The render file binds model, animation library, arms, materials, nodes, action names, and display transforms. Typical declarations include:

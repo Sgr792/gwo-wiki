@@ -65,6 +65,8 @@ category:
 {
   "id": "example:example_rifle",
   "display_name": "示例步枪",
+  "creative_category": "assault_rifle",
+  "creative_sort": 100,
   "model_data": 2000,
   "magazine_size": 30,
   "ammo": {
@@ -118,6 +120,25 @@ category:
 - `damage` 是基础伤害，距离衰减、身体部位和弹药再共同修正。
 - `inaccuracy.aim` 是瞄准散射，不是后坐力。
 - 射速、弹量、伤害、命中与换弹提交属于逻辑状态，不要用客户端动画帧自行扣弹。
+
+### 10.1 武器分类
+
+`creative_category` 同时决定创造物品栏分类和改装界面显示的武器类型。当前支持的标准值为：
+
+| 配置值 | 显示分类 |
+|---|---|
+| `assault_rifle` | 突击步枪 |
+| `battle_rifle` | 战斗步枪 |
+| `submachine_gun` | 微型冲锋枪 |
+| `shotgun` | 霰弹枪 |
+| `light_machine_gun` | 轻机枪 |
+| `marksman_rifle` | 精确射手步枪 |
+| `sniper_rifle` | 狙击步枪 |
+| `pistol` | 手枪 |
+| `launcher` | 发射器 |
+| `melee` | 近战 |
+
+`creative_sort` 控制同一分类内的排序，数值较小的项目排在前面。未知分类会回退为 `assault_rifle`，因此不要自创拼写。
 
 ## 11. 创建枪械渲染 JSON
 

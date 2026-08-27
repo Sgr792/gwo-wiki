@@ -27,6 +27,25 @@ Magnified optics use the single world render plus a lens stencil/mask while reta
 
 Hybrid optics declare both modes and a programmatic transition. The magnified image must appear only when the physical magnifier reaches the configured transition point; closing follows the inverse handoff. Variable magnification should expose discrete supported levels and preserve reticle shape/scale.
 
+### Programmatic tactical stance
+
+Tactical stance belongs in the firearm render definition rather than an optic animation:
+
+```json
+"canted_aim": {
+  "enabled": true,
+  "pose_node": "tag_ads",
+  "pivot_node": "tag_weapon",
+  "translation": {"x": 0, "y": 0, "z": 0},
+  "rotation": {"x": -55, "y": 0, "z": 0},
+  "response": 22.0,
+  "damping": 0.62,
+  "fov_multiplier": 1.0
+}
+```
+
+The player holds ADS and presses V to toggle normal ADS/tactical stance for that weapon identity. Magnified and hybrid optics disable the toggle; iron sights, reflex sights, and holographic sights may use it. No laser attachment is required. `pose_node` and `pivot_node` must exist in the weapon GLB. Rotation/translation define the target pose, response/damping shape the transition, and a `fov_multiplier` of `1.0` releases optic magnification. Do not bind legacy canted or NVG ADS clips to this route.
+
 ## 24. Charms
 
 Charms attach to `tag_cosmetic`. A physics charm needs a stable pivot, content-defined colliders, damping, and motion limits; it must not infer arbitrary weapon collision from render bounds. Dynamic avatar charms may asynchronously fetch a player's current skin and render a runtime nameplate, while their chain continues to use authored PBR textures.
