@@ -186,8 +186,16 @@ Weapon Sway 在倍镜模式下会通过镜内投影参考参与画面与准心�
   "enabled": true,
   "pose_node": "tag_ads",
   "pivot_node": "tag_weapon",
-  "translation": {"x": 0, "y": 0, "z": 0},
-  "rotation": {"x": -55, "y": 0, "z": 0},
+  "translation": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "rotation": {
+    "x": -55.0,
+    "y": 0.0,
+    "z": 0.0
+  },
   "response": 22.0,
   "damping": 0.62,
   "fov_multiplier": 1.0
