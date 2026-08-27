@@ -103,6 +103,13 @@ category:
 - `reload_phases`
 - `mechanics.action_commit_ms`
 
+弹匣分支不要混用：
+
+- `xmaglrg` 是大型箱式扩容弹匣，使用 `reload_xmaglrg`、`inspect_xmaglrg`、`bullet_additive_xmaglrg` 等状态。
+- `drummag` 是鼓式弹匣，使用 `reload_drummag`、`inspect_drummag`、`bullet_additive_drummag` 等独立状态。
+
+行为文件中的 `animation_override` 应指向实际弹匣家族。两种弹匣都存在时，普通/空仓、腰射/瞄准、检视、空仓附加层和弹量附加层都要分别声明，不能只改模型和容量。
+
 ## 14. 瞄具
 
 ### 14.1 普通红点/全息

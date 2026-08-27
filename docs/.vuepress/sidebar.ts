@@ -5,6 +5,7 @@ export default {
     {
       text: "GWO 内容包制作",
       icon: "book-open",
+      link: "/guide/",
       collapsible: false,
       children: [
         "getting-started",

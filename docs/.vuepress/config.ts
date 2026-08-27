@@ -20,6 +20,14 @@ export default defineUserConfig({
     ["meta", { name: "theme-color", content: "#4b8cff" }],
     ["meta", { name: "apple-mobile-web-app-capable", content: "yes" }],
   ],
+  markdown: {
+    headers: {
+      level: [2, 3, 4],
+    },
+    anchor: {
+      level: [1, 2, 3, 4],
+    },
+  },
   bundler: viteBundler(),
   theme,
 });

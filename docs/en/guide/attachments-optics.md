@@ -19,6 +19,8 @@ Use explicit show/hide nodes for iron sights, laser mounts, bipods, alternate ma
 
 Alternative magazines or moving guards may select replacement actions such as `reload_xmaglrg`. Their duration and event frames belong to that animation set and must not reuse incompatible default timing.
 
+Keep magazine families separate: `xmaglrg` is a large extended box magazine and uses `*_xmaglrg` states; `drummag` is a drum magazine and uses independent `*_drummag` states. When both exist, `animation_override` must route normal/empty, hip/ADS, inspect, empty-additive, and ammunition-additive actions to the matching family rather than changing only the model and capacity.
+
 ## 23. Optics
 
 A projected reticle normally declares lens and reticle nodes, texture, scale, parallax, stabilization, response, emissive/glow strength, and ADS threshold. Keep the physical glass mesh and runtime reticle separate.

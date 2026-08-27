@@ -5,6 +5,7 @@ export default {
     {
       text: "GWO Content-Pack Authoring",
       icon: "book-open",
+      link: "/en/guide/",
       collapsible: false,
       children: [
         "getting-started",

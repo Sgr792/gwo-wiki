@@ -7,6 +7,7 @@ export default [
     icon: "book-open",
     prefix: "/en/guide/",
     children: [
+      { text: "Guide Index", link: "" },
       { text: "Getting Started", link: "getting-started" },
       { text: "Model Rules", link: "models" },
       { text: "Animation Rules", link: "animation" },

@@ -31,12 +31,14 @@ The key in `animation_clips` is the GWO state; its value is the real clip inside
 
 ```json
 "animation_clips": {
-  "reload_xmaglrg": "reload_drummag",
-  "aim_reload_xmaglrg": "aim_reload_drummag"
+  "reload_xmaglrg": "reload_xmaglrg",
+  "reload_drummag": "reload_drummag"
 }
 ```
 
-Use a recognized state key and map it to an existing authored clip. The tables below describe state purposes.
+Declare the state key consistently in `animation_controller`, `animation_machine`, and attachment `animation_override`, then map it to an existing authored clip. The tables below describe state purposes.
+
+`xmaglrg` and `drummag` are not synonyms. `xmaglrg` is a large extended box magazine; `drummag` is a drum magazine. Runtime mappings may technically point to differently named clips, but content that supplies both authored families must keep two independent state sets.
 
 ### Base, equip, and display
 
@@ -71,10 +73,13 @@ Use a recognized state key and map it to an existing authored clip. The tables b
 |---|---|
 | `reload` / `reload_empty` | Tactical reload with a chambered round versus an empty reload that includes chambering/bolt release. |
 | `aim_reload` / `aim_reload_empty` | ADS-space equivalents; they are not scaled copies of hip reloads. |
-| `reload_xmaglrg` / `reload_empty_xmaglrg` | Normal/empty replacement-magazine branches. They may map to clips such as `reload_drummag`. |
-| `aim_reload_xmaglrg` / `aim_reload_empty_xmaglrg` | ADS-space replacement-magazine branches with independent timing, events, sound, and visibility. |
+| `reload_xmaglrg` / `reload_empty_xmaglrg` | Normal/empty large extended box-magazine branches; they do not represent a drum. |
+| `aim_reload_xmaglrg` / `aim_reload_empty_xmaglrg` | ADS-space large extended box-magazine branches with independent timing and events. |
+| `reload_drummag` / `reload_empty_drummag` | Normal/empty drum-magazine branches with drum-specific grip and clearance. |
+| `aim_reload_drummag` / `aim_reload_empty_drummag` | ADS-space drum-magazine branches with their own commit, sound, and visibility timeline. |
 | `inspect` / `inspect_empty` | Non-empty/empty inspection using real ammunition and mechanism state. |
-| `inspect_xmaglrg` / `inspect_empty_xmaglrg` | Replacement-magazine inspection branches, only needed when the authored motion differs. |
+| `inspect_xmaglrg` / `inspect_empty_xmaglrg` | Large extended box-magazine inspection branches. |
+| `inspect_drummag` / `inspect_empty_drummag` | Drum-magazine inspection branches; do not share the xmag state/sound timeline. |
 | `switch_fire_mode` | Generic selector action shared by destination modes. |
 | `switch_to_auto` / `switch_to_semi` | Destination-specific selector actions. |
 | `aim_switch_fire_mode` / `aim_switch_to_auto` / `aim_switch_to_semi` | ADS-space selector equivalents. |
@@ -98,8 +103,8 @@ Use a recognized state key and map it to an existing authored clip. The tables b
 
 | State | Purpose and distinction |
 |---|---|
-| `empty_additive` / `empty_additive_xmaglrg` | Default/replacement-magazine persistent empty-mechanism layers, not full held poses. |
-| `bullet_additive` / `bullet_additive_xmaglrg` | Default/replacement-magazine ammunition, follower, and `j_ammo_*` layers. |
+| `empty_additive` / `empty_additive_xmaglrg` / `empty_additive_drummag` | Default, large-box, and drum persistent empty-mechanism layers, not full held poses. |
+| `bullet_additive` / `bullet_additive_xmaglrg` / `bullet_additive_drummag` | Default, large-box, and drum ammunition/follower/`j_ammo_*` layers. |
 | `shell_additive_*` | Tube-shell/follower pose selected by configuration; the suffix alone does not make runtime infer capacity. |
 | `sprint_in/loop/out` | Normal sprint enter, repeating loop, and exit. Only `loop` repeats. |
 | `super_sprint_in/loop/out` | Super-sprint three-stage route with its own endpoints and stronger authored posture. |

@@ -106,12 +106,14 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 
 ```json
 "animation_clips": {
-  "reload_xmaglrg": "reload_drummag",
-  "aim_reload_xmaglrg": "aim_reload_drummag"
+  "reload_xmaglrg": "reload_xmaglrg",
+  "reload_drummag": "reload_drummag"
 }
 ```
 
-状态名必须使用状态机认识的名称；剪辑名可以不同，但必须真实存在。下表描述的是“状态用途”，同一状态可以映射到内容作者自己的剪辑名。
+状态名必须在 `animation_controller`、`animation_machine` 和配件 `animation_override` 中一致声明；剪辑名可以不同，但必须真实存在。下表描述的是“状态用途”，同一状态可以映射到内容作者自己的剪辑名。
+
+`xmaglrg` 和 `drummag` 不是同义词：`xmaglrg` 表示大型箱式扩容弹匣，`drummag` 表示鼓式弹匣。运行时允许状态映射到不同剪辑名，但新内容如果同时拥有这两套动作，必须保留两组独立状态，不能把鼓式弹匣全部塞进 `*_xmaglrg` 分支。
 
 #### 基础、装备与展示动画
 
@@ -155,11 +157,14 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 | `reload_empty` | 弹匣和膛内均空时换弹 | 包含必要的上膛或枪机释放动作 |
 | `aim_reload` | 保持瞄准参考空间的普通换弹 | 不是把 `reload` 整体缩放；手和枪必须按瞄准姿态制作 |
 | `aim_reload_empty` | 保持瞄准参考空间的空仓换弹 | 对应 `reload_empty`，同时保持瞄准层所有权 |
-| `reload_xmaglrg` / `reload_empty_xmaglrg` | 大型扩容、鼓式等替换弹匣的普通/空仓换弹状态 | 状态后缀表示配件分支，实际剪辑可命名为 `reload_drummag` 等 |
-| `aim_reload_xmaglrg` / `aim_reload_empty_xmaglrg` | 上述扩容弹匣换弹的瞄准版本 | 时长、提交帧、声音和显隐必须独立配置 |
+| `reload_xmaglrg` / `reload_empty_xmaglrg` | 大型箱式扩容弹匣的普通/空仓换弹 | 只用于 `xmaglrg`，不代表鼓式弹匣 |
+| `aim_reload_xmaglrg` / `aim_reload_empty_xmaglrg` | 大型箱式扩容弹匣换弹的瞄准版本 | 时长、提交帧、声音和显隐必须独立配置 |
+| `reload_drummag` / `reload_empty_drummag` | 鼓式弹匣的普通/空仓换弹 | 鼓体尺寸和握持方式不同，应与 `xmaglrg` 分开制作 |
+| `aim_reload_drummag` / `aim_reload_empty_drummag` | 鼓式弹匣换弹的瞄准版本 | 必须保持瞄准参考空间，并使用鼓式弹匣自己的事件帧 |
 | `inspect` | 非空仓检视 | 应显示当前真实弹量、弹匣和膛内弹状态 |
 | `inspect_empty` | 空仓检视 | 使用真实空仓机构姿态 |
-| `inspect_xmaglrg` / `inspect_empty_xmaglrg` | 扩容弹匣的正常/空仓检视 | 只有配件外形或动作确实不同才需要 |
+| `inspect_xmaglrg` / `inspect_empty_xmaglrg` | 大型箱式扩容弹匣的正常/空仓检视 | 只有外形或动作确实不同才需要 |
+| `inspect_drummag` / `inspect_empty_drummag` | 鼓式弹匣的正常/空仓检视 | 不与 `xmaglrg` 共用状态和声音时间线 |
 | `switch_fire_mode` | 通用射击模式切换动作 | 不区分切换目标，适合多个模式共享动作 |
 | `switch_to_auto` / `switch_to_semi` | 分别切到全自动/半自动 | 目标模式明确，可表现不同方向的选择器运动 |
 | `aim_switch_fire_mode` / `aim_switch_to_auto` / `aim_switch_to_semi` | 瞄准状态下的对应切换动作 | 保持瞄准参考姿态，不能闪回腰射 |
@@ -184,9 +189,11 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 | 状态 | 触发时机与作用 | 与相近状态的区别 |
 |---|---|---|
 | `empty_additive` | 持续保持空仓枪机、套筒等机构姿态 | 局部状态层，不包含完整持枪姿态 |
-| `empty_additive_xmaglrg` | 扩容弹匣分支的空仓状态层 | 只有替换弹匣导致机构/弹药节点不同才需要 |
+| `empty_additive_xmaglrg` | 大型箱式扩容弹匣的空仓状态层 | 只有替换弹匣导致机构/弹药节点不同才需要 |
+| `empty_additive_drummag` | 鼓式弹匣的空仓状态层 | 鼓式弹匣有独立空仓机构或弹药节点时使用 |
 | `bullet_additive` | 根据剩余弹量驱动 `j_ammo_*`、弹托或 follower | 只控制弹药相关节点，不是装填动作 |
-| `bullet_additive_xmaglrg` | 扩容弹匣使用的弹量状态层 | 骨骼布局或容量曲线与默认弹匣不同时使用 |
+| `bullet_additive_xmaglrg` | 大型箱式扩容弹匣的弹量状态层 | 骨骼布局或容量曲线与默认弹匣不同时使用 |
+| `bullet_additive_drummag` | 鼓式弹匣的弹量状态层 | 使用鼓式弹匣自己的容量、透明节点和 `j_ammo_*` 布局 |
 | `shell_additive_*` | 管式弹仓内弹壳与 follower 的持续弹量姿态 | 后缀由内容配置映射；不代表运行时会仅凭名字自动猜容量 |
 | `sprint_in` / `sprint_loop` / `sprint_out` | 普通奔跑的进入、循环、退出三段 | `in/out` 是有限交接，只有 `loop` 循环 |
 | `super_sprint_in` / `super_sprint_loop` / `super_sprint_out` | 超级奔跑的进入、循环、退出三段 | 姿态和幅度通常比普通奔跑更强，两套端点不能互相混用 |

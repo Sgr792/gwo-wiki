@@ -18,7 +18,8 @@ category:
 | 独立近战 | `weapons/melee/karambit.json` | `weapons/melee/render/karambit.render.json` |
 | 增倍镜 | `attachments/sights/sz_bullseye_optic.json` | `attachments/render/sights/sz_bullseye_optic.render.json` |
 | 激光器 | `attachments/lasers/1mw_laser_box.json` | `attachments/render/lasers/1mw_laser_box.render.json` |
-| 扩容弹匣 | `attachments/magazines/m4_xmaglrg.json` | `attachments/render/magazines/m4_xmaglrg.render.json` |
+| 大型箱式扩容弹匣（xmaglrg） | `attachments/magazines/m4_xmaglrg.json` | `attachments/render/magazines/m4_xmaglrg.render.json` |
+| 鼓式弹匣（drummag，模型与配件定义） | `attachments/magazines/rm277_drummag.json` | `attachments/render/magazines/rm277_drummag.render.json` |
 | 弹药 | `bullets/5_56x45.json` | 同一文件包含模型材质定义 |
 
 这些路径均相对于[官方示例内容包](https://github.com/Sgr792/gwo/tree/main/work/example-contentpack)根目录。字段与结构以当前版本示例和加载器校验结果为准。

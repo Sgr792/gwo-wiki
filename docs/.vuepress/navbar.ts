@@ -7,6 +7,7 @@ export default [
     icon: "book-open",
     prefix: "/guide/",
     children: [
+      { text: "教程目录", link: "" },
       { text: "快速开始", link: "getting-started" },
       { text: "模型规范", link: "models" },
       { text: "动画规范", link: "animation" },

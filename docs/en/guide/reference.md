@@ -18,7 +18,8 @@ Copy the closest current example when creating content:
 | Standalone melee | `weapons/melee/karambit.json` | `weapons/melee/render/karambit.render.json` |
 | Magnified optic | `attachments/sights/sz_bullseye_optic.json` | `attachments/render/sights/sz_bullseye_optic.render.json` |
 | Laser | `attachments/lasers/1mw_laser_box.json` | `attachments/render/lasers/1mw_laser_box.render.json` |
-| Extended magazine | `attachments/magazines/m4_xmaglrg.json` | `attachments/render/magazines/m4_xmaglrg.render.json` |
+| Large box magazine (`xmaglrg`) | `attachments/magazines/m4_xmaglrg.json` | `attachments/render/magazines/m4_xmaglrg.render.json` |
+| Drum magazine (`drummag`, model/module definition) | `attachments/magazines/rm277_drummag.json` | `attachments/render/magazines/rm277_drummag.render.json` |
 | Ammunition | `bullets/5_56x45.json` | Same file contains model/material declarations |
 
 Paths are relative to the [official example content pack](https://github.com/Sgr792/gwo/tree/main/work/example-contentpack). Current examples and loader validation are authoritative when a field changes between releases.

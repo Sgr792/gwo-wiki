@@ -17,11 +17,13 @@ export default hopeTheme({
       lang: "zh-CN",
       navbar,
       sidebar,
+      headerDepth: 3,
     },
     "/en/": {
       lang: "en-US",
       navbar: navbarEn,
       sidebar: sidebarEn,
+      headerDepth: 3,
     },
   },
   displayFooter: true,
