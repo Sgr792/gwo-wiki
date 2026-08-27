@@ -40,6 +40,14 @@ Declare the state key consistently in `animation_controller`, `animation_machine
 
 `xmaglrg` and `drummag` are not synonyms. `xmaglrg` is a large extended box magazine; `drummag` is a drum magazine. Runtime mappings may technically point to differently named clips, but content that supplies both authored families must keep two independent state sets.
 
+### `animation_events` is only for dispatchable actions
+
+`animation_events` classifies animation states into runtime action channels such as `fire`, `reload`, `inspect`, `aim`, `sprint`, and `melee`. Explicit mappings remain part of the current format and may be retained; they are not deprecated.
+
+Do not place `static_idle`, `bullet_additive`, `empty_additive`, `aim_additive`, `aim_up_additive`, or `shell_additive_*` in `animation_events`. They are base or additive pose layers rather than dispatchable events and belong in `animation_clips`, the controller, or the pose graph. Event values must be supported GWO logical events, not arbitrary copied clip names.
+
+An identity clip mapping such as `"fire": "fire"` is still valid and may serve as an explicit capability declaration. Do not remove it merely because the state and clip names match.
+
 ### Base, equip, and display
 
 | State | Purpose and distinction |

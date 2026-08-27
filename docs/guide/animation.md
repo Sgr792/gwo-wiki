@@ -115,6 +115,14 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 
 `xmaglrg` 和 `drummag` 不是同义词：`xmaglrg` 表示大型箱式扩容弹匣，`drummag` 表示鼓式弹匣。运行时允许状态映射到不同剪辑名，但新内容如果同时拥有这两套动作，必须保留两组独立状态，不能把鼓式弹匣全部塞进 `*_xmaglrg` 分支。
 
+#### `animation_events` 只声明可派发动作
+
+`animation_events` 把动画状态归类到运行时动作通道，例如 `fire`、`reload`、`inspect`、`aim`、`sprint` 和 `melee`。显式映射仍是当前格式，可以保留；它不是废弃配置。
+
+不要把 `static_idle`、`bullet_additive`、`empty_additive`、`aim_additive`、`aim_up_additive` 或 `shell_additive_*` 写进 `animation_events`。这些是基础姿态或附加姿态层，不是可派发事件，应只出现在 `animation_clips`、控制器或姿态图中。事件值必须是 GWO 支持的逻辑事件，不能简单复制任意剪辑名。
+
+状态名与剪辑名相同时，`"fire": "fire"` 之类的 `animation_clips` 映射依然合法，也可以作为内容包的显式能力声明；不要仅因左右名称相同就当作旧兼容字段删除。
+
 #### 基础、装备与展示动画
 
 | 状态 | 触发时机与作用 | 与相近状态的区别 |

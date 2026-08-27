@@ -23,3 +23,22 @@ Copy the closest current example when creating content:
 | Ammunition | `bullets/5_56x45.json` | Same file contains model/material declarations |
 
 Paths are relative to the [official example content pack](https://github.com/Sgr792/gwo/tree/main/work/example-contentpack). Current examples and loader validation are authoritative when a field changes between releases.
+
+## 34. Legacy fields not to use
+
+The following names are ignored or explicitly removed legacy syntax. Do not add them to new packs; retain current fields and explicitly authored defaults.
+
+| Legacy field | Current form |
+|---|---|
+| `hud_icon_texture` | `hud.weapon_icon` |
+| `camera.recoil_pitch`, `camera.recoil_yaw`, `camera.recoil_recovery`, `recoil.handRotPivot`, `recoil_animation` | Current `recoil` block |
+| `arms.arm_poses` | Current `arms`, animation controller, and `pose_graph` |
+| Module `default_enabled`, `built_in`, `incompatible_with` | `default_installed`, `embedded`, `conflicts_with` |
+| Sight `reticle_attach_node`, `lense_hide_node` | `reticle_node`, `lens_hide_node` |
+| Flat `reticle_preview.u/v/width/height` | `reticle_preview.crop.u/v/width/height` |
+| Top-level `rpm`, `shot_cooldown_*`, `automatic_interval_*` | `mechanics.rpm` and `mechanics.fire_interval_ms` |
+| `animation_state_rules`, `animation_interrupt_rules` | `animation_machine` |
+| `melee.impact_frame`, `melee.impact_time` | Timing fields in `melee.combos.*.attacks[]` |
+| `sight.hybrid` | `sight.optic` |
+
+Do not classify explicit current defaults or valid identity animation mappings as legacy. Remove only obsolete names or formats that the loader explicitly rejects.

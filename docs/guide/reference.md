@@ -23,3 +23,22 @@ category:
 | 弹药 | `bullets/5_56x45.json` | 同一文件包含模型材质定义 |
 
 这些路径均相对于[官方示例内容包](https://github.com/Sgr792/gwo/tree/main/work/example-contentpack)根目录。字段与结构以当前版本示例和加载器校验结果为准。
+
+## 26. 不要继续使用的旧字段
+
+以下名称属于已经忽略或明确移除的旧格式。新内容包不要写入；当前字段和默认值则应保留。
+
+| 旧字段 | 当前写法 |
+|---|---|
+| `hud_icon_texture` | `hud.weapon_icon` |
+| `camera.recoil_pitch`、`camera.recoil_yaw`、`camera.recoil_recovery`、`recoil.handRotPivot`、`recoil_animation` | 当前 `recoil` 配置 |
+| `arms.arm_poses` | 当前 `arms`、动画控制器与 `pose_graph` |
+| 模块的 `default_enabled`、`built_in`、`incompatible_with` | `default_installed`、`embedded`、`conflicts_with` |
+| 瞄具的 `reticle_attach_node`、`lense_hide_node` | `reticle_node`、`lens_hide_node` |
+| 直接写在 `reticle_preview` 下的 `u/v/width/height` | `reticle_preview.crop.u/v/width/height` |
+| 顶层 `rpm`、`shot_cooldown_*`、`automatic_interval_*` | `mechanics.rpm` 与 `mechanics.fire_interval_ms` |
+| `animation_state_rules`、`animation_interrupt_rules` | `animation_machine` |
+| `melee.impact_frame`、`melee.impact_time` | `melee.combos.*.attacks[]` 的时序字段 |
+| `sight.hybrid` | `sight.optic` |
+
+不要把“显式写出的当前默认值”或名称相同的有效动画映射误判为废弃字段。只有上表旧名称以及加载器明确拒绝的格式才应清理。
