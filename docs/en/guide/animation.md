@@ -25,6 +25,91 @@ Export the static weapon model separately from the animation-only `.anim.glb`. B
 
 Only export actions that the weapon actually uses.
 
+### State names versus GLB clip names
+
+The key in `animation_clips` is the GWO state; its value is the real clip inside the `.anim.glb`. They may differ:
+
+```json
+"animation_clips": {
+  "reload_xmaglrg": "reload_drummag",
+  "aim_reload_xmaglrg": "aim_reload_drummag"
+}
+```
+
+Use a recognized state key and map it to an existing authored clip. The tables below describe state purposes.
+
+### Base, equip, and display
+
+| State | Purpose and distinction |
+|---|---|
+| `static_idle` | Stable first-person base pose. It must not contain empty, ammunition, or fire-mode state. |
+| `draw` | Normal equip/re-equip action. |
+| `draw_first` | Optional first successful equip for that weapon identity in the client session; previews and warm-up do not consume it. |
+| `holster` / `holster_empty` | Normal/empty-state unequip actions. Use the empty variant only when the mechanism needs a distinct pose. |
+| `ground_idle` | Optional dropped-item state alias; it does not participate in first-person action flow. |
+| `third_person_idle` | Optional third-person display state; it does not replace `third_person_pose`. |
+
+### ADS, fire, and cycling
+
+| State | Purpose and distinction |
+|---|---|
+| `aim_in` / `aim_out` | Enter and exit normal ADS. Their shared endpoint is the ADS reference pose. |
+| `aim_down_settle` | Optional residual settling after ADS exit; it does not replace `aim_out`. |
+| `aim_additive` | Runtime state commonly mapped to an authored `aim_up_additive` clip. Do not duplicate the same clip under both names. |
+| `aim_up_additive` | Local `tag_weapon` ADS correction, not a full pose; no hands or `tag_ads`. |
+| `aim_idle` | Optional ADS hold loop only when the aim action explicitly references it; many weapons hold ADS by layering over `static_idle`. |
+| `fire_pre` | Optional short sequence entry before the actual fire state; it does not own shot effects or ammunition consumption. |
+| `fire` / `aim_fire` | Hip-fire and ADS-fire actions. The ADS version must not add another `tag_ads` transform. |
+| `fire_last` / `fire_last_ads` | Hip/ADS last-round actions that enter the empty mechanism state. |
+| `fire_settle` / `fire_last_settle` | Post-shot settling states. They do not fire again; the last-round route must retain empty state. |
+| `dry_fire` / `aim_dry_fire` | Hip/ADS no-ammunition actions; no projectile, muzzle effect, or casing. |
+| `fire_rechamber` / `aim_fire_rechamber` | Hip/ADS pump or bolt cycle after firing, separate from recoil/fire animation. |
+
+### Magazine reload, inspect, and selector
+
+| State | Purpose and distinction |
+|---|---|
+| `reload` / `reload_empty` | Tactical reload with a chambered round versus an empty reload that includes chambering/bolt release. |
+| `aim_reload` / `aim_reload_empty` | ADS-space equivalents; they are not scaled copies of hip reloads. |
+| `reload_xmaglrg` / `reload_empty_xmaglrg` | Normal/empty replacement-magazine branches. They may map to clips such as `reload_drummag`. |
+| `aim_reload_xmaglrg` / `aim_reload_empty_xmaglrg` | ADS-space replacement-magazine branches with independent timing, events, sound, and visibility. |
+| `inspect` / `inspect_empty` | Non-empty/empty inspection using real ammunition and mechanism state. |
+| `inspect_xmaglrg` / `inspect_empty_xmaglrg` | Replacement-magazine inspection branches, only needed when the authored motion differs. |
+| `switch_fire_mode` | Generic selector action shared by destination modes. |
+| `switch_to_auto` / `switch_to_semi` | Destination-specific selector actions. |
+| `aim_switch_fire_mode` / `aim_switch_to_auto` / `aim_switch_to_semi` | ADS-space selector equivalents. |
+| `select_fire_empty` / `aim_select_fire_empty` | Empty-state hip/ADS selector branches, only when empty mechanics change the motion. |
+| `firemode_auto_static` / `firemode_semi_static` | Persistent selector-bone state layers, not one-shot switching actions. |
+
+### Tube-fed reload
+
+| State | Purpose and distinction |
+|---|---|
+| `reload_start` | Enter non-empty per-round reload posture; it should not repeat an insert commit. |
+| `reload_loop` | Repeated action that commits exactly one shell per loop. |
+| `reload_end` | Stop inserting and return to the held pose; it must not unconditionally rechamber. |
+| `reload_empty_chamber_start` | Empty route that loads the first shell directly into the chamber. |
+| `reload_empty_start` | Enter the subsequent tube-loading posture after the empty route begins. |
+| `reload_empty_chamber_end` | Optional handoff from direct chamber loading to tube-loop posture; it must not commit the same shell again. |
+| `aim_reload_start/loop/end` | ADS-space equivalents of the non-empty three-stage route. |
+| `aim_reload_empty_chamber_start` / `aim_reload_empty_start` / `aim_reload_empty_chamber_end` | ADS-space equivalents of the empty chamber route; pair each state explicitly. |
+
+### Persistent layers, sprint, and melee
+
+| State | Purpose and distinction |
+|---|---|
+| `empty_additive` / `empty_additive_xmaglrg` | Default/replacement-magazine persistent empty-mechanism layers, not full held poses. |
+| `bullet_additive` / `bullet_additive_xmaglrg` | Default/replacement-magazine ammunition, follower, and `j_ammo_*` layers. |
+| `shell_additive_*` | Tube-shell/follower pose selected by configuration; the suffix alone does not make runtime infer capacity. |
+| `sprint_in/loop/out` | Normal sprint enter, repeating loop, and exit. Only `loop` repeats. |
+| `super_sprint_in/loop/out` | Super-sprint three-stage route with its own endpoints and stronger authored posture. |
+| `melee_miss_*` | Firearm-melee air/miss set. Number suffixes must be continuous. |
+| `melee_hit_*` | Firearm-melee non-fatal hit set. |
+| `melee_fatal_*` | Firearm-melee fatal-result set, not merely a heavier random variation. |
+| `swipe_*` / `stab_*` | Independent-melee authored attacks. Name does not define damage; `melee.combos` owns order/random mode, commit, and chain windows. |
+
+Not every weapon needs every state. A correctly named but unreferenced clip is not played automatically.
+
 ## 12. Channel ownership
 
 - Animate a node in the layer that owns it; avoid duplicate channels for the same target across independent armatures.
