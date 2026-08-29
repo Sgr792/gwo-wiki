@@ -47,6 +47,27 @@ GWO 当前内容以枪口朝模型 `+X` 方向为基准。不要只靠 JSON 把�
 
 不要把 `tag_camera` 当成 `tag_view`。`tag_camera` 提供相机动画，`tag_view` 决定视角参考位置。
 
+#### 标准父子层级
+
+第一人称主链应当按下面的方向建立：
+
+```text
+root
+└─ tag_view
+   ├─ tag_camera
+   └─ tag_ads
+      └─ tag_weapon
+         └─ 枪械主体骨骼（例如 j_gunx 或 j_gun）
+            ├─ 枪械网格和可动机构
+            ├─ tag_align_gun
+            ├─ tag_weapon_focus（需要时）
+            └─ tag_brass
+```
+
+这里每缩进一级就代表一级真实父子关系。`tag_camera` 和 `tag_ads` 是同级节点；`tag_weapon` 是 `tag_ads` 的子级，不是它的父级。允许在枪械主体骨骼与功能节点之间保留武器自身需要的中间骨骼，例如 `tag_sling` 或 `tag_pistol_offset`，但不能改变 `root → tag_view → tag_ads → tag_weapon` 这条主链。
+
+模块化武器的 `tag_flash` 通常位于枪管 GLB 的 `tag_barrel_attach` 分支下；一体模型则放在枪械主体运动分支下。枪口、抛壳、挂点和需要随枪运动的网格都不能直接挂到 `root`、`tag_view` 或 `tag_camera`，否则瞄准、开火或动画混合时会留在错误空间。
+
 ### 7.3 默认部件
 
 主机匣模型必须保留供其他部件挂载的节点。默认部件模型在各自渲染文件中通过 `anchor_node` 挂到主枪节点。

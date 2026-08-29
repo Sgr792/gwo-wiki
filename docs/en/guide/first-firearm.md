@@ -84,15 +84,29 @@ Minimum reference nodes:
 
 ```text
 root
-└─ tag_weapon
-   ├─ tag_view
+└─ tag_view
    ├─ tag_camera
-   ├─ tag_ads
-   ├─ tag_align_gun
-   ├─ tag_weapon_focus
-   ├─ tag_flash
-   └─ tag_brass
+   └─ tag_ads
+      └─ tag_weapon
+         └─ main weapon bone (for example, j_gunx)
+            ├─ weapon meshes and moving mechanisms
+            ├─ tag_align_gun
+            ├─ tag_weapon_focus (when needed)
+            └─ tag_brass
 ```
+
+The indentation above is the required parent hierarchy, not merely a list of names. The main chain is `root → tag_view → tag_ads → tag_weapon → main weapon bone`. `tag_camera` is a sibling of `tag_ads` under `tag_view`; it is not a child of `tag_weapon`.
+
+| Child | Required parent | Reason |
+|---|---|---|
+| `tag_view` | `root` | Establishes the first-person view space |
+| `tag_camera` | `tag_view` | Carries camera-only animation |
+| `tag_ads` | `tag_view` | Owns hip-to-ADS pose transitions |
+| `tag_weapon` | `tag_ads` | Places the weapon and hands in the current aiming space |
+| Main weapon bone, such as `j_gunx` | `tag_weapon` | Carries weapon meshes and weapon animation |
+| `tag_align_gun`, `tag_weapon_focus`, `tag_brass` | A moving branch below the main weapon bone | These references must follow weapon animation; weapon-specific intermediate bones are allowed |
+
+For a modular weapon, `tag_flash` normally belongs to the barrel GLB below its `tag_barrel_attach` branch. For a one-piece model, place it below the moving main-weapon branch. Never parent it directly to `root`, `tag_view`, or `tag_camera`.
 
 `tag_view` is the first-person view reference. `tag_camera` carries camera animation and is not a replacement for `tag_view`. Put `tag_flash` at the real muzzle and `tag_brass` at the ejection port.
 

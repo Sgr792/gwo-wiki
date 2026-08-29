@@ -28,6 +28,25 @@ The muzzle points along model-space `+X`. Apply mesh rotation and scale, but do 
 | `tag_laser` | Laser beam origin inside the device |
 | `tag_hybrid` | Hybrid-optic anchor |
 
+### Required first-person hierarchy
+
+```text
+root
+└─ tag_view
+   ├─ tag_camera
+   └─ tag_ads
+      └─ tag_weapon
+         └─ main weapon bone (for example, j_gunx or j_gun)
+            ├─ weapon meshes and moving mechanisms
+            ├─ tag_align_gun
+            ├─ tag_weapon_focus (when needed)
+            └─ tag_brass
+```
+
+Every indentation level is a real parent-child relationship. `tag_camera` and `tag_ads` are siblings, while `tag_weapon` is a child of `tag_ads`. Weapon-specific intermediate bones such as `tag_sling` or `tag_pistol_offset` may remain below the main weapon bone, but the core `root → tag_view → tag_ads → tag_weapon` chain must not be reversed.
+
+For modular weapons, `tag_flash` normally lives in the barrel GLB below its `tag_barrel_attach` branch. For a one-piece weapon, it belongs below the moving weapon branch. Muzzle, ejection, attachment, and moving mesh nodes must not be parented directly to `root`, `tag_view`, or `tag_camera`.
+
 Never substitute `tag_camera` for `tag_view`.
 
 ## 8. Default parts

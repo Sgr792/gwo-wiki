@@ -108,15 +108,29 @@ tutorial:skins/guns/training_rifle.png
 
 ```text
 root
-└─ tag_weapon
-   ├─ tag_view
+└─ tag_view
    ├─ tag_camera
-   ├─ tag_ads
-   ├─ tag_align_gun
-   ├─ tag_weapon_focus
-   ├─ tag_flash
-   └─ tag_brass
+   └─ tag_ads
+      └─ tag_weapon
+         └─ 枪械主体骨骼（例如 j_gunx）
+            ├─ 枪械网格和可动机构
+            ├─ tag_align_gun
+            ├─ tag_weapon_focus（需要时）
+            └─ tag_brass
 ```
+
+上面的缩进就是父子级，不只是名称清单：`root` 是 `tag_view` 的父级；`tag_view` 同时是 `tag_camera` 和 `tag_ads` 的父级；`tag_ads` 是 `tag_weapon` 的父级；枪械主体骨骼及枪械网格位于 `tag_weapon` 下面。不要把它反过来做成 `root → tag_weapon → tag_view`。
+
+| 子节点 | 应放在谁下面 | 原因 |
+|---|---|---|
+| `tag_view` | `root` | 建立整套第一人称视角参考空间 |
+| `tag_camera` | `tag_view` | 只叠加相机动画，不跟着枪械局部机构运动 |
+| `tag_ads` | `tag_view` | 承担腰射与瞄准姿态的切换 |
+| `tag_weapon` | `tag_ads` | 让整把枪和手在当前瞄准参考空间内运动 |
+| 枪械主体骨骼（如 `j_gunx`） | `tag_weapon` | 承载枪身、手臂参考和枪械动画 |
+| `tag_align_gun`、`tag_weapon_focus`、`tag_brass` | 枪械主体的运动分支 | 必须跟随枪身动画；中间可以存在 `tag_sling` 等武器自身骨骼 |
+
+`tag_flash` 的父级取决于模型拆分方式：一体模型应把它放在枪械主体的运动分支下；模块化武器通常把它放进枪管 GLB，并置于该枪管的 `tag_barrel_attach` 分支下。无论哪种方式，它都必须随当前枪管和枪身运动，不能直接放在 `root`、`tag_view` 或 `tag_camera` 下。
 
 它们的用途：
 
@@ -132,7 +146,7 @@ root
 | `tag_flash` | 枪口火焰、烟雾和第一人称尾迹起点 |
 | `tag_brass` | 弹壳抛出位置 |
 
-`tag_flash` 放在真实枪口，局部朝向与枪口出射方向一致。`tag_brass` 放在抛壳窗。节点名一个字符都不能拼错。
+`tag_flash` 放在真实枪口，局部朝向与枪口出射方向一致。`tag_brass` 放在抛壳窗。节点名和父子级都必须正确，一个字符都不能拼错。
 
 ### 2.3 导出模型 GLB
 
