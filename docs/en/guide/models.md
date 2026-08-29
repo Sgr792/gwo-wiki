@@ -68,7 +68,7 @@ For reversed, offset, incorrectly scaled, or non-animated parts, check the share
 
 Blender Empty nodes may drive simple rigid child meshes. Complex first-person blending, masks, and hand-follow behavior are most reliable with bones. Download the [Blender 3.3 arm template](/gwo-wiki/downloads/gwo_arms_template_blender33.blend); if you change its skeleton, update the weapon animation library and independent arm model together.
 
-## 8. Beginner Blender workflow
+### 9.1 Beginner Blender workflow
 
 1. Save a project copy before changing imported data.
 2. Rename receiver, barrel, magazine, stock, and moving mechanisms in the Outliner.

@@ -64,7 +64,7 @@ my_pack.zip
    └─ ...
 ```
 
-普通文件夹和 ZIP 都必须主动提供正确的 `pack.mcmeta`。
+开发时仍建议主动保留正确的 `pack.mcmeta`。普通文件夹缺失该文件时，GWO 会生成一份基础元数据作为安全兜底；ZIP 无法在包内补写，因此发布 ZIP 的根目录必须预先包含正确的 `pack.mcmeta`。
 
 ## 3. 推荐的完整目录结构
 
@@ -160,7 +160,7 @@ example_pack/
 
 例如：
 
-```json
+```jsonc
 "id": "example:example_rifle",
 "gltf_model": "example:gltf/guns/example_rifle/example_rifle_receiver_default.glb",
 "texture": "example:skins/guns/example_rifle.png"
@@ -174,7 +174,7 @@ assets/example/gltf/...
 
 行为 JSON 中引用另一个内容包文件时，使用相对内容包根目录的路径，例如：
 
-```json
+```jsonc
 "render": "weapons/firearms/render/example_rifle.render.json"
 ```
 

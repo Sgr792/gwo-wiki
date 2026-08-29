@@ -62,7 +62,7 @@ assets/my_studio/
 
 以后所有资源 ID 都必须使用相同前缀：
 
-```json
+```jsonc
 "id": "my_studio:training_rifle"
 ```
 
@@ -115,7 +115,7 @@ my_studio:Training Rifle   路径有大写和空格
 
 只修改 `description` 即可开始，例如：
 
-```json
+```jsonc
 "description": "My Studio Weapon Pack"
 ```
 

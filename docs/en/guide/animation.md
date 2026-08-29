@@ -29,7 +29,7 @@ Only export actions that the weapon actually uses.
 
 The key in `animation_clips` is the GWO state; its value is the real clip inside the `.anim.glb`. They may differ:
 
-```json
+```jsonc
 "animation_clips": {
   "reload_xmaglrg": "reload_xmaglrg",
   "reload_drummag": "reload_drummag"
@@ -158,7 +158,7 @@ Use start → repeated loop → end. Commit one shell at its configured loop eve
 
 For `tube_per_round`, authored frames are the only mechanical timing source. Do not duplicate them as `insert_commit_ms`, `start_commit_ms`, `empty_chamber_start_commit_ms`, `empty_start_commit_ms`, `rechamber_eject_ms`, or `rechamber_commit_ms`. Runtime converts each frame through the weapon-level `animation_fps` so a dedicated server can keep a real-time mechanical clock without requiring authors to maintain two values.
 
-```json
+```jsonc
 "reload_system": {
   "type": "tube_per_round",
   "tube_capacity": 7,

@@ -51,7 +51,7 @@ assets/my_studio/
 
 Every resource ID must then use the same prefix:
 
-```json
+```jsonc
 "id": "my_studio:training_rifle"
 ```
 

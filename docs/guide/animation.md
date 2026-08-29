@@ -20,7 +20,9 @@ category:
 ```json
 {
   "gltf_model": "example:gltf/guns/example_rifle/example_rifle_receiver_default.glb",
-  "animation_sources": "example:gltf/animations/example_rifle_receiver_default.anim.glb",
+  "animation_sources": [
+    "example:gltf/animations/example_rifle_receiver_default.anim.glb"
+  ],
   "first_person_arms": true,
   "arms": {
     "model": "example:gltf/arms/arms.glb"
@@ -104,7 +106,7 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 
 `animation_clips` 左侧是 GWO 状态名，右侧才是 `.anim.glb` 内的实际剪辑名。例如：
 
-```json
+```jsonc
 "animation_clips": {
   "reload_xmaglrg": "reload_xmaglrg",
   "reload_drummag": "reload_drummag"
@@ -343,7 +345,7 @@ root
 
 `tube_per_round` 的机械时序以动画帧为唯一数据源。内容包只填写 `*_frame`；运行时会按照武器根配置的 `animation_fps` 自动换算服务端使用的毫秒时间，不要再额外填写 `insert_commit_ms`、`start_commit_ms`、`empty_chamber_start_commit_ms`、`empty_start_commit_ms`、`rechamber_eject_ms` 或 `rechamber_commit_ms`。
 
-```json
+```jsonc
 "reload_system": {
   "type": "tube_per_round",
   "tube_capacity": 7,
@@ -497,7 +499,7 @@ root
 
 最小结构：
 
-```json
+```jsonc
 "animation_machine": {
   "version": 2,
   "actions": {

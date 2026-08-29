@@ -264,7 +264,7 @@ Create `weapons/firearms/training_rifle.json`:
 
 ## Step 7: Add rendering and Animation Machine v2
 
-Create `weapons/firearms/render/training_rifle.render.json`. Use the complete minimal block from the [Chinese step-by-step page](/gwo-wiki/guide/first-firearm.html#第-7-步-创建最小渲染与动画配置) or assemble the following required sections:
+Create `weapons/firearms/render/training_rifle.render.json` and copy the complete minimal configuration below:
 
 ```json
 {
@@ -380,7 +380,7 @@ Common diagnosis:
 
 Export the arm template to `assets/tutorial/gltf/arms/arms.glb` and add:
 
-```json
+```jsonc
 "first_person_arms": true,
 "arms": {
   "model": "tutorial:gltf/arms/arms.glb",

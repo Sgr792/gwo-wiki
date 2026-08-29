@@ -72,7 +72,7 @@ category:
 
 装/不装某类配件时隐藏或显示机瞄、支架等节点：
 
-```json
+```jsonc
 "gun_bone_visibility": {
   "when_slot_empty": {
     "sight": {
@@ -116,7 +116,7 @@ category:
 
 行为文件重点：
 
-```json
+```jsonc
 "sight": {
   "enabled": true,
   "type": "reflex",
@@ -126,7 +126,7 @@ category:
 
 渲染文件常用：
 
-```json
+```jsonc
 "sight": {
   "reticle_node": "tag_reticle_attach",
   "reticle_plane_node": "tag_lense",
@@ -146,7 +146,7 @@ category:
 
 行为文件：
 
-```json
+```jsonc
 "sight": {
   "enabled": true,
   "type": "scope",
@@ -181,7 +181,7 @@ Weapon Sway 在倍镜模式下会通过镜内投影参考参与画面与准心�
 
 侧瞄属于枪械渲染配置，不属于瞄具动画。推荐从当前 RM277 或 M4 的渲染文件复制：
 
-```json
+```jsonc
 "canted_aim": {
   "enabled": true,
   "pose_node": "tag_ads",

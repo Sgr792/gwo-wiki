@@ -592,7 +592,7 @@ assets/tutorial/gltf/arms/arms.glb
 
 在渲染 JSON 增加：
 
-```json
+```jsonc
 "first_person_arms": true,
 "arms": {
   "model": "tutorial:gltf/arms/arms.glb",
@@ -667,7 +667,7 @@ aim_fire
 
 枪械逻辑：
 
-```json
+```jsonc
 "sound_events": {
   "fire": "tutorial:training_rifle_fire"
 }
@@ -675,7 +675,7 @@ aim_fire
 
 动画帧：
 
-```json
+```jsonc
 "animation_commands": {
   "reload": [
     {"frame": 39, "type": "sound", "sound": "tutorial:training_rifle_mag_in"}

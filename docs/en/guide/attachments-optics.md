@@ -33,7 +33,7 @@ Hybrid optics declare both modes and a programmatic transition. The magnified im
 
 Tactical stance belongs in the firearm render definition rather than an optic animation:
 
-```json
+```jsonc
 "canted_aim": {
   "enabled": true,
   "pose_node": "tag_ads",

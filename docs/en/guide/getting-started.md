@@ -23,7 +23,7 @@ Place development folders or distributable ZIP files in:
 .minecraft/gwo/
 ```
 
-The ZIP root must directly contain `pack.mcmeta`, `weapons`, `bullets`, and `assets`; do not wrap them in another directory.
+Keep a valid `pack.mcmeta` during development. GWO can generate basic metadata as a safety fallback when a folder pack is missing it, but it cannot modify a ZIP. A release ZIP must therefore contain `pack.mcmeta`, `weapons`, `bullets`, and `assets` directly at its root; do not wrap them in another directory.
 
 ## 3. Recommended layout
 

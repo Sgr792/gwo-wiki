@@ -34,8 +34,10 @@ The render file binds model, animation library, arms, materials, nodes, action n
 
 ```json
 {
-  "model": "example:gltf/guns/example_rifle/example_rifle_receiver_default.glb",
-  "animation": "example:gltf/animations/example_rifle_receiver_default.anim.glb",
+  "gltf_model": "example:gltf/guns/example_rifle/example_rifle_receiver_default.glb",
+  "animation_sources": [
+    "example:gltf/animations/example_rifle_receiver_default.anim.glb"
+  ],
   "texture": "example:skins/guns/example_rifle.png",
   "normal": "example:skins/guns/example_rifle_n.png",
   "specular": "example:skins/guns/example_rifle_s.png"

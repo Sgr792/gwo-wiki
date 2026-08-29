@@ -44,7 +44,7 @@ assets/example/sounds/example_rifle/mag_in.ogg
 
 动画帧事件：
 
-```json
+```jsonc
 "animation_commands": {
   "reload": [
     {"frame": 0, "type": "sound", "sound": "example:example_rifle_reload_start"},
@@ -85,7 +85,7 @@ textures/item/ammo/<id>.png
 
 改装界面只选择“下一次换弹要使用的弹种”时，不应立即改写当前弹匣。生存模式下背包必须有至少一发目标弹种才能选择，实际换弹时装入可用数量并返还原弹；创造模式不受库存限制。
 
-## 19.1 零基础声音接入顺序
+### 19.1 零基础声音接入顺序
 
 每次只接入一个声音事件：
 
@@ -105,7 +105,7 @@ textures/item/ammo/<id>.png
 
 这三个层级分别是文件、`sounds.json` 内的资源值和配置中引用的声音事件，不是同一个字符串。
 
-## 19.2 图标制作与验收
+### 19.2 图标制作与验收
 
 1. 使用透明背景 PNG。
 2. 枪械保持侧面轮廓，留出少量透明边距。
@@ -115,7 +115,7 @@ textures/item/ammo/<id>.png
 
 游戏内分别检查创造栏、快捷栏、右下角 HUD、改装卡片和物品提示。某一处正常不代表所有 UI 路径都已正确配置。
 
-## 19.3 语言文件
+### 19.3 语言文件
 
 正式发布至少准备：
 

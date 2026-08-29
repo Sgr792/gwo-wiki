@@ -9,17 +9,52 @@ category:
 
 Standalone melee weapons are not firearms with zero ammunition. Place definitions under `weapons/melee/` and use a melee render/state contract with equip, idle, inspect, sprint, holster, and attack actions.
 
-Common attack families are discovered from existing clips:
+Define standalone-melee attacks explicitly in `melee.combos.*.attacks`. Names such as `swipe_01` and `stab_01` are authored clip names; the combo configuration owns selection order, damage timing, and chaining:
 
-- `melee_miss_*`
-- `melee_hit_*`
-- `melee_fatal_*`
+```json
+{
+  "id": "example:example_knife",
+  "display_name": "Example Melee Weapon",
+  "creative_category": "melee",
+  "creative_sort": 10,
+  "model_data": 2100,
+  "damage": 7.0,
+  "melee": {
+    "enabled": true,
+    "damage": 7.0,
+    "range": 3.0,
+    "angle": 42.0,
+    "knockback": 0.35,
+    "combos": {
+      "primary": {
+        "mode": "random",
+        "reset_ms": 700,
+        "attacks": [
+          {
+            "animation": "swipe_01",
+            "duration_ms": 833,
+            "commit_ms": 180,
+            "chain_open_ms": 390
+          },
+          {
+            "animation": "stab_01",
+            "duration_ms": 833,
+            "commit_ms": 250,
+            "chain_open_ms": 470
+          }
+        ]
+      }
+    }
+  },
+  "render": "weapons/melee/render/example_knife.render.json"
+}
+```
 
-The runtime can choose among all numbered variants without a fixed maximum. Keep attack recovery, hit timing, air swings, and interruption rules in the melee state machine. Use weapon-size-specific sound sets rather than firearm melee audio.
+`melee_miss_*`, `melee_hit_*`, and `melee_fatal_*` are firearm-melee result sets. Do not present them as the standalone weapon's primary combo unless that standalone definition explicitly lists those exact clips. Keep attack recovery, hit timing, air swings, and interruption rules in the standalone melee state machine. Use weapon-size-specific sound sets rather than firearm-melee audio.
 
 Validate first-person hands, third-person pose, offhand stow, fixed display, inspect audio, draw/holster audio, consecutive attacks, hits, misses, and fatal variants.
 
-## 26. Beginner order and timing
+### 25.1 Beginner order and timing
 
 Do not convert a firearm by only deleting ammunition fields. Create gameplay under `weapons/melee/` and rendering under `weapons/melee/render/`. Begin with `static_idle`, `draw_first`, `holster`, and one attack. Verify reference space before adding the remaining combo, inspect, sprint, super sprint, hit variants, and audio.
 

@@ -148,7 +148,9 @@ category:
 ```json
 {
   "gltf_model": "example:gltf/guns/example_rifle/example_rifle_receiver_default.glb",
-  "animation_sources": "example:gltf/animations/example_rifle_receiver_default.anim.glb",
+  "animation_sources": [
+    "example:gltf/animations/example_rifle_receiver_default.anim.glb"
+  ],
   "texture": "example:skins/guns/example_rifle.png",
   "normal": "example:skins/guns/example_rifle_n.png",
   "specular": "example:skins/guns/example_rifle_s.png",
@@ -202,7 +204,7 @@ category:
 
 ### 11.2 后坐力与 Weapon Sway
 
-```json
+```jsonc
 "weapon_sway": {
   "enabled": true,
   "hip": {
@@ -259,7 +261,7 @@ category:
 
 推荐直接复制同类型默认枪的 `muzzle_flash` 与 `muzzle_smoke`，再小幅调整。尾迹基础开关：
 
-```json
+```jsonc
 "bullet_tracer": {
   "enabled": true,
   "size_multiplier": 1.0,
@@ -276,7 +278,7 @@ category:
 
 常用字段：
 
-```json
+```jsonc
 "texture": "example:skins/guns/example_rifle.png",
 "normal": "example:skins/guns/example_rifle_n.png",
 "specular": "example:skins/guns/example_rifle_s.png",
@@ -296,7 +298,7 @@ category:
 
 透明节点示例：
 
-```json
+```jsonc
 "transparent_nodes": {
   "lens_glass": {
     "alpha": 0.8,

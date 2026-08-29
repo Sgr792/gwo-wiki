@@ -49,17 +49,8 @@ def main() -> None:
         )
         (OUTPUT / f"{slug}.md").write_text(frontmatter + body, encoding="utf-8", newline="\n")
 
-    index = """---
-title: 内容包制作教程
-index: false
-icon: book-open
----
-
-# 内容包制作教程
-
-请从左侧目录选择章节。第一次制作时，建议按照目录顺序阅读。
-"""
-    (OUTPUT / "README.md").write_text(index, encoding="utf-8", newline="\n")
+    # The guide landing page is curated separately. Regenerating chapter pages
+    # must not replace its learning routes and visual chapter cards.
 
 
 if __name__ == "__main__":
