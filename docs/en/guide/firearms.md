@@ -24,6 +24,8 @@ Start from the closest official example: magazine-fed rifle, pistol, tube-fed sh
 
 Do not copy shotgun shell-loop rules into a detachable-magazine weapon, or automatic scheduling into a bolt-action weapon.
 
+Magazine-fed finite actions use `mechanics.action_commit_ms`. A tube-fed shotgun with `reload_system.type: "tube_per_round"` instead authors only the event frames under `reload_system.events`; runtime derives server timing from `animation_fps`, so do not add duplicate per-round `*_ms` fields.
+
 Use `creative_category` to select both the creative-tab group and the weapon-type label shown in the modification screen. Standard values are `assault_rifle`, `battle_rifle`, `submachine_gun`, `shotgun`, `light_machine_gun`, `marksman_rifle`, `sniper_rifle`, `pistol`, `launcher`, and `melee`. `creative_sort` controls ordering within a category. Unknown values fall back to `assault_rifle`.
 
 ## 18. Firearm render JSON

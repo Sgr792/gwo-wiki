@@ -183,11 +183,11 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 
 | 状态 | 触发时机与作用 | 与相近状态的区别 |
 |---|---|---|
-| `reload_start` | 非空仓逐发装填的进入动作 | 只进入装填姿态，不应重复提交一发 |
+| `reload_start` | 非空仓逐发装填的进入动作，并可按 `start_commit_frame` 提交第一发 | 第一发属于这一阶段；后续重复装填才进入 `reload_loop` |
 | `reload_loop` | 每循环向弹仓装入一发 | 每次循环只提交一发，可重复直到装满或玩家松开 |
 | `reload_end` | 停止装填并回到持枪姿态 | 不负责再装一发，也不应无条件 rechamber |
 | `reload_empty_chamber_start` | 完全空仓时先把第一发直接送入膛内 | 与 `reload_empty_start` 的主要区别是第一发进入 chamber |
-| `reload_empty_start` | 空仓流程随后进入管式弹仓装填姿态 | 负责空仓装填的进入/首段，不等于重复 `reload_loop` |
+| `reload_empty_start` | 空仓第一发直接入膛后，继续向管式弹仓装入下一发 | 使用独立的 `empty_start_commit_frame`，之后才进入重复 `reload_loop` |
 | `reload_empty_chamber_end` | 直接入膛动作与后续弹仓循环之间的交接段 | 可选；用于整理手和枪的姿态，不应再次提交同一发 |
 | `aim_reload_start` / `aim_reload_loop` / `aim_reload_end` | 非空仓逐发装填三段的瞄准版本 | 与非 `aim_` 版本流程相同，但参考姿态不同 |
 | `aim_reload_empty_chamber_start` / `aim_reload_empty_start` / `aim_reload_empty_chamber_end` | 空仓逐发装填三段的瞄准版本 | 必须与对应腰射状态逐一配对，不能混用世界姿态 |
@@ -332,7 +332,7 @@ root
 
 ### 8.3.9 管式霰弹枪逐发装填
 
-- `reload_start`：进入装填姿态。
+- `reload_start`：进入装填姿态，并可在 `start_commit_frame` 提交非空仓流程的第一发。
 - `reload_loop`：每循环装入一发。
 - `reload_end`：结束装填并回到持枪姿态。
 - 空仓流程可增加 `reload_empty_chamber_start`，先把第一发直接送入膛内。
@@ -340,6 +340,48 @@ root
 - 手中弹壳、管内弹壳和 follower 的显示由动作事件与 `shell_additive_*` 共同控制。
 - `shell_additive_*` 不能包含护木、手臂或枪身轨道。
 - 装填结束后是否需要 rechamber 由枪械机械流程决定；已经直接入膛时不能重复执行。
+
+`tube_per_round` 的机械时序以动画帧为唯一数据源。内容包只填写 `*_frame`；运行时会按照武器根配置的 `animation_fps` 自动换算服务端使用的毫秒时间，不要再额外填写 `insert_commit_ms`、`start_commit_ms`、`empty_chamber_start_commit_ms`、`empty_start_commit_ms`、`rechamber_eject_ms` 或 `rechamber_commit_ms`。
+
+```json
+"reload_system": {
+  "type": "tube_per_round",
+  "tube_capacity": 7,
+  "chamber_capacity": 1,
+  "rechamber_delay_ms": 350,
+  "frame_lengths": {
+    "start": 27,
+    "insert": 22,
+    "end": 19,
+    "end_rechamber": 19,
+    "empty_chamber_start": 53,
+    "empty_start": 27,
+    "empty_chamber_end": 16,
+    "rechamber": 21
+  },
+  "events": {
+    "insert_sound_frame": 19,
+    "insert_commit_frame": 19,
+    "start_commit_frame": 24,
+    "empty_chamber_start_commit_frame": 50,
+    "empty_start_commit_frame": 24,
+    "rechamber_eject_frame": 2,
+    "rechamber_commit_frame": 19
+  }
+}
+```
+
+| 参数 | 对应动画 | 作用 |
+|---|---|---|
+| `start_commit_frame` | `reload_start` / `aim_reload_start` | 非空仓流程第一发真正加入武器的帧 |
+| `insert_commit_frame` | `reload_loop` / `aim_reload_loop` | 每次循环真正增加一发并扣除一颗备弹的帧 |
+| `empty_chamber_start_commit_frame` | `reload_empty_chamber_start` / `aim_reload_empty_chamber_start` | 完全空仓时第一发真正加入武器的帧 |
+| `empty_start_commit_frame` | `reload_empty_start` / `aim_reload_empty_start` | 空仓流程继续向管内装入下一发的帧 |
+| `rechamber_eject_frame` | `fire_rechamber` / `aim_fire_rechamber` | 真正生成并抛出弹壳的帧 |
+| `rechamber_commit_frame` | `fire_rechamber` / `aim_fire_rechamber` | 护木复位、下一发进入膛内并解除待循环状态的帧 |
+| `insert_sound_frame` | `reload_loop` / `aim_reload_loop` | 装弹声音的作者参考帧；实际声音事件仍在渲染配置的 `animation_commands` 中声明 |
+
+`frame_lengths` 是各阶段动画的总帧数：`start`、`insert`、`end`、`end_rechamber`、`empty_chamber_start`、`empty_start`、`empty_chamber_end`、`rechamber` 分别对应同名 `clips` 阶段。正常情况下运行时优先读取 GLB 剪辑真实时长；这些数值用于缺失时长信息时的阶段持续时间回退，必须与导出的动画长度一致。弹量 HUD 与真正射击判定读取机械提交结果；`shell_additive_*` 和弹壳显隐只负责模型表现，不能代替提交帧。
 
 ### 8.3.10 泵动与栓动 `rechamber`
 
@@ -439,17 +481,17 @@ root
 修改动画后至少检查四处：
 
 1. `animation_controller.channels.<动作>.duration_frame` 或 `duration`。
-2. `mechanics.action_commit_ms`。
+2. 弹匣式武器检查 `mechanics.action_commit_ms`；`tube_per_round` 检查 `reload_system.events` 的 `*_commit_frame`，不要为逐发换弹重复填写 `*_ms`。
 3. `reload_phases` 的阶段帧。
 4. `animation_commands` 中声音、遮罩、装填、抛壳等事件帧。
 
-30 FPS 动画可用：
+弹匣式武器需要手工换算时，30 FPS 动画可用：
 
 ```text
 毫秒 = 帧数 / 30 × 1000
 ```
 
-替换 `.anim.glb` 后必须同步核对事件帧，否则会出现声音延迟、弹匣提前消失、换弹提交时机错误或动画结束后才更新弹量。
+`tube_per_round` 会根据 `animation_fps` 自动完成这一步。替换 `.anim.glb` 后仍必须同步核对事件帧，否则会出现声音延迟、弹壳提前消失、换弹提交时机错误或动画结束后才更新弹量。
 
 ### 8.5 动画机 v2
 

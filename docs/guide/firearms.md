@@ -120,6 +120,7 @@ category:
 - `damage` 是基础伤害，距离衰减、身体部位和弹药再共同修正。
 - `inaccuracy.aim` 是瞄准散射，不是后坐力。
 - 射速、弹量、伤害、命中与换弹提交属于逻辑状态，不要用客户端动画帧自行扣弹。
+- `mechanics.action_commit_ms` 用于弹匣式换弹等普通有限动作；管式霰弹枪的 `tube_per_round` 只在 `reload_system.events` 填写提交帧，运行时根据 `animation_fps` 自动换算，不再填写重复的 `*_ms`。
 
 ### 10.1 武器分类
 

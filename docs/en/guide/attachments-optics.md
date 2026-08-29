@@ -54,7 +54,7 @@ Tactical stance belongs in the firearm render definition rather than an optic an
 }
 ```
 
-The player holds ADS and presses V to toggle normal ADS/tactical stance for that weapon identity. Magnified and hybrid optics disable the toggle; iron sights, reflex sights, and holographic sights may use it. No laser attachment is required. `pose_node` and `pivot_node` must exist in the weapon GLB. Rotation/translation define the target pose, response/damping shape the transition, and a `fov_multiplier` of `1.0` releases optic magnification. Do not bind legacy canted or NVG ADS clips to this route.
+The player holds ADS and presses V to toggle normal ADS/tactical stance for that weapon identity. Magnified and hybrid optics disable the toggle; iron sights, reflex sights, and holographic sights may use it. No laser attachment is required. A temporary first-person canted laser is scoped to one stance session: manually turning it off during that session is respected instead of being forced on again on the next frame. `pose_node` and `pivot_node` must exist in the weapon GLB. Rotation/translation define the target pose, response/damping shape the transition, and a `fov_multiplier` of `1.0` releases optic magnification. Do not bind legacy canted or NVG ADS clips to this route.
 
 ## 24. Charms
 

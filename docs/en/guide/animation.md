@@ -98,11 +98,11 @@ An identity clip mapping such as `"fire": "fire"` is still valid and may serve a
 
 | State | Purpose and distinction |
 |---|---|
-| `reload_start` | Enter non-empty per-round reload posture; it should not repeat an insert commit. |
+| `reload_start` | Enter the non-empty per-round route and commit its first shell at `start_commit_frame`; later shells use the loop. |
 | `reload_loop` | Repeated action that commits exactly one shell per loop. |
 | `reload_end` | Stop inserting and return to the held pose; it must not unconditionally rechamber. |
 | `reload_empty_chamber_start` | Empty route that loads the first shell directly into the chamber. |
-| `reload_empty_start` | Enter the subsequent tube-loading posture after the empty route begins. |
+| `reload_empty_start` | Load the next tube shell after the empty route chambered its first shell; it uses `empty_start_commit_frame` before the repeated loop. |
 | `reload_empty_chamber_end` | Optional handoff from direct chamber loading to tube-loop posture; it must not commit the same shell again. |
 | `aim_reload_start/loop/end` | ADS-space equivalents of the non-empty three-stage route. |
 | `aim_reload_empty_chamber_start` / `aim_reload_empty_start` / `aim_reload_empty_chamber_end` | ADS-space equivalents of the empty chamber route; pair each state explicitly. |
@@ -155,6 +155,40 @@ Keep authored weapon and hand channels in the same reference space. `fire_last` 
 ### Tube-fed reload and rechamber
 
 Use start → repeated loop → end. Commit one shell at its configured loop event. A chamber-start action may commit the first round separately. Pump/bolt actions begin only after their configured delay and must preserve hand ownership through their final frame.
+
+For `tube_per_round`, authored frames are the only mechanical timing source. Do not duplicate them as `insert_commit_ms`, `start_commit_ms`, `empty_chamber_start_commit_ms`, `empty_start_commit_ms`, `rechamber_eject_ms`, or `rechamber_commit_ms`. Runtime converts each frame through the weapon-level `animation_fps` so a dedicated server can keep a real-time mechanical clock without requiring authors to maintain two values.
+
+```json
+"reload_system": {
+  "type": "tube_per_round",
+  "tube_capacity": 7,
+  "chamber_capacity": 1,
+  "rechamber_delay_ms": 350,
+  "frame_lengths": {
+    "start": 27,
+    "insert": 22,
+    "end": 19,
+    "end_rechamber": 19,
+    "empty_chamber_start": 53,
+    "empty_start": 27,
+    "empty_chamber_end": 16,
+    "rechamber": 21
+  },
+  "events": {
+    "insert_sound_frame": 19,
+    "insert_commit_frame": 19,
+    "start_commit_frame": 24,
+    "empty_chamber_start_commit_frame": 50,
+    "empty_start_commit_frame": 24,
+    "rechamber_eject_frame": 2,
+    "rechamber_commit_frame": 19
+  }
+}
+```
+
+`start_commit_frame`, `insert_commit_frame`, `empty_chamber_start_commit_frame`, and `empty_start_commit_frame` map respectively to the start, repeated insert, empty chamber-start, and empty-start clips (including their paired `aim_` states). `rechamber_eject_frame` ejects the casing and `rechamber_commit_frame` chambers the next shell in `fire_rechamber` / `aim_fire_rechamber`. `insert_sound_frame` is an authoring reference; dispatch the actual sound through the render definition's `animation_commands`.
+
+`frame_lengths` records the total frames of each phase and supplies fallback phase duration when a GLB clip duration is unavailable. Keep it synchronized with the exported clips. Shell/follower visibility and `shell_additive_*` are visual state only; they do not replace the mechanical commit frame or authoritative HUD ammunition.
 
 ### Sprint
 
