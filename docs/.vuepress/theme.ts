@@ -8,7 +8,6 @@ export default hopeTheme({
   hostname: "https://wiki.playgwo.com/",
   author: {
     name: "GWO Team",
-    url: "https://github.com/Sgr792/gwo",
   },
   repo: "Sgr792/gwo-wiki",
   docsDir: "docs",

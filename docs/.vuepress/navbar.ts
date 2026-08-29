@@ -21,9 +21,4 @@ export default [
       { text: "参考文件", link: "reference" },
     ],
   },
-  {
-    text: "GitHub",
-    icon: "github",
-    link: "https://github.com/Sgr792/gwo",
-  },
 ] satisfies NavbarConfig;
