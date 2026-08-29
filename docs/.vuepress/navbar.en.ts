@@ -9,6 +9,8 @@ export default [
     children: [
       { text: "Guide Index", link: "" },
       { text: "Getting Started", link: "getting-started" },
+      { text: "Empty Template", link: "empty-template" },
+      { text: "Build Your First Firearm", link: "first-firearm" },
       { text: "Model Rules", link: "models" },
       { text: "Animation Rules", link: "animation" },
       { text: "Firearms and Ammo", link: "firearms" },

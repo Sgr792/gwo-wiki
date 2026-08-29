@@ -7,7 +7,7 @@ category:
 
 ## 33. Reference implementations
 
-Copy the closest current example when creating content:
+Start from the [empty template](empty-template.md). The table names typical files in the current default content pack. If you have a matching version of that pack, use it for comparison, but do not copy its namespace and IDs unchanged.
 
 | Type | Behavior file | Render file |
 |---|---|---|
@@ -22,7 +22,7 @@ Copy the closest current example when creating content:
 | Drum magazine (`drummag`, model/module definition) | `attachments/magazines/rm277_drummag.json` | `attachments/render/magazines/rm277_drummag.render.json` |
 | Ammunition | `bullets/5_56x45.json` | Same file contains model/material declarations |
 
-Paths are relative to the [official example content pack](https://github.com/Sgr792/gwo/tree/main/work/example-contentpack). Current examples and loader validation are authoritative when a field changes between releases.
+Paths are relative to the current default content pack. The public Wiki provides an asset-free empty template so the guide does not depend on a removed or version-mismatched example link. Current Wiki rules and loader validation are authoritative.
 
 ## 34. Legacy fields not to use
 

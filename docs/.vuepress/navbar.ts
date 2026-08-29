@@ -9,6 +9,8 @@ export default [
     children: [
       { text: "教程目录", link: "" },
       { text: "快速开始", link: "getting-started" },
+      { text: "空内容包模板", link: "empty-template" },
+      { text: "从零制作第一把枪", link: "first-firearm" },
       { text: "模型规范", link: "models" },
       { text: "动画规范", link: "animation" },
       { text: "枪械与弹药", link: "firearms" },

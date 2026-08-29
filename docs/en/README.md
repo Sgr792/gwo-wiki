@@ -8,7 +8,7 @@ heroImage: /assets/m4.png
 actions:
   - text: Get Started
     icon: signs-post
-    link: /en/guide/getting-started.html
+    link: /en/guide/first-firearm.html
     type: primary
   - text: Animation Rules
     icon: film
@@ -17,8 +17,12 @@ actions:
 features:
   - title: Start from Zero
     icon: rocket
-    details: Build a working content pack in the recommended order, from folders and resource IDs to an in-game weapon.
-    link: /en/guide/getting-started.html
+    details: Download the empty template and progress from folders, models, and animation to a firearm that shoots and reloads, with a checkpoint after every stage.
+    link: /en/guide/first-firearm.html
+  - title: Empty Content-Pack Template
+    icon: box-open
+    details: Download the current asset-free structure with no legacy compatibility fields.
+    link: /en/guide/empty-template.html
   - title: Complete Animation Rules
     icon: film
     details: Rigging, action names, channel ownership, export validation, and troubleshooting.
@@ -37,5 +41,5 @@ footer: GWO Wiki · Guns Workshop Origins
 This is the public English documentation for **Guns Workshop Origins**. It describes the directory layout, configuration, model, and animation contracts used by the current version.
 
 ::: tip Recommended order
-If this is your first content pack, begin with **Getting Started** and read **Animation Rules** completely before exporting animations.
+If this is your first content pack, download the empty template, complete **Build Your First Firearm**, and read **Animation Rules** before exporting animations.
 :::

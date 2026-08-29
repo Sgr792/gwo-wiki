@@ -7,7 +7,7 @@ category:
 
 ## 25. 权威参考文件
 
-制作新内容时按武器类型复制最接近的现有实现：
+先用[空内容包模板](empty-template.md)建立自己的包。下表列出当前默认内容包中各类典型实现的文件名；如果你拥有与当前模组版本匹配的默认内容包，可以按类型对照，但不要把默认内容包的命名空间和资源 ID 原样复制进自己的项目。
 
 | 类型 | 逻辑文件 | 渲染文件 |
 |---|---|---|
@@ -22,7 +22,7 @@ category:
 | 鼓式弹匣（drummag，模型与配件定义） | `attachments/magazines/rm277_drummag.json` | `attachments/render/magazines/rm277_drummag.render.json` |
 | 弹药 | `bullets/5_56x45.json` | 同一文件包含模型材质定义 |
 
-这些路径均相对于[官方示例内容包](https://github.com/Sgr792/gwo/tree/main/work/example-contentpack)根目录。字段与结构以当前版本示例和加载器校验结果为准。
+这些路径相对于当前默认内容包根目录。公开 Wiki 只提供不含武器资源的空模板，避免教程依赖已移除或版本不匹配的示例链接。字段与结构以当前 Wiki 和加载器校验结果为准。
 
 ## 26. 不要继续使用的旧字段
 

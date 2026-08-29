@@ -11,7 +11,7 @@ category:
 - Blender 3.3 for models, rigs, and animation.
 - [GWO arm authoring template for Blender 3.3](/gwo-wiki/downloads/gwo_arms_template_blender33.blend).
 - A UTF-8 JSON editor, a PNG editor, and an OGG Vorbis encoder.
-- The matching [official example content pack](https://github.com/Sgr792/gwo/tree/main/work/example-contentpack).
+- The [GWO empty content-pack template](/gwo-wiki/downloads/gwo_empty_content_pack_template.zip), which uses the current directory format and contains no legacy compatibility content.
 
 GWO uses `.glb` for models, `.anim.glb` for animation libraries, `.png` for textures and icons, `.ogg` for sounds, and `.json` for behavior/render definitions. Use lowercase ASCII letters, digits, and underscores in resource paths.
 

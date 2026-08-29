@@ -9,6 +9,8 @@ export default {
       collapsible: false,
       children: [
         "getting-started",
+        "empty-template",
+        "first-firearm",
         "models",
         "animation",
         "firearms",

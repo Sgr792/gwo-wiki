@@ -15,7 +15,7 @@ category:
 - 能保存 UTF-8 无 BOM JSON 的编辑器，例如 VS Code。
 - PNG 图片编辑工具。
 - 能输出 OGG Vorbis 的音频工具。
-- 一份与当前模组版本匹配的[官方示例内容包](https://github.com/Sgr792/gwo/tree/main/work/example-contentpack)，新内容优先从相同武器类型的现有文件复制。
+- [GWO 空内容包模板](/gwo-wiki/downloads/gwo_empty_content_pack_template.zip)，用于从当前目录格式开始制作，不包含旧兼容内容。
 
 GWO 使用以下主要资源格式：
 
@@ -180,7 +180,7 @@ assets/example/gltf/...
 
 ## 6. 推荐制作顺序
 
-不要一次把所有系统都填满。最稳定的顺序是：
+零基础作者先完成[从零制作第一把枪](first-firearm.md)。不要一次把所有系统都填满。最稳定的顺序是：
 
 1. 建立目录和 `pack.mcmeta`。
 2. 先导出机匣主模型和最小动画库。

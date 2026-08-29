@@ -48,3 +48,20 @@ For reversed, offset, incorrectly scaled, or non-animated parts, check the share
 ## 9. Empty nodes and arm template
 
 Blender Empty nodes may drive simple rigid child meshes. Complex first-person blending, masks, and hand-follow behavior are most reliable with bones. Download the [Blender 3.3 arm template](/gwo-wiki/downloads/gwo_arms_template_blender33.blend); if you change its skeleton, update the weapon animation library and independent arm model together.
+
+## 8. Beginner Blender workflow
+
+1. Save a project copy before changing imported data.
+2. Rename receiver, barrel, magazine, stock, and moving mechanisms in the Outliner.
+3. Remove unused lights, cameras, duplicate LODs, and imported collision helpers.
+4. Confirm the muzzle points along `+X`.
+5. Apply rotation and scale to mesh objects.
+6. Preserve the Armature object transform used by the animation project.
+7. Recalculate accidentally inverted normals; do not force the entire weapon double-sided.
+8. Separate transparent glass, emissive areas, and independently hidden parts into named meshes.
+9. Create and inspect the required reference nodes and parents.
+10. Use one-bone full weight or a stable rigid-node parent for rigid parts.
+
+For `File → Export → glTF 2.0`, select glTF Binary (`.glb`), export only required objects, retain mesh/Armature/skinning and intended Empty nodes, and keep the action library out of the model GLB.
+
+Reimport the result into an empty Blender file and verify direction, scale, node names, hierarchy, material slots, transparent mesh separation, and rigid weights. If bone names, hierarchy, bind pose, Armature object transform, or shared arm reference bones change, re-export the model, animation library, and affected arm model together.
