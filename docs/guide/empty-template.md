@@ -11,9 +11,9 @@ category:
 
 ## 1. 下载
 
-[下载 GWO 空内容包模板 ZIP](/gwo-wiki/downloads/gwo_empty_content_pack_template.zip)
+[下载 GWO 空内容包模板 ZIP](/downloads/gwo_empty_content_pack_template.zip)
 
-同时提供：[Blender 3.3 第一人称手臂模板](/gwo-wiki/downloads/gwo_arms_template_blender33.blend)。
+同时提供：[Blender 3.3 第一人称手臂模板](/downloads/gwo_arms_template_blender33.blend)。
 
 下载后先解压。制作期间不要直接编辑 ZIP，使用普通文件夹才能方便修改和重载。
 

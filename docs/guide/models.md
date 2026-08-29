@@ -99,7 +99,7 @@ GLB 可以包含 Blender `Empty`/普通节点并由其带动子网格，但 GWO 
 
 ### 7.5 手臂制作模板（Blender 3.3）
 
-可以下载 [GWO 手臂制作模板（Blender 3.3）](/gwo-wiki/downloads/gwo_arms_template_blender33.blend)，直接作为第一人称手臂模型和动画制作的起点。
+可以下载 [GWO 手臂制作模板（Blender 3.3）](/downloads/gwo_arms_template_blender33.blend)，直接作为第一人称手臂模型和动画制作的起点。
 
 该文件使用 **Blender 3.3** 保存。它是方便创作者建立正确骨架名称、父子层级、绑定姿态和参考空间的制作模板，不是必须原样使用的固定外观。替换网格或调整外观时，不要单独改变骨骼名称、层级和绑定姿态；如果确实要改变骨架，武器动画库和独立手臂模型必须一起更新并保持一致。
 

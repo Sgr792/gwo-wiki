@@ -22,4 +22,4 @@ pnpm docs:build
 仓库已包含 `.github/workflows/deploy.yml`。推送到 `main` 后，在 GitHub 仓库的
 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**。
 
-默认站点地址：`https://sgr792.github.io/gwo-wiki/`。
+站点地址：`https://wiki.playgwo.com/`。

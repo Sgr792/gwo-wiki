@@ -40,8 +40,8 @@ category:
 1. 安装 Minecraft 1.21.1、匹配版本 NeoForge 和 GWO。
 2. 安装 Blender 3.3。
 3. 准备 VS Code 或其他能保存 UTF-8 JSON 的编辑器。
-4. 下载并解压[空内容包模板](/gwo-wiki/downloads/gwo_empty_content_pack_template.zip)。
-5. 下载[Blender 3.3 第一人称手臂模板](/gwo-wiki/downloads/gwo_arms_template_blender33.blend)。
+4. 下载并解压[空内容包模板](/downloads/gwo_empty_content_pack_template.zip)。
+5. 下载[Blender 3.3 第一人称手臂模板](/downloads/gwo_arms_template_blender33.blend)。
 6. 把模板文件夹改名为 `my_first_gwo_pack`，放进 `.minecraft/gwo/`。
 7. 把 `assets/example/` 改名为 `assets/tutorial/`。
 

@@ -31,8 +31,8 @@ You may rename them, but every reference must change consistently.
 1. Install Minecraft 1.21.1, the matching NeoForge version, and GWO.
 2. Install Blender 3.3.
 3. Install an editor that saves valid UTF-8 JSON.
-4. Download and extract the [empty content-pack template](/gwo-wiki/downloads/gwo_empty_content_pack_template.zip).
-5. Download the [Blender 3.3 arm template](/gwo-wiki/downloads/gwo_arms_template_blender33.blend).
+4. Download and extract the [empty content-pack template](/downloads/gwo_empty_content_pack_template.zip).
+5. Download the [Blender 3.3 arm template](/downloads/gwo_arms_template_blender33.blend).
 6. Rename the pack folder to `my_first_gwo_pack` and place it in `.minecraft/gwo/`.
 7. Rename `assets/example/` to `assets/tutorial/`.
 

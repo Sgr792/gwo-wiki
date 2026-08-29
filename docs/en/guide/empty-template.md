@@ -11,9 +11,9 @@ This page creates a correctly structured GWO content pack. The template contains
 
 ## 1. Download
 
-[Download the GWO empty content-pack template](/gwo-wiki/downloads/gwo_empty_content_pack_template.zip)
+[Download the GWO empty content-pack template](/downloads/gwo_empty_content_pack_template.zip)
 
-You can also download the [Blender 3.3 first-person arm template](/gwo-wiki/downloads/gwo_arms_template_blender33.blend).
+You can also download the [Blender 3.3 first-person arm template](/downloads/gwo_arms_template_blender33.blend).
 
 Extract the ZIP before editing it. Use a normal folder while developing so files can be changed and reloaded easily.
 

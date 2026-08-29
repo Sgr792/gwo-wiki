@@ -5,7 +5,7 @@ import sidebar from "./sidebar.js";
 import sidebarEn from "./sidebar.en.js";
 
 export default hopeTheme({
-  hostname: "https://sgr792.github.io/gwo-wiki/",
+  hostname: "https://wiki.playgwo.com/",
   author: {
     name: "GWO Team",
     url: "https://github.com/Sgr792/gwo",

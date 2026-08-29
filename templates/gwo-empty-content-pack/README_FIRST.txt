@@ -6,7 +6,7 @@ GWO 空内容包模板 / GWO Empty Content Pack Template
 4. 枪械逻辑放 weapons/firearms/，渲染文件放 weapons/firearms/render/。
 5. 独立近战放 weapons/melee/，弹药放 bullets/，配件放 attachments/。
 6. 开发时保留文件夹形式；发布时再压缩，ZIP 根目录必须直接看到 pack.mcmeta。
-7. 完整步骤：https://sgr792.github.io/gwo-wiki/guide/first-firearm.html
+7. 完整步骤：https://wiki.playgwo.com/guide/first-firearm.html
 
 This template intentionally contains no weapon, model, texture, animation, sound, or legacy
 compatibility data. Empty folders contain .gitkeep files only; they may be deleted
