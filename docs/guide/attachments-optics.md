@@ -164,6 +164,8 @@ attachments/render/sights/sz_bullseye_optic.render.json
 
 Weapon Sway 在倍镜模式下会通过镜内投影参考参与画面与准心计算；内容作者不应在动画里再做一套相反的相机摆动。
 
+物理镜片透明度写在瞄具渲染文件的 `transparent_nodes` 中。只有真实镜片节点（例如 `scope_front_lens`、`scope_rear_lens`）的 `alpha` 控制玻璃透明度；数值越小越透明，`1.0` 为完全不透明。`scope_stencil`、`scope_relief` 和 `scope_reflection` 属于光学辅助几何，不能用它们的节点透明度代替镜片透明度。反射叠加强度应使用 `scope_reflection_alpha`。修改这些已编译的渲染材质后需要按 `F3+T` 重载资源或重启客户端，单独执行 `/gwo reload` 不会重建 GPU 材质缓存。
+
 ### 14.3 双用瞄具
 
 两类常见结构：

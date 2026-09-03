@@ -27,6 +27,8 @@ A projected reticle normally declares lens and reticle nodes, texture, scale, pa
 
 Magnified optics use the single world render plus a lens stencil/mask while retaining GWO's physical lens mesh, reticle, eye relief, and in-scope laser. Verify no weapon/iron-sight ghost silhouette leaks into the scope.
 
+Physical glass opacity belongs in the render definition's `transparent_nodes`. Only real lens nodes such as `scope_front_lens` and `scope_rear_lens` use `alpha` as glass opacity; lower values are more transparent and `1.0` is fully opaque. `scope_stencil`, `scope_relief`, and `scope_reflection` are optical helper geometry rather than ordinary glass. Control the reflection overlay with `scope_reflection_alpha`. After changing compiled render materials, use `F3+T` or restart the client; `/gwo reload` alone does not rebuild GPU material caches.
+
 Hybrid optics declare both modes and a programmatic transition. The magnified image must appear only when the physical magnifier reaches the configured transition point; closing follows the inverse handoff. Variable magnification should expose discrete supported levels and preserve reticle shape/scale.
 
 ### Programmatic tactical stance
