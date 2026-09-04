@@ -56,6 +56,8 @@ Weapon Sway is a spring-like location/rotation offset around the authored pose. 
 
 `tag_flash` supplies the muzzle origin, while the actual projectile remains authoritative for collision and damage. Tracers are visual segments that begin at the animated muzzle and converge toward the physical trajectory. Shotguns create one physical pellet/tracer path per configured pellet, not one decorative beam for the whole shot.
 
+Use `tracer.count_interval: 0` whenever every shot must display a tracer. Validate high-velocity ammunition at short, medium, and long range: every first-person muzzle event should still create its visual tracer even when the authoritative projectile hits or leaves view almost immediately. If only one weapon is affected, inspect that ammunition's own `tracer` configuration before changing fire rate or animation event frames.
+
 Muzzle flash and smoke use separate resources. Verify both first and third person, with and without shaders, while moving the camera quickly. Spent cases originate at `tag_brass` and use the currently loaded ammunition's case model.
 
 ## 21. Texture channels
