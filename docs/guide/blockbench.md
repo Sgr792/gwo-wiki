@@ -8,6 +8,8 @@ category:
 
 [返回制作方式选择](./choose-workflow.md)
 
+需要手臂起始工程时，可下载[Blockbench 手臂源模板](./arm-templates.md)。
+
 这条路线在 Blockbench 中完成方块模型、分组层级、UV 和动画，不需要先学习 Blender。
 
 ::: warning 使用前确认
@@ -78,4 +80,3 @@ example.png
 **完成标准：**导出的文件能恢复正确模型和动作。然后阅读[快速开始](./getting-started.md)、[格式配置示例](./bedrock-empty.md)，进入[共用配置教程](./first-firearm.md)。
 
 共用教程中的 GLB 文件名只是示例。使用本路线时替换为自己的 `.geo.json` 和 `.animation.json` 路径，无需转换成 GLB。
-

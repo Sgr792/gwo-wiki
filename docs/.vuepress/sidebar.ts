@@ -9,7 +9,7 @@ export default {
       collapsible: false,
       children: [
         "choose-workflow",
-        { text: "模型与动画制作路线", collapsible: true, children: ["blender-skinning", "blender-empty", "blockbench"] },
+        { text: "模型与动画制作路线", collapsible: true, children: ["blender-skinning", "blender-empty", "blockbench", "arm-templates"] },
         "getting-started",
         "empty-template",
         "first-firearm",

@@ -28,6 +28,8 @@ No-Skin Empty animation and Bedrock support require the development build contai
 
 ## Learning order
 
+For arm creation, see the [independent arm source templates and downloads](./arm-templates.md).
+
 1. Choose one route above.
 2. Complete its software setup, modeling, hierarchy/anchors, UVs, animation, and export checks.
 3. Read [Getting Started](./getting-started.md) to prepare the game environment.
@@ -36,4 +38,3 @@ No-Skin Empty animation and Bedrock support require the development build contai
 6. Complete [Debugging and Release](./debugging-release.md).
 
 [Formats and Support Scope](./bedrock-empty.md) is a reference, not another required software route.
-

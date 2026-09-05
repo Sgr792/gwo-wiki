@@ -9,7 +9,7 @@ export default {
       collapsible: false,
       children: [
         "choose-workflow",
-        { text: "Model and animation routes", collapsible: true, children: ["blender-skinning", "blender-empty", "blockbench"] },
+        { text: "Model and animation routes", collapsible: true, children: ["blender-skinning", "blender-empty", "blockbench", "arm-templates"] },
         "getting-started",
         "empty-template",
         "first-firearm",

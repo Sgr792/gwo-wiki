@@ -8,6 +8,8 @@ category:
 
 [Choose another workflow](./choose-workflow.md)
 
+For rigid cube-style arms, download the [arm source templates](./arm-templates.md) and read the runtime limitations first.
+
 Use this for whole-part movement, rotation, and scale, not deforming arms or cloth. It requires the new format-support development build; visual acceptance is pending.
 
 ## 1. Software and project
@@ -66,4 +68,3 @@ Embed clips in the model GLB or use a separate animation library. Separate files
 Reimport into an empty project and verify Empty nodes, clips, and mesh movement. This new route is for pure no-Skin rigid models, not expanded mixed-rig compatibility.
 
 **Checkpoint:** Reimport reproduces the animation. Continue through [format configuration](./bedrock-empty.md), [Getting Started](./getting-started.md), and [shared configuration](./first-firearm.md).
-
