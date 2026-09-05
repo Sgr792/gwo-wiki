@@ -10,7 +10,7 @@ toc: false
 <div class="gwo-guide-hub">
   <div class="gwo-guide-lead">
     <span>GWO CONTENT-PACK AUTHORING</span>
-    <p>Complete the beginner route first. After your first working weapon, use the remaining chapters as focused technical reference instead of copying thousands of lines from a finished weapon.</p>
+    <p>Choose your modeling and animation workflow first and learn only the application you use. After export, all three routes join the shared configuration and in-game validation tutorials.</p>
   </div>
 
   <div class="gwo-guide-format-note">
@@ -19,9 +19,17 @@ toc: false
   </div>
 
   <div class="gwo-guide-section-heading">
-    <span>Recommended route</span>
-    <h2>Build your first weapon from zero</h2>
+    <span>Step one · Choose your workflow</span>
+    <h2>How will you build your model and animation?</h2>
   </div>
+
+  <p><a href="./choose-workflow.html">Not sure? Compare the routes and build requirements →</a></p>
+  <div class="gwo-beginner-route">
+    <a href="./blender-skinning.html"><span>BLENDER</span><strong>Skinning route</strong><small>Detailed meshes, deforming arms, bone animation, and GLB export.</small></a>
+    <a href="./blender-empty.html"><span>BLENDER</span><strong>Empty rigid route</strong><small>Parent nodes, mechanical movement, and no-Skin GLB export.</small></a>
+    <a href="./blockbench.html"><span>BLOCKBENCH</span><strong>Bedrock entity route</strong><small>Cubes, groups, pivots, numeric animation, and JSON export.</small></a>
+  </div>
+  <div class="gwo-guide-section-heading compact"><span>After export · Shared tutorials</span><h2>Configure the pack and test in game</h2></div>
 
   <div class="gwo-beginner-route">
     <a href="./getting-started.html">
@@ -47,7 +55,7 @@ toc: false
   </div>
 
   <div class="gwo-chapter-grid">
-    <a href="./bedrock-empty.html"><b>Formats</b><strong>Bedrock and Empty Animation</strong><small>New development build: Blockbench cubes, numeric animation, and Blender rigid nodes.</small></a>
+    <a href="./bedrock-empty.html"><b>Formats</b><strong>Formats and Support Scope</strong><small>File formats, configuration mapping, build requirements, and limitations.</small></a>
     <a href="./models.html"><b>Models</b><strong>Model Rules</strong><small>Blender 3.3, coordinates, skeletons, Empty/rigid nodes, anchors, and GLB export.</small></a>
     <a href="./animation.html"><b>Animation</b><strong>Animation Rules</strong><small>Clip purpose, state differences, channel ownership, handoff, and machine configuration.</small></a>
     <a href="./firearms.html"><b>Firearms</b><strong>Firearms and Ammunition</strong><small>Behavior, ballistics, display transforms, recoil, effects, and materials.</small></a>

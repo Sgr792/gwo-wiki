@@ -8,7 +8,7 @@ heroImage: /assets/gwo-logo.png
 actions:
   - text: Start Building
     icon: rocket
-    link: /en/guide/first-firearm.html
+    link: /en/guide/choose-workflow.html
     type: primary
   - text: Empty Template
     icon: download
@@ -19,18 +19,18 @@ actions:
     link: /en/guide/animation.html
     type: secondary
 features:
-  - title: 01 · Create the Pack
+  - title: 01 · Choose Your Workflow
     icon: folder-plus
-    details: Begin with a clean template, namespace, folders, and base configuration.
-    link: /en/guide/getting-started.html
-  - title: 02 · Models and Anchors
+    details: Choose Blender skinning, Blender Empty, or Blockbench.
+    link: /en/guide/choose-workflow.html
+  - title: 02 · Build Models and Animation
     icon: box
-    details: Prepare GLB files, skeletons, rigid nodes, and modular parts.
-    link: /en/guide/models.html
-  - title: 03 · Animation and Audio
+    details: Follow your application's modeling, hierarchy, UV, animation, and export route.
+    link: /en/guide/choose-workflow.html
+  - title: 03 · Configure the Pack
     icon: film
     details: Configure clips, channel ownership, event frames, and sound mappings.
-    link: /en/guide/animation.html
+    link: /en/guide/first-firearm.html
   - title: 04 · Validate In Game
     icon: circle-check
     details: Hot reload, diagnose problems, and complete the release checklist.
@@ -76,5 +76,5 @@ footer: GWO Wiki · Guns Workshop Origins
 
 <div class="gwo-home-start-note">
   <strong>First content pack?</strong>
-  Read Getting Started → Empty Template → Build Your First Firearm, then finish Animation Rules before exporting clips.
+  Choose Blender skinning, Blender Empty, or Blockbench first. Finish models and animation, then continue to Getting Started → Empty Template → Shared Configuration → In-Game Validation.
 </div>

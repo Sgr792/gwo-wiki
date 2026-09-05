@@ -1,5 +1,5 @@
 ---
-title: Bedrock and Empty Animation
+title: Formats and Support Scope
 category:
   - Content-Pack Authoring
 ---
@@ -9,6 +9,8 @@ Requires a development build containing this format-support update. Earlier rele
 :::
 
 ## Choose a model workflow
+
+This page is a format/configuration reference. For authoring steps, [choose a workflow](./choose-workflow.md) and follow its separate Blender or Blockbench route.
 
 GWO now routes three workflows through its existing configuration, animation states, and rendering infrastructure:
 

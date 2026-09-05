@@ -7,6 +7,8 @@ category:
 
 # Build Your First Firearm
 
+This is the shared configuration tutorial after any of the three authoring routes. [Choose Your Workflow](./choose-workflow.md) first if you have not built the assets. GLB paths below are examples: Blockbench users should substitute their geometry/animation JSON paths using [format configuration](./bedrock-empty.md). Behavior, materials, and events remain shared; Blender skinning-specific steps do not apply to pure rigid models.
+
 This chapter is for a creator who has never made a GWO pack. Follow the checkpoints in order: first load a definition, then render a model, then verify shooting and reloading, and only then add arms, aiming, audio, attachments, and advanced states.
 
 Do not continue when the current checkpoint fails. Adding more systems hides the original error.

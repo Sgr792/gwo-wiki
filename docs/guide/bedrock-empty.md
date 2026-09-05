@@ -1,5 +1,5 @@
 ---
-title: Bedrock 与 Empty 动画
+title: 格式与支持范围
 category:
   - 内容包制作
 ---
@@ -9,6 +9,8 @@ category:
 :::
 
 ## 接入方式
+
+本页只作格式与配置参考。软件操作请先[选择制作方式](./choose-workflow.md)，进入独立的 Blender 或 Blockbench 路线。
 
 以下三种模型使用相同的 GWO 配置、动画状态和渲染流程：
 
@@ -107,5 +109,4 @@ root (Empty)
 - 原有骨骼 GLB 枪械是否保持正常。
 
 格式字段以 [Mojang 官方模型 Schema](https://mojang.github.io/bedrock-samples/Schemas.html) 为依据；本页列出的是 GWO 当前实现范围，而不是整个 Bedrock 实体引擎。
-
 

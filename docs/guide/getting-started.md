@@ -7,10 +7,12 @@ category:
 
 ## 1. 开始前要准备什么
 
+还没有选择软件与制作方式？先进入[选择制作方式](./choose-workflow.md)，完成其中一条模型与动画路线，再返回本页准备共用环境。
+
 建议准备：
 
 - Minecraft 1.21.1、匹配版本的 NeoForge 和 GWO。
-- Blender 3.3，用于模型、骨架与动画。
+- 制作软件按路线选择：Blender（模板使用 3.3）或 Blockbench；不要求同时安装。
 - [GWO 手臂制作模板（Blender 3.3）](/downloads/gwo_arms_template_blender33.blend)，用于建立与示例骨架一致的第一人称手臂。
 - 能保存 UTF-8 无 BOM JSON 的编辑器，例如 VS Code。
 - PNG 图片编辑工具。

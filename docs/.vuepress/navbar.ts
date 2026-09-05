@@ -8,6 +8,10 @@ export default [
     prefix: "/guide/",
     children: [
       { text: "教程目录", link: "" },
+      { text: "选择制作方式", link: "choose-workflow" },
+      { text: "Blender 骨骼路线", link: "blender-skinning" },
+      { text: "Blender Empty 路线", link: "blender-empty" },
+      { text: "Blockbench 路线", link: "blockbench" },
       { text: "快速开始", link: "getting-started" },
       { text: "空内容包模板", link: "empty-template" },
       { text: "从零制作第一把枪", link: "first-firearm" },

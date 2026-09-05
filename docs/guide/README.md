@@ -10,7 +10,7 @@ toc: false
 <div class="gwo-guide-hub">
   <div class="gwo-guide-lead">
     <span>GWO CONTENT-PACK AUTHORING</span>
-    <p>第一次制作先走完零基础路线；完成第一把武器后，再把其余章节作为技术参考。无需从完整武器 JSON 中复制两千行配置。</p>
+    <p>先选择模型与动画制作方式，只学习你使用的软件。完成导出后，三条路线汇合到共用内容包配置与游戏验收。</p>
   </div>
 
   <div class="gwo-guide-format-note">
@@ -19,9 +19,17 @@ toc: false
   </div>
 
   <div class="gwo-guide-section-heading">
-    <span>推荐路线</span>
-    <h2>零基础完成第一把武器</h2>
+    <span>第一步 · 选择制作方式</span>
+    <h2>你想用哪种方式制作模型与动画？</h2>
   </div>
+
+  <p><a href="./choose-workflow.html">不知道怎么选？查看三条路线的区别与版本要求 →</a></p>
+  <div class="gwo-beginner-route">
+    <a href="./blender-skinning.html"><span>BLENDER</span><strong>骨骼蒙皮路线</strong><small>精细网格、手臂变形、骨骼动画与 GLB 导出。</small></a>
+    <a href="./blender-empty.html"><span>BLENDER</span><strong>Empty 刚性路线</strong><small>空物体层级、机构运动与无 Skin GLB 导出。</small></a>
+    <a href="./blockbench.html"><span>BLOCKBENCH</span><strong>Bedrock 实体路线</strong><small>方块、分组、枢轴、数值动画与 JSON 导出。</small></a>
+  </div>
+  <div class="gwo-guide-section-heading compact"><span>导出完成后 · 共用教程</span><h2>配置内容包并进入游戏测试</h2></div>
 
   <div class="gwo-beginner-route">
     <a href="./getting-started.html">
@@ -47,7 +55,7 @@ toc: false
   </div>
 
   <div class="gwo-chapter-grid">
-    <a href="./bedrock-empty.html"><b>格式</b><strong>Bedrock 与 Empty 动画</strong><small>新增开发版：Blockbench 方块模型、数值动画和 Blender 刚性节点。</small></a>
+    <a href="./bedrock-empty.html"><b>格式</b><strong>格式与支持范围</strong><small>文件格式、配置映射、版本要求与功能限制参考。</small></a>
     <a href="./models.html"><b>模型</b><strong>模型制作规范</strong><small>Blender 3.3、坐标、骨架、Empty/刚性节点、挂点与 GLB 导出。</small></a>
     <a href="./animation.html"><b>动画</b><strong>动画制作与导出</strong><small>动画用途、状态区别、通道所有权、交接与动画机配置。</small></a>
     <a href="./firearms.html"><b>枪械</b><strong>枪械、弹药与材质</strong><small>枪械逻辑、弹道、显示变换、后坐力、特效和贴图。</small></a>

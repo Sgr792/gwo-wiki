@@ -7,8 +7,10 @@ category:
 
 ## 1. Requirements
 
+Start with [Choose Your Workflow](./choose-workflow.md) if you have not selected an authoring route. Complete that route, then return for the shared environment setup.
+
 - Minecraft 1.21.1, the matching NeoForge build, and GWO.
-- Blender 3.3 for models, rigs, and animation.
+- Blender (the template uses 3.3) or Blockbench, depending on your route; both are not required.
 - [GWO arm authoring template for Blender 3.3](/downloads/gwo_arms_template_blender33.blend).
 - A UTF-8 JSON editor, a PNG editor, and an OGG Vorbis encoder.
 - The [GWO empty content-pack template](/downloads/gwo_empty_content_pack_template.zip), which uses the current directory format and contains no legacy compatibility content.

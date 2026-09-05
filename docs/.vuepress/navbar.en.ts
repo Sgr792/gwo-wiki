@@ -8,6 +8,10 @@ export default [
     prefix: "/en/guide/",
     children: [
       { text: "Guide Index", link: "" },
+      { text: "Choose Your Workflow", link: "choose-workflow" },
+      { text: "Blender Skinning Route", link: "blender-skinning" },
+      { text: "Blender Empty Route", link: "blender-empty" },
+      { text: "Blockbench Route", link: "blockbench" },
       { text: "Getting Started", link: "getting-started" },
       { text: "Empty Template", link: "empty-template" },
       { text: "Build Your First Firearm", link: "first-firearm" },

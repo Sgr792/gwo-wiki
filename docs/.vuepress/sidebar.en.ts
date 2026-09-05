@@ -8,6 +8,8 @@ export default {
       link: "/en/guide/",
       collapsible: false,
       children: [
+        "choose-workflow",
+        { text: "Model and animation routes", collapsible: true, children: ["blender-skinning", "blender-empty", "blockbench"] },
         "getting-started",
         "empty-template",
         "first-firearm",

@@ -8,7 +8,7 @@ heroImage: /assets/gwo-logo.png
 actions:
   - text: 开始制作
     icon: rocket
-    link: /guide/first-firearm.html
+    link: /guide/choose-workflow.html
     type: primary
   - text: 下载空模板
     icon: download
@@ -19,18 +19,18 @@ actions:
     link: /guide/animation.html
     type: secondary
 features:
-  - title: 01 · 创建内容包
+  - title: 01 · 选择制作方式
     icon: folder-plus
-    details: 从干净模板建立目录、命名空间和基础配置。
-    link: /guide/getting-started.html
-  - title: 02 · 模型与挂点
+    details: 选择 Blender 骨骼、Blender Empty 或 Blockbench 路线。
+    link: /guide/choose-workflow.html
+  - title: 02 · 完成模型与动画
     icon: box
-    details: 准备 GLB、骨架、刚性节点和模块化部件。
-    link: /guide/models.html
-  - title: 03 · 动画与声音
+    details: 按所选软件完成建模、层级、UV、动画与导出检查。
+    link: /guide/choose-workflow.html
+  - title: 03 · 配置内容包
     icon: film
     details: 配置动作、通道所有权、事件帧和声音映射。
-    link: /guide/animation.html
+    link: /guide/first-firearm.html
   - title: 04 · 游戏内验收
     icon: circle-check
     details: 热重载、定位错误并完成发布前检查。
@@ -76,5 +76,5 @@ footer: GWO Wiki · Guns Workshop Origins
 
 <div class="gwo-home-start-note">
   <strong>第一次制作？</strong>
-  按顺序阅读“快速开始 → 空内容包模板 → 从零制作第一把枪”，导出动画前再完整阅读动画规范。
+  先选择“Blender 骨骼 / Blender Empty / Blockbench”制作路线，完成模型与动画后，再进入“快速开始 → 空模板 → 共用配置 → 游戏验收”。
 </div>
