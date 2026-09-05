@@ -406,6 +406,8 @@ Add only needed features: first draw; last-round/dry-fire and empty-state poses;
 
 ## Step 14: Final release checkpoint
 
+For optional custom arms, configure `arms.model` using the [arm-template guide](./arm-templates.md). Empty / Bedrock independent-arm child support requires a build containing `ad17487`; the default arms and existing pack configuration do not need changes.
+
 Complete [Debugging, Acceptance, and Release](debugging-release.md), then verify a clean game restart—not only hot reload. Do not ship duplicate packs, absolute local paths, source `.blend` files, diagnostics, caches, backups, or obsolete compatibility data. A release ZIP must expose `pack.mcmeta`, `weapons`, `attachments`, `bullets`, and `assets` at its root.
 
 Recommended reading order:

@@ -108,4 +108,6 @@ Fields follow the [official Mojang geometry schemas](https://mojang.github.io/be
 
 This format documentation is checked against the implementation introduced in commit `b6d52ab` (2026-09-05). It is a source revision marker, not a release download or an in-game acceptance certificate. The shared `2.12.87` label alone cannot distinguish older builds. Use a build explicitly containing that implementation; visual acceptance is still pending.
 
+Independent-arm child geometry support was added in `ad17487`; see [arm templates and configuration](./arm-templates.md). That build passed 1346 automated tests, a full build, and reported general gameplay regression checks. Dedicated visual acceptance of the new Empty / Bedrock arm templates is still required. The accompanying cleanup does not change the content-pack format or existing assets.
+
 Per-face Bedrock `uv_rotation` is not currently processed. Do not use face UV rotation in exported assets; arrange the texture and UV rectangles so they do not need this field. A successful import does not prove that unsupported fields took effect.

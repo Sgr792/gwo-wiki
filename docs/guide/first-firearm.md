@@ -598,7 +598,7 @@ weapons/firearms/render/training_rifle.render.json
 
 未填写 `arms.model` 时使用内置 `gwo:gltf/arms/arms.glb`。不需要每把枪或每个包重复导出一份手臂网格；但枪械动画中有效的手臂节点与轨道必须保留。两个 holder 名称需要对应实际动画节点，`blend_ticks` 调整交接，不代替正确的轨道和参考空间。
 
-如确实需要自定义手臂外观，可额外配置 `arms.model` 并提供匹配的模型，这是进阶选项。新提供的 Empty / Bedrock 手臂源模板尚未完成独立手臂运行时验收，不要仅替换该路径就认为已经接入。
+如确实需要自定义手臂外观，可额外配置 `arms.model` 并提供匹配的模型，这是进阶选项。Empty / Bedrock 独立手臂适配已在 `ad17487` 接入，配置方法与专门验收要求见[手臂模板](./arm-templates.md)。默认手臂和现有配置无需修改。
 
 ### 完成标准
 
