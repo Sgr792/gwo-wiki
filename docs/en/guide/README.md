@@ -47,6 +47,7 @@ toc: false
   </div>
 
   <div class="gwo-chapter-grid">
+    <a href="./bedrock-empty.html"><b>Formats</b><strong>Bedrock and Empty Animation</strong><small>New development build: Blockbench cubes, numeric animation, and Blender rigid nodes.</small></a>
     <a href="./models.html"><b>Models</b><strong>Model Rules</strong><small>Blender 3.3, coordinates, skeletons, Empty/rigid nodes, anchors, and GLB export.</small></a>
     <a href="./animation.html"><b>Animation</b><strong>Animation Rules</strong><small>Clip purpose, state differences, channel ownership, handoff, and machine configuration.</small></a>
     <a href="./firearms.html"><b>Firearms</b><strong>Firearms and Ammunition</strong><small>Behavior, ballistics, display transforms, recoil, effects, and materials.</small></a>

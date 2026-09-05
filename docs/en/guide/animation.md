@@ -7,6 +7,8 @@ category:
 
 ## 10. Animation library contract
 
+This page focuses on skinned GLB authoring. See [Bedrock and Empty Animation](./bedrock-empty.md) for the new development-build workflows. GWO state names and event configuration remain shared, but Bedrock tracks are relative to the initial pose rather than GLB absolute local transforms.
+
 Export the static weapon model separately from the animation-only `.anim.glb`. Both files must use the same skeleton names, hierarchy, bind pose, and coordinate space. Frame 0 is valid; configuration event frames must match the exported clip.
 
 ## 11. Common action names

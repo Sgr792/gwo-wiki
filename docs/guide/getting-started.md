@@ -23,12 +23,16 @@ GWO 使用以下主要资源格式：
 |---|---|
 | 枪械、配件、子弹、手臂模型 | `.glb` |
 | 独立动画库 | `.anim.glb` |
+| Bedrock 实体方块模型（新增开发版） | `.geo.json` |
+| Bedrock 数值动画库（新增开发版） | `.animation.json` |
 | 基础色、法线、材质、自发光、图标 | `.png` |
 | 声音 | `.ogg`，Vorbis 编码 |
 | 行为和渲染配置 | `.json` |
 | 内容包元数据 | `pack.mcmeta` |
 
 文件名、目录名和资源 ID 一律建议使用小写英文字母、数字和下划线。不要使用空格、中文、括号或大写字母作为资源路径。
+
+Blender 也可制作 Empty 刚性 GLB；使用 Blockbench 的创作者可选择 Bedrock 实体模型。先阅读 [Bedrock 与 Empty 动画](./bedrock-empty.md)的版本要求、支持范围和配置示例。
 
 ## 2. 内容包放在哪里
 

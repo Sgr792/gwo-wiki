@@ -66,7 +66,11 @@ For reversed, offset, incorrectly scaled, or non-animated parts, check the share
 
 ## 9. Empty nodes and arm template
 
-Blender Empty nodes may drive simple rigid child meshes. Complex first-person blending, masks, and hand-follow behavior are most reliable with bones. Download the [Blender 3.3 arm template](/downloads/gwo_arms_template_blender33.blend); if you change its skeleton, update the weapon animation library and independent arm model together.
+The new development build supports Blender Empty/spatial animation in no-Skin GLBs, preserving hierarchy, local transforms, and child meshes in the shared pose pipeline. Rigid meshes do not deform; use Armature skinning for deforming arms. Multi-Armature and mixed-rig compatibility are unchanged.
+
+Bedrock entity cubes and numeric animations are also available. See [Bedrock and Empty Animation](./bedrock-empty.md) for build requirements, configuration, and limitations.
+
+Download the [Blender 3.3 arm template](/downloads/gwo_arms_template_blender33.blend); if you change its skeleton, update the weapon animation library and independent arm model together.
 
 ### 9.1 Beginner Blender workflow
 

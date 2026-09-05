@@ -7,6 +7,8 @@ category:
 
 ## 8. 动画导出规范
 
+本页主要介绍 GLB 骨骼制作路线；新增开发版的 Bedrock 数值动画和无 Skin Empty 刚性动画见 [Bedrock 与 Empty 动画](./bedrock-empty.md)。GWO 状态名、事件配置仍共用，但 Bedrock 轨道是相对初始姿态的变化，不应直接当作 GLB 局部变换使用。
+
 ### 8.1 模型与动画分离
 
 推荐：

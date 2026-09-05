@@ -47,6 +47,7 @@ toc: false
   </div>
 
   <div class="gwo-chapter-grid">
+    <a href="./bedrock-empty.html"><b>格式</b><strong>Bedrock 与 Empty 动画</strong><small>新增开发版：Blockbench 方块模型、数值动画和 Blender 刚性节点。</small></a>
     <a href="./models.html"><b>模型</b><strong>模型制作规范</strong><small>Blender 3.3、坐标、骨架、Empty/刚性节点、挂点与 GLB 导出。</small></a>
     <a href="./animation.html"><b>动画</b><strong>动画制作与导出</strong><small>动画用途、状态区别、通道所有权、交接与动画机配置。</small></a>
     <a href="./firearms.html"><b>枪械</b><strong>枪械、弹药与材质</strong><small>枪械逻辑、弹道、显示变换、后坐力、特效和贴图。</small></a>

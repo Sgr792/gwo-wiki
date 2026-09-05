@@ -12,6 +12,7 @@ export default {
         "empty-template",
         "first-firearm",
         "models",
+        "bedrock-empty",
         "animation",
         "firearms",
         "attachments-optics",
