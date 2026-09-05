@@ -55,6 +55,8 @@ toc: false
   </div>
 
   <div class="gwo-chapter-grid">
+    <a href="./arm-templates.html"><b>Arms</b><strong>Arm authoring templates</strong><small>Shared runtime arms, authoring tracks, and source downloads.</small></a>
+    <a href="./config-examples.html"><b>Examples</b><strong>Configuration examples</strong><small>Animation routing, pose layers, scopes, and charms.</small></a>
     <a href="./bedrock-empty.html"><b>Formats</b><strong>Formats and Support Scope</strong><small>File formats, configuration mapping, build requirements, and limitations.</small></a>
     <a href="./models.html"><b>Models</b><strong>Model Rules</strong><small>Blender 3.3, coordinates, skeletons, Empty/rigid nodes, anchors, and GLB export.</small></a>
     <a href="./animation.html"><b>Animation</b><strong>Animation Rules</strong><small>Clip purpose, state differences, channel ownership, handoff, and machine configuration.</small></a>

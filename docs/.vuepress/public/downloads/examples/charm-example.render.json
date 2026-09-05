@@ -1,0 +1,39 @@
+{
+  "model": "example:gltf/attachments/training_charm.glb",
+  "texture": "example:skins/attachments/training_charm.png",
+  "anchor_node": "tag_cosmetic",
+  "charm_physics": {
+    "enabled": true,
+    "root_bone": "tag_cosmetic",
+    "bones": [
+      "chain_01",
+      "chain_02",
+      "charm_body"
+    ],
+    "gravity": 1,
+    "velocity_damping": 0.22,
+    "constraint_iterations": 6,
+    "max_angle": 45,
+    "collision_anchor_bone": "tag_cosmetic",
+    "collision_radii": [
+      0.025,
+      0.03,
+      0.1
+    ],
+    "colliders": [
+      {
+        "type": "box",
+        "min": [
+          -0.2,
+          -0.2,
+          -0.2
+        ],
+        "max": [
+          0.2,
+          0,
+          0.2
+        ]
+      }
+    ]
+  }
+}

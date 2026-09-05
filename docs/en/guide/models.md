@@ -5,11 +5,11 @@ category:
   - Content-Pack Authoring
 ---
 
-## 6. Coordinates and bind pose
+## Coordinates and bind pose
 
 The muzzle points along model-space `+X`. Apply mesh rotation and scale, but do not casually apply armature object transforms before export. Receiver, default parts, animation library, and independent arms must share bone names, hierarchy, bind pose, and reference space.
 
-## 7. Core nodes and attachment points
+## Core nodes and attachment points
 
 | Node | Purpose |
 |---|---|
@@ -49,7 +49,7 @@ For modular weapons, `tag_flash` normally lives in the barrel GLB below its `tag
 
 Never substitute `tag_camera` for `tag_view`.
 
-## 8. Default parts
+## Default parts
 
 ```json
 {
@@ -64,15 +64,15 @@ Never substitute `tag_camera` for `tag_view`.
 
 For reversed, offset, incorrectly scaled, or non-animated parts, check the shared reference space, exact anchor spelling, node ownership in the animated rig, extra root transforms, and multi-armature export ownership.
 
-## 9. Empty nodes and arm template
+## Empty nodes and arm template
 
 The new development build supports Blender Empty/spatial animation in no-Skin GLBs, preserving hierarchy, local transforms, and child meshes in the shared pose pipeline. Rigid meshes do not deform; use Armature skinning for deforming arms. Multi-Armature and mixed-rig compatibility are unchanged.
 
 Bedrock entity cubes and numeric animations are also available. See [Bedrock and Empty Animation](./bedrock-empty.md) for build requirements, configuration, and limitations.
 
-Download the [Blender 3.3 arm template](/downloads/gwo_arms_template_blender33.blend); if you change its skeleton, update the weapon animation library and independent arm model together.
+Download the [Arm templates: choose a workflow and download](./arm-templates.md); if you change its skeleton, update the weapon animation library and independent arm model together.
 
-### 9.1 Beginner Blender workflow
+### Beginner Blender workflow
 
 1. Save a project copy before changing imported data.
 2. Rename receiver, barrel, magazine, stock, and moving mechanisms in the Outliner.

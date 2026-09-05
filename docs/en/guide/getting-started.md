@@ -5,13 +5,13 @@ category:
   - Content-Pack Authoring
 ---
 
-## 1. Requirements
+## Requirements
 
 Start with [Choose Your Workflow](./choose-workflow.md) if you have not selected an authoring route. Complete that route, then return for the shared environment setup.
 
 - Minecraft 1.21.1, the matching NeoForge build, and GWO.
 - Blender (the template uses 3.3) or Blockbench, depending on your route; both are not required.
-- [GWO arm authoring template for Blender 3.3](/downloads/gwo_arms_template_blender33.blend).
+- [Arm templates: choose a workflow and download](./arm-templates.md).
 - A UTF-8 JSON editor, a PNG editor, and an OGG Vorbis encoder.
 - The [GWO empty content-pack template](/downloads/gwo_empty_content_pack_template.zip), which uses the current directory format and contains no legacy compatibility content.
 
@@ -19,7 +19,7 @@ GWO uses `.glb` for models, `.anim.glb` for animation libraries, `.png` for text
 
 The new development build also accepts Bedrock entity cube `.geo.json` models, numeric `.animation.json` animation, and Blender Empty rigid GLBs. Blockbench can author the Bedrock workflow. Check [Bedrock and Empty Animation](./bedrock-empty.md) for build requirements, supported features, and configuration examples.
 
-## 2. Pack location
+## Pack location
 
 Place development folders or distributable ZIP files in:
 
@@ -29,7 +29,7 @@ Place development folders or distributable ZIP files in:
 
 Keep a valid `pack.mcmeta` during development. GWO can generate basic metadata as a safety fallback when a folder pack is missing it, but it cannot modify a ZIP. A release ZIP must therefore contain `pack.mcmeta`, `weapons`, `bullets`, and `assets` directly at its root; do not wrap them in another directory.
 
-## 3. Recommended layout
+## Recommended layout
 
 ```text
 example_pack/
@@ -61,7 +61,7 @@ example_pack/
 
 Default receiver, barrel, magazine, grip, and stock models belong under `gltf/guns/<weapon_id>/`. Reusable optional parts belong under `gltf/attachments/`.
 
-## 4. Metadata and resource IDs
+## Metadata and resource IDs
 
 ```json
 {
@@ -75,7 +75,7 @@ Default receiver, barrel, magazine, grip, and stock models belong under `gltf/gu
 
 `example:gltf/guns/example_rifle/model.glb` maps to `assets/example/gltf/guns/example_rifle/model.glb`. Paths such as the `render` field are relative to the pack root.
 
-## 5. Recommended production order
+## Recommended production order
 
 1. Create folders and `pack.mcmeta`.
 2. Export the receiver and a minimal animation library.
@@ -86,3 +86,33 @@ Default receiver, barrel, magazine, grip, and stock models belong under `gltf/gu
 7. Add optional attachments, optics, lasers, and charms.
 8. Finish third person, item frames, modification UI, dropped items, and icons.
 9. Validate the folder build, then create a ZIP for distribution.
+
+## Configuration examples
+
+These examples use the same fields as the Chinese reference. Replace resource IDs, timings, and model-specific nodes with your own. `json` blocks are JSON objects; `jsonc` blocks are fragments to merge, not standalone pack files. Valid JSON alone does not make a complete working weapon.
+
+### Pack metadata
+
+```json
+{
+  "pack": {
+    "pack_format": 48,
+    "supported_formats": [34, 48],
+    "description": "Example GWO Content Pack"
+  }
+}
+```
+
+### Example resource IDs (fragment)
+
+```jsonc
+"id": "example:example_rifle",
+"gltf_model": "example:gltf/guns/example_rifle/example_rifle_receiver_default.glb",
+"texture": "example:skins/guns/example_rifle.png"
+```
+
+### Render file path (fragment)
+
+```jsonc
+"render": "weapons/firearms/render/example_rifle.render.json"
+```

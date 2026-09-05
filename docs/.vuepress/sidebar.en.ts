@@ -16,6 +16,7 @@ export default {
         "models",
         "bedrock-empty",
         "animation",
+        "config-examples",
         "firearms",
         "attachments-optics",
         "melee",

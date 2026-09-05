@@ -1,0 +1,35 @@
+{
+  "model": "example:gltf/attachments/training_scope.glb",
+  "texture": "example:skins/attachments/training_scope.png",
+  "normal": "example:skins/attachments/training_scope_n.png",
+  "specular": "example:skins/attachments/training_scope_s.png",
+  "anchor_node": "tag_scope",
+  "transparent_nodes": {
+    "scope_front_lens": {
+      "alpha": 0.8,
+      "depth_write": false,
+      "depth_test": true,
+      "double_sided": true
+    },
+    "scope_rear_lens": {
+      "alpha": 0.8,
+      "depth_write": false,
+      "depth_test": true,
+      "double_sided": true
+    }
+  },
+  "sight": {
+    "reticle_node": "tag_reticle_attach",
+    "scope_front_lens_node": "scope_front_lens",
+    "scope_rear_lens_node": "scope_rear_lens",
+    "rear_lens_node": "scope_rear_lens",
+    "scope_optical_mesh_prefix": "scope_",
+    "scope_stencil_node": "scope_stencil",
+    "scope_relief_node": "scope_relief",
+    "scope_reflection_node": "scope_reflection",
+    "scope_reflection_texture": "example:textures/sights/reflection.png",
+    "scope_reflection_alpha": 0.3,
+    "reticle_texture": "example:textures/sights/reticle.png",
+    "reticle_scale": 1
+  }
+}

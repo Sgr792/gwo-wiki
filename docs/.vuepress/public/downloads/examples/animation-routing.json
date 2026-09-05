@@ -1,0 +1,138 @@
+{
+  "animation_fps": 30,
+  "animation_clips": {
+    "static_idle": "static_idle",
+    "fire_pre": "fire_pre",
+    "fire": "fire",
+    "fire_settle": "fire_settle",
+    "reload": "reload",
+    "reload_empty": "reload_empty"
+  },
+  "animation_events": {
+    "fire_pre": "fire",
+    "fire": "fire",
+    "fire_settle": "fire_settle",
+    "reload": "reload",
+    "reload_empty": "reload_empty"
+  },
+  "animation_machine": {
+    "version": 2,
+    "actions": {
+      "fire": {
+        "type": "finite",
+        "default_state": "fire",
+        "sequences": [
+          {
+            "priority": 0,
+            "steps": [
+              {
+                "state": "fire_pre",
+                "marker": "prepare",
+                "phase": "enter"
+              },
+              {
+                "state": "fire",
+                "marker": "shot",
+                "phase": "action"
+              },
+              {
+                "state": "fire_settle",
+                "marker": "settle",
+                "phase": "exit"
+              }
+            ]
+          }
+        ],
+        "events": [
+          {
+            "type": "shot_effects",
+            "marker": "shot",
+            "offset_ms": 0
+          },
+          {
+            "type": "fire_sound",
+            "marker": "shot",
+            "offset_ms": 0
+          },
+          {
+            "type": "recoil",
+            "marker": "shot",
+            "offset_ms": 0
+          }
+        ]
+      },
+      "reload": {
+        "type": "finite",
+        "default_state": "reload",
+        "variants": [
+          {
+            "state": "reload_empty",
+            "priority": 100,
+            "when": {
+              "empty": "true"
+            }
+          },
+          {
+            "state": "reload",
+            "priority": 0
+          }
+        ]
+      }
+    },
+    "interrupts": [
+      {
+        "active": "reload",
+        "incoming": "fire",
+        "decision": "reject",
+        "min_progress": 0,
+        "max_progress": 1,
+        "priority": 100,
+        "reason": "finish_reload_before_fire"
+      }
+    ]
+  },
+  "animation_controller": {
+    "channels": {
+      "fire_pre": {
+        "clip": "fire_pre",
+        "layer": "recoil",
+        "duration_frame": 2,
+        "loop": false,
+        "fade_in": 0,
+        "fade_out": 0
+      },
+      "fire": {
+        "clip": "fire",
+        "layer": "recoil",
+        "duration_frame": 6,
+        "loop": false,
+        "fade_in": 0,
+        "fade_out": 0
+      },
+      "fire_settle": {
+        "clip": "fire_settle",
+        "layer": "recoil",
+        "duration_frame": 8,
+        "loop": false,
+        "fade_in": 0,
+        "fade_out": 0
+      },
+      "reload": {
+        "clip": "reload",
+        "layer": "action",
+        "duration_frame": 60,
+        "loop": false,
+        "fade_in": 0,
+        "fade_out": 0
+      },
+      "reload_empty": {
+        "clip": "reload_empty",
+        "layer": "action",
+        "duration_frame": 75,
+        "loop": false,
+        "fade_in": 0,
+        "fade_out": 0
+      }
+    }
+  }
+}

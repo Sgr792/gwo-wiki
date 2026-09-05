@@ -1,0 +1,28 @@
+{
+  "pose_graph": {
+    "base_clip": "static_idle",
+    "default_blend": "override",
+    "layers": {
+      "action": {
+        "channels": [
+          "reload",
+          "hand_action",
+          "action",
+          "inspect"
+        ],
+        "blend": "override",
+        "priority": 100
+      },
+      "recoil": {
+        "channels": [
+          "recoil"
+        ],
+        "blend": "override",
+        "priority": 200,
+        "bone_mask": [
+          "tag_weapon"
+        ]
+      }
+    }
+  }
+}

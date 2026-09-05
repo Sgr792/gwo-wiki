@@ -10,19 +10,19 @@ category:
 
 For rigid cube-style arms, download the [arm source templates](./arm-templates.md) and read the runtime limitations first.
 
-Use this for whole-part movement, rotation, and scale, not deforming arms or cloth. It requires the new format-support development build; visual acceptance is pending.
+Use this for whole-part movement, rotation, and scale, not weight-deformed arms or cloth. Whole cube-style arm parts can be rigid authoring objects. It requires the new format-support development build; visual acceptance is pending.
 
-## 1. Software and project
+## Software and project
 
 Create a Blender project with a receiver and one moving part. Save it separately. No Armature is required.
 
-## 2. Model and coordinates
+## Model and coordinates
 
 Keep the muzzle along `+X`. Establish units and transforms before animation. Mesh origins, Empty origins, and parenting are different things; moving origins repeatedly does not repair incorrect parenting.
 
 **Checkpoint:** Static assembly is correct, with no unintended armature dependency or skinning modifier.
 
-## 3. Empty hierarchy and anchors
+## Empty hierarchy and anchors
 
 Create Empty objects and parent meshes to them. A complete first-person reference chain is:
 
@@ -44,11 +44,11 @@ Check parent-inverse transforms when parenting. Do not also bake a parent's move
 
 **Checkpoint:** Moving the Empty moves its children; resetting it restores the assembly.
 
-## 4. UVs and materials
+## UVs and materials
 
 Author UVs on the Mesh, not the Empty. Use the same [material configuration](./firearms.md) for base color, normal, and specular maps.
 
-## 5. Rigid animation
+## Rigid animation
 
 Keyframe location, rotation, or scale on the moving Empty. Mesh object animation also works, but organizing mechanism motion on Empty parents is easier to maintain.
 
@@ -59,7 +59,7 @@ Keyframe location, rotation, or scale on the moving Empty. Mesh object animation
 
 **Checkpoint:** Parts remain rigid and do not move twice because of parent/child keys.
 
-## 6. Export and verify
+## Export and verify
 
 Include the complete Empty hierarchy and meshes in the GLB export, with animation enabled. Exporting only meshes loses their drivers.
 
@@ -68,3 +68,5 @@ Embed clips in the model GLB or use a separate animation library. Separate files
 Reimport into an empty project and verify Empty nodes, clips, and mesh movement. This new route is for pure no-Skin rigid models, not expanded mixed-rig compatibility.
 
 **Checkpoint:** Reimport reproduces the animation. Continue through [format configuration](./bedrock-empty.md), [Getting Started](./getting-started.md), and [shared configuration](./first-firearm.md).
+
+Implementation baseline: `b6d52ab` (2026-09-05); see [version and acceptance status](./bedrock-empty.md). This marker does not imply the feature is present in every build labeled 2.12.87.

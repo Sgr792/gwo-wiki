@@ -28,7 +28,7 @@ No-Skin Empty animation and Bedrock support require the development build contai
 
 ## Learning order
 
-For arm creation, see the [independent arm source templates and downloads](./arm-templates.md).
+For arm creation, see the [arm authoring templates and downloads](./arm-templates.md).
 
 1. Choose one route above.
 2. Complete its software setup, modeling, hierarchy/anchors, UVs, animation, and export checks.
@@ -38,3 +38,5 @@ For arm creation, see the [independent arm source templates and downloads](./arm
 6. Complete [Debugging and Release](./debugging-release.md).
 
 [Formats and Support Scope](./bedrock-empty.md) is a reference, not another required software route.
+
+Implementation baseline: `b6d52ab` (2026-09-05); see [version and acceptance status](./bedrock-empty.md). This marker does not imply the feature is present in every build labeled 2.12.87.

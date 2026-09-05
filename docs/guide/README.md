@@ -55,6 +55,8 @@ toc: false
   </div>
 
   <div class="gwo-chapter-grid">
+    <a href="./arm-templates.html"><b>手臂</b><strong>手臂制作模板</strong><small>制作动作与共用游戏手臂的区别、模板选择和下载。</small></a>
+    <a href="./config-examples.html"><b>示例</b><strong>配置示例与接入</strong><small>分支、序列、姿态层、倍率镜与物理挂饰的独立示例。</small></a>
     <a href="./bedrock-empty.html"><b>格式</b><strong>格式与支持范围</strong><small>文件格式、配置映射、版本要求与功能限制参考。</small></a>
     <a href="./models.html"><b>模型</b><strong>模型制作规范</strong><small>Blender 3.3、坐标、骨架、Empty/刚性节点、挂点与 GLB 导出。</small></a>
     <a href="./animation.html"><b>动画</b><strong>动画制作与导出</strong><small>动画用途、状态区别、通道所有权、交接与动画机配置。</small></a>

@@ -5,13 +5,13 @@ category:
   - Content-Pack Authoring
 ---
 
-## 10. Animation library contract
+## Animation library contract
 
 This page focuses on skinned GLB authoring. See [Bedrock and Empty Animation](./bedrock-empty.md) for the new development-build workflows. GWO state names and event configuration remain shared, but Bedrock tracks are relative to the initial pose rather than GLB absolute local transforms.
 
 Export the static weapon model separately from the animation-only `.anim.glb`. Both files must use the same skeleton names, hierarchy, bind pose, and coordinate space. Frame 0 is valid; configuration event frames must match the exported clip.
 
-## 11. Common action names
+## Common action names
 
 | Group | Common actions |
 |---|---|
@@ -125,7 +125,7 @@ An identity clip mapping such as `"fire": "fire"` is still valid and may serve a
 
 Not every weapon needs every state. A correctly named but unreferenced clip is not played automatically.
 
-## 12. Channel ownership
+## Channel ownership
 
 - Animate a node in the layer that owns it; avoid duplicate channels for the same target across independent armatures.
 - Missing additive channels must remain absent. Do not bake every static bone into every clip.
@@ -134,7 +134,7 @@ Not every weapon needs every state. A correctly named but unreferenced clip is n
 - ADS correction must not be baked again into fire/reload clips when the runtime already applies the ADS layer.
 - Preserve authored hand motion. Do not create a second procedural hand-follow transform for the same node.
 
-## 13. Action-specific rules
+## Action-specific rules
 
 ### Draw and holster
 
@@ -196,7 +196,7 @@ For `tube_per_round`, authored frames are the only mechanical timing source. Do 
 
 Enter, loop, and exit endpoints must match. Composite sprint clips must be baked on every required frame after all source layers are combined; do not leave source IK layers unresolved.
 
-## 14. Arms, camera, and multi-armature export
+## Arms, camera, and multi-armature export
 
 - The independent arms and weapon file must share their bind reference.
 - Export only intentional `LEFT_ARM`, `RIGHT_ARM`, and required child-bone channels.
@@ -204,7 +204,7 @@ Enter, loop, and exit endpoints must match. Composite sprint clips must be baked
 - In multi-armature files, each bone needs one unambiguous owner. Map duplicate one-bone shell or attachment rigs explicitly instead of guessing.
 - Validate that actions from receiver, barrel, magazine, pump, bolt, and other rigs merge into one named clip rather than becoming duplicate clips.
 
-## 15. Export checklist
+## Export checklist
 
 - No unexpected `.001` actions or duplicate names.
 - No scale keys unless scaling is intentional; normal transform scale remains `1`.
@@ -217,3 +217,40 @@ Enter, loop, and exit endpoints must match. Composite sprint clips must be baked
 ::: warning
 An animation that looks correct in Blender can still be invalid when two rigs own the same target or when a runtime additive layer repeats an authored transform. Fix ownership and reference space instead of hiding the symptom with a per-animation offset.
 :::
+
+## First-draw eligibility and transform timing
+
+`draw_first` requires available ammunition and a configured controller channel, in addition to an unused weapon identity. An empty firearm does not select it even on the first equip; independent melee is exempt from firearm ammunition requirements. The animation machine still resolves the final state. Merely exporting a clip with that name is insufficient.
+
+Normalize object transforms before binding and animating. Do not independently apply Armature transforms in an already bound/animated project; update affected models, bind poses, and animations together and recheck them.
+
+Start with the [self-contained configuration examples](./config-examples.md) for variants, sequences, markers, interrupts, and pose layers. Matching default-pack files are optional supplementary references, not required downloads.
+
+## Channel ownership details
+
+| State family | Intended tracks | Exclude |
+| --- | --- | --- |
+| `firemode_*_static` | Selector only, such as `j_firesel` | Arms, weapon root, ADS, camera, ammunition and magazine |
+| `fire*`, `aim_fire*`, `dry_fire*` | Authored recoil/mechanisms/arms | `tag_ads`; omit static camera tracks when there is no camera motion |
+| `reload*`, `aim_reload*`, `inspect*`, `draw*`, `holster*`, melee attacks | Required weapon, arms, mechanisms, camera | `tag_ads` and bulk-baked unrelated bones |
+| `sprint_*`, `super_sprint_*` | Required weapon, arms, camera | ADS, ammo/selector state, unrelated attachments |
+
+These are the documented ownership convention, not a claim that every exporter forbids such tracks. If changing masks or pose layers, update authored tracks consistently rather than applying the table blindly.
+
+### Detailed authoring checkpoints
+
+- Base idle must not bake changing ammunition, selector, or empty mechanism state. Keep the first/last pose continuous.
+- Draw ends at idle; holster begins at the corresponding held pose. Empty and normal variants must retain the correct mechanism state.
+- Aim transitions own `tag_ads`; aim additive owns its configured weapon node. Do not repeat ADS displacement in aim-fire or aim-reload.
+- Fire settle restores pose without producing another shot. Last-shot settle must retain the empty-state result. Ejection occurs when the mechanism reaches its authored ejection point.
+- Reload's removal, insertion, commit, bolt, and completion are different phases. Track the two magazines' visibility independently. Commit controls ammunition, not merely sound.
+- Each tube insert commits one round. Direct chamber loading must not trigger a duplicate chamber cycle later. Shell/follower tracks stay in their own state layer.
+- Rechamber must preserve pump/bolt, hand, and ejection relationships. Equal final curve values do not prove equal reference space.
+- Inspection reads actual ammunition state. Actions hand back without leaving an unintended last-frame layer.
+- Sprint enter ends at loop start; loop endpoints and exit are continuous. Do not mix a weapon's unrelated reference pose into its running clips.
+- Preserve necessary arm tracks when omitting authoring preview meshes. The supplied arms are rigid cube-style parts, not a detailed finger rig; see [Arm Templates](./arm-templates.md).
+- Camera motion belongs on its own node and should enter/exit smoothly. Do not bake the same runtime sway/recoil/bob into every clip.
+- Static anchors need no redundant keys; moving anchors must follow their intended mechanism. Keep cartridge and magazine nodes distinct.
+- Multiple Armatures require one clear owner per target and unified clip name/time. Exporter-specific ownership must be checked rather than guessed.
+- Sample constrained motion into numeric keys; keep quaternion rotations normalized. Scale keys are intentional only when the model needs them.
+- After editing timing, synchronize controller duration, mechanical commits, reload phases, and timed commands. At 30 FPS, milliseconds = frames / 30 × 1000. Tube timing derives from `animation_fps`.

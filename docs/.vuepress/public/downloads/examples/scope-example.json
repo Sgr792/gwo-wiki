@@ -1,0 +1,17 @@
+{
+  "id": "example:training_scope",
+  "type": "sight",
+  "slot": "sight",
+  "display_name": "Training Scope",
+  "default_installed": false,
+  "parent_types": [
+    "gun"
+  ],
+  "sight": {
+    "enabled": true,
+    "type": "scope",
+    "scope_rate": 4,
+    "ads_z_compensation": 1
+  },
+  "render": "attachments/render/sights/training_scope.render.json"
+}

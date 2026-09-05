@@ -103,3 +103,9 @@ Automated tests cover a real no-Skin GLB import, Empty tracks, parent transforms
 Before publishing, check idle/draw/fire/reload/inspect, child meshes and moving locators, texture orientation, transparent nodes, normal rendering and Iris, and existing skinned GLB weapons.
 
 Fields follow the [official Mojang geometry schemas](https://mojang.github.io/bedrock-samples/Schemas.html). The list above describes GWO's implemented subset, not the entire Bedrock format.
+
+## Version baseline
+
+This format documentation is checked against the implementation introduced in commit `b6d52ab` (2026-09-05). It is a source revision marker, not a release download or an in-game acceptance certificate. The shared `2.12.87` label alone cannot distinguish older builds. Use a build explicitly containing that implementation; visual acceptance is still pending.
+
+Per-face Bedrock `uv_rotation` is not currently processed. Do not use face UV rotation in exported assets; arrange the texture and UV rectangles so they do not need this field. A successful import does not prove that unsupported fields took effect.

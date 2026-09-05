@@ -9,15 +9,15 @@ category:
 
 This page creates a correctly structured GWO content pack. The template contains no weapon, model, animation, texture, sound, or legacy compatibility fields.
 
-## 1. Download
+## Download
 
 [Download the GWO empty content-pack template](/downloads/gwo_empty_content_pack_template.zip)
 
-You can also download the [Blender 3.3 first-person arm template](/downloads/gwo_arms_template_blender33.blend).
+You can also download the [Arm templates: choose a workflow and download](./arm-templates.md).
 
 Extract the ZIP before editing it. Use a normal folder while developing so files can be changed and reloaded easily.
 
-## 2. Install the folder
+## Install the folder
 
 Copy the extracted `gwo_empty_content_pack` folder to:
 
@@ -33,7 +33,7 @@ The final path must be:
 
 It must not contain another duplicated folder level. The empty template adds no items when the game starts; that is expected.
 
-## 3. Choose a namespace
+## Choose a namespace
 
 The template uses `example`. Choose a namespace containing lowercase English letters, digits, and underscores only, such as `my_studio`.
 
@@ -55,9 +55,9 @@ Every resource ID must then use the same prefix:
 "id": "my_studio:training_rifle"
 ```
 
-Do not use spaces, uppercase letters, parentheses, or hyphens in resource paths.
+Do not use spaces, uppercase letters, or parentheses in resource IDs. Hyphens are valid; underscores are simply this tutorial's recommended convention.
 
-## 4. Directory purpose
+## Directory purpose
 
 | Directory | Contents |
 |---|---|
@@ -82,7 +82,7 @@ Do not use spaces, uppercase letters, parentheses, or hyphens in resource paths.
 
 `.gitkeep` files only preserve empty directories in Git and ZIP archives. Delete them after adding real assets if desired.
 
-## 5. Edit pack metadata
+## Edit pack metadata
 
 Open `pack.mcmeta` and change only the description to begin:
 
@@ -98,7 +98,7 @@ Open `pack.mcmeta` and change only the description to begin:
 
 Do not remove the outer `pack` object or leave a trailing comma after the last JSON property.
 
-## 6. Validate the empty pack
+## Validate the empty pack
 
 Start the game and inspect `logs/latest.log`:
 
@@ -108,7 +108,7 @@ Start the game and inspect `logs/latest.log`:
 4. There are no JSON or resource-path errors.
 5. No new item appears, because this template intentionally contains no content.
 
-## 7. Package for release
+## Package for release
 
 During development, keep the pack as a folder. For release, archive the files inside the pack. Opening the ZIP must immediately show:
 
@@ -123,3 +123,7 @@ assets/
 The template targets Minecraft 1.21.1 and the current GWO format. It does not use the removed `guns/` directory or obsolete compatibility fields.
 
 Next: [Build Your First Firearm](first-firearm.md).
+
+## Valid identifiers
+
+Namespaces allow lowercase letters, digits, underscores, hyphens, and dots; this tutorial recommends underscores as a convention. `my-studio:training_rifle` is valid. Resource paths also permit `/` for directories. Uppercase letters and spaces are not valid resource-ID characters.

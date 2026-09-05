@@ -40,10 +40,10 @@ category:
 ## 第 0 步：准备环境
 
 1. 安装 Minecraft 1.21.1、匹配版本 NeoForge 和 GWO。
-2. 安装 Blender 3.3。
+2. 只准备所选路线的软件：Blender 或 Blockbench。
 3. 准备 VS Code 或其他能保存 UTF-8 JSON 的编辑器。
 4. 下载并解压[空内容包模板](/downloads/gwo_empty_content_pack_template.zip)。
-5. 下载[Blender 3.3 第一人称手臂模板](/downloads/gwo_arms_template_blender33.blend)。
+5. 需要制作手臂动作时，按路线下载[手臂制作模板](./arm-templates.md)。
 6. 把模板文件夹改名为 `my_first_gwo_pack`，放进 `.minecraft/gwo/`。
 7. 把 `assets/example/` 改名为 `assets/tutorial/`。
 
@@ -97,16 +97,15 @@ tutorial:skins/guns/training_rifle.png
 
 第一版模型只追求参考空间正确。细分默认配件、透明玻璃、挂饰碰撞和复杂骨骼都放到基础验收以后。
 
-### 2.1 Blender 场景要求
+### 按所选路线准备场景
 
-1. 用 Blender 3.3 打开你的枪械工程。
-2. 让枪口朝模型 `+X`。
-3. 在对象模式选中可见枪械网格，使用 `Ctrl + A`，应用旋转和缩放。
-4. 不要在动画完成后随意应用 Armature 对象变换。
-5. 删除不会使用的相机、灯光、隐藏重复网格和测试对象。
-6. 保证网格和骨架处于同一原点与参考空间。
+- [Blender 骨架](./blender-skinning.md)：骨架、网格和绑定姿态一致。
+- [Blender Empty](./blender-empty.md)：保留父级 Empty 与子网格，不要求 Armature 或 Skinning。
+- [Blockbench](./blockbench.md)：使用 Bedrock 实体方块、分组和数值动画，不需要安装 Blender。
 
-### 2.2 第一版至少需要的节点
+三条路线都要检查模型方向、比例、节点命名和无用对象。软件操作按对应路线完成，本章不再要求所有作者使用同一种导出器。
+
+### 第一版至少需要的节点
 
 ```text
 root
@@ -150,26 +149,22 @@ root
 
 `tag_flash` 放在真实枪口，局部朝向与枪口出射方向一致。`tag_brass` 放在抛壳窗。节点名和父子级都必须正确，一个字符都不能拼错。
 
-### 2.3 导出模型 GLB
+### 导出模型
 
-模型文件负责网格、骨架、蒙皮和节点，不负责保存整套动作库：
+本章 GLB 示例路径：
 
 ```text
 assets/tutorial/gltf/guns/training_rifle/training_rifle_receiver_default.glb
 ```
 
-在 Blender 的 glTF 2.0 导出界面：
+骨架路线保留所需骨架与 Skinning；Empty 路线保留驱动节点及子网格。Blockbench 则导出几何 JSON，并把后文 `gltf_model` 替换为对应路径，例如 `tutorial:models/training_rifle.geo.json`。静态模型不需要混入无关动作库。
 
-1. 格式选择 `glTF Binary (.glb)`。
-2. 只导出当前武器需要的对象。
-3. 保留 Skinning。
-4. 模型 GLB 不要携带无关 Action 和 NLA 动作。
-5. 导出后不要再改变同一工程的骨骼名称或绑定姿态，除非模型和动画库一起重导。
+不要改变模型与动画的节点名、绑定/初始姿态后只重导其中一个文件。
 
 ### 完成标准
 
-- GLB 文件存在且不是 0 字节。
-- 重新导入一个空 Blender 文件时，枪口仍朝 `+X`。
+- 对应路线的模型文件存在且不是 0 字节。
+- 在所选软件的新工程中重新打开导出文件，方向与比例仍正确。
 - 节点名称、父子层级和模型比例没有变化。
 - `tag_flash` 与 `tag_brass` 位置正确。
 
@@ -211,7 +206,7 @@ reload
 reload_empty
 ```
 
-### 4.1 每个动作的作用
+### 每个动作的作用
 
 | 动作 | 作用 | 第一帧/最后一帧要求 |
 |---|---|---|
@@ -222,32 +217,27 @@ reload_empty
 | `reload` | 弹匣内仍有弹时换弹 | 提交帧前后弹匣动作清晰 |
 | `reload_empty` | 完全空仓时换弹 | 包含需要的枪机/释放动作 |
 
-### 4.2 Blender 中逐个建立 Action
+### 按路线建立动作
 
-1. 选择主 Armature。
-2. 切到 `Dope Sheet → Action Editor`。
-3. 新建 Action，并立刻改成上表中的准确名称。
-4. 设置 30 FPS。
-5. 只给这个动作真实需要的节点打关键帧。
-6. 不要让无关骨骼因为“全选插帧”获得整段静态通道。
-7. 完成一个 Action 后保留它，再新建下一个。
-8. 清理自动产生的 `Action`、`.001`、空 NLA Strip 和测试动作。
+- Blender 骨架：给所属骨架建立 Action。
+- Blender Empty：给运动节点制作对象变换关键帧，并按导出器的 Action/NLA 组织方式归入同名剪辑；不要误选不存在的 Armature。
+- Blockbench：在动画工作区创建动作，给分组制作数值关键帧。
 
-完整动作可以驱动枪和手，但同一个骨骼在同一时间只能有明确所有者。附加动画不能重复写基础根姿态。详细限制见[动画制作与导出规范](animation.md)。
+本例统一使用 30 FPS 作为配置帧基准。为动作命名、保留有效轨道，删除无关的批量静态轨道和重复动作。具体软件操作见对应路线，所有路线共同遵守[动画通道所有权](./animation.md)。
 
-### 4.3 导出动画库
+### 导出动画库
 
-动画库保存为：
+GLB 路线的动画库保存为：
 
 ```text
 assets/tutorial/gltf/animations/training_rifle_receiver_default.anim.glb
 ```
 
-动画库与模型 GLB 必须使用同一套骨骼名称、父子层级和绑定姿态。不要为了让动画“看起来差不多”单独移动动画文件里的骨架根。
+Blockbench 路线改为独立 `.animation.json`，并在 `animation_sources` 中引用；`animation_clips` 右侧保留实际完整动作名。各路线模型与动画都要具有相匹配的节点、父子关系和参考姿态，不要单独移动动画根来掩盖错误。
 
 ### 完成标准
 
-- `.anim.glb` 中六个剪辑名称准确且唯一。
+- 导出的动画库中六个剪辑名称准确且唯一，与配置映射对应。
 - 所有剪辑都能从第 0 帧开始。
 - `draw` 尾帧与 `static_idle` 对接。
 - `fire` 结束后不会留下额外根位移。
@@ -288,7 +278,7 @@ bullets/training_ammo.json
 执行 `/gwo reload` 后聊天栏没有弹药解析错误，并且：
 
 ```text
-/gwo give ammo tutorial:training_ammo
+/gwo give ammo "tutorial:training_ammo"
 ```
 
 能得到弹药。如果物品图标暂时使用通用外观，不影响这一阶段逻辑验收。
@@ -371,7 +361,7 @@ weapons/firearms/training_rifle.json
 `/gwo reload` 后没有 `Failed to read weapon definition`，并且：
 
 ```text
-/gwo give firearm tutorial:training_rifle
+/gwo give firearm "tutorial:training_rifle"
 ```
 
 能够得到枪。此时渲染文件还没完成，枪可能不可见或使用缺失表现；只要定义能被识别就通过本步。
@@ -550,8 +540,8 @@ weapons/firearms/render/training_rifle.render.json
 
 ```text
 /gwo reload
-/gwo give firearm tutorial:training_rifle
-/gwo give ammo tutorial:training_ammo
+/gwo give firearm "tutorial:training_rifle"
+/gwo give ammo "tutorial:training_ammo"
 ```
 
 依次检查：
@@ -584,20 +574,18 @@ weapons/firearms/render/training_rifle.render.json
 
 只有这十项通过，才进入下一阶段。
 
-## 第 9 步：加入第一人称手臂
+## 第 9 步：使用共用第一人称手臂
 
-把手臂模板导出的模型放到：
+先阅读[手臂制作与运行时的区别](./arm-templates.md)。制作时手臂与枪放在一起做动作；游戏默认加载共用手臂网格，读取玩家皮肤，再跟随枪械动画中的手臂姿态。不是要求制作第二套动作。
 
-```text
-assets/tutorial/gltf/arms/arms.glb
-```
-
-在渲染 JSON 增加：
+使用现有共用骨架手臂时，在渲染 JSON 增加：
 
 ```jsonc
 "first_person_arms": true,
 "arms": {
-  "model": "tutorial:gltf/arms/arms.glb",
+  "enabled": true,
+  "left_holder_bone": "LEFT_ARM",
+  "right_holder_bone": "RIGHT_ARM",
   "poses": {
     "draw": {"blend_ticks": 5},
     "holster": {"blend_ticks": 5},
@@ -608,13 +596,15 @@ assets/tutorial/gltf/arms/arms.glb
 }
 ```
 
-手臂模型和武器动画库必须共享相同骨骼名称与绑定姿态。游戏内手的位置和 Blender 不同，优先比较绑定姿态、Armature 对象变换和动画通道所有权，不要立刻在 JSON 中写武器专用硬偏移。
+未填写 `arms.model` 时使用内置 `gwo:gltf/arms/arms.glb`。不需要每把枪或每个包重复导出一份手臂网格；但枪械动画中有效的手臂节点与轨道必须保留。两个 holder 名称需要对应实际动画节点，`blend_ticks` 调整交接，不代替正确的轨道和参考空间。
+
+如确实需要自定义手臂外观，可额外配置 `arms.model` 并提供匹配的模型，这是进阶选项。新提供的 Empty / Bedrock 手臂源模板尚未完成独立手臂运行时验收，不要仅替换该路径就认为已经接入。
 
 ### 完成标准
 
-- `static_idle` 中两只手位置正确。
-- `fire` 与换弹过程中，手跟随对应枪械部件。
-- 动画结束回到 `static_idle` 时没有一帧抽搐或位置跳变。
+- 使用玩家皮肤，普通/纤细手臂与外层选择正确。
+- 待机、开火、换弹时双手握持正确。
+- 动作结束无跳变，枪内没有重复显示制作时的预览手臂网格。
 
 ## 第 10 步：加入瞄准
 

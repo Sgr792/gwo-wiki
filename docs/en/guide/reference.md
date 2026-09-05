@@ -5,7 +5,7 @@ category:
   - Content-Pack Authoring
 ---
 
-## 33. Reference implementations
+## Reference implementations
 
 Start from the [empty template](empty-template.md). The table names typical files in the current default content pack. If you have a matching version of that pack, use it for comparison, but do not copy its namespace and IDs unchanged.
 
@@ -24,7 +24,7 @@ Start from the [empty template](empty-template.md). The table names typical file
 
 Paths are relative to the current default content pack. The public Wiki provides an asset-free empty template so the guide does not depend on a removed or version-mismatched example link. Current Wiki rules and loader validation are authoritative.
 
-## 34. Legacy fields not to use
+## Legacy fields not to use
 
 The following names are ignored or explicitly removed legacy syntax. Do not add them to new packs; retain current fields and explicitly authored defaults.
 
@@ -42,3 +42,5 @@ The following names are ignored or explicitly removed legacy syntax. Do not add 
 | `sight.hybrid` | `sight.optic` |
 
 Do not classify explicit current defaults or valid identity animation mappings as legacy. Remove only obsolete names or formats that the loader explicitly rejects.
+
+For independent teaching configurations without default-pack assets, see [Configuration Examples](./config-examples.md). Existing valid fields and explicit defaults should be preserved when merging examples.

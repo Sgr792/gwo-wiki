@@ -1,10 +1,10 @@
 ---
-title: Independent Arm Source Templates
+title: Arm Authoring Templates
 category:
   - Model and Animation Routes
 ---
 
-# Independent arm source templates
+# Arm authoring templates
 
 Choose your [workflow](./choose-workflow.md), then download its template. All three are based on the same arms.
 
@@ -18,7 +18,25 @@ Choose your [workflow](./choose-workflow.md), then download its template. All th
 The new Empty and Bedrock templates have passed hierarchy, position, and UV data checks. Independent-arm loading, player skin binding, and in-game animation have not been validated. Dropping these files into a pack does not automatically enable them. This documentation update does not change the mod's arm loader.
 :::
 
-## 1. Open and choose an arm variant
+
+## How GWO currently uses arms
+
+GWO already uses an independent **shared arm mesh**. It loads `gwo:gltf/arms/arms.glb` by default, chooses regular/slim arms and outer layers, and uses the player's skin.
+
+During authoring, put the arms beside the gun and animate them together to check grip, reload, and inspection. At runtime the gun animation supplies arm poses, while the shared model supplies visible arm geometry. **The mesh is independent; the authored motion remains coordinated with the weapon.** Do not make a second set of arm animations.
+
+| Exported information | Purpose |
+| --- | --- |
+| Weapon mesh and mechanism nodes | Visible weapon and moving parts |
+| Required arm reference nodes and animation tracks | Drive runtime arms |
+| Authoring preview arm mesh | Not needed in every weapon model when using shared arms |
+| Custom `arms.model` | Optional replacement requiring matching names and reference space |
+
+Do not delete arm animation tracks when removing preview geometry. Do not render both the embedded preview arms and runtime arms.
+
+The original Armature template corresponds to the existing arm workflow. The new Empty and Bedrock sources are authoring alternatives whose independent-arm runtime integration is **not yet validated**. General rigid weapon support is not proof that skin selection and arm-part mapping work for those templates.
+
+## Open and choose an arm variant
 
 Open `.blend` in Blender or `.bbmodel` in Blockbench. Each template includes left/right arms, regular-width `MALE`, slim-width `SLIM`, and outer skin `LAYER` parts.
 
@@ -26,7 +44,7 @@ Open `.blend` in Blender or `.bbmodel` in Blockbench. Each template includes lef
 - The Empty template hides SLIM only in the viewport. Check export selection and visibility separately.
 - The original source contains no embedded skin image. Import your own 64×64 player skin for preview; a missing image does not mean missing UVs.
 
-## 2. Hierarchy and animation targets
+## Hierarchy and animation targets
 
 ```text
 arms_root
@@ -44,7 +62,7 @@ Slashes denote separate sibling nodes. Empty part nodes have `_mesh` children. P
 
 Animate Empty transforms in Blender or group transforms in Blockbench. These move whole arm parts without skinned elbow or finger deformation. No idle, fire, or reload animations are supplied.
 
-## 3. Scale, UVs, and export
+## Scale, UVs, and export
 
 The Empty version preserves the original meshes and UVs. The Blockbench version reconstructs the subdivided boxes as 8 editable cubes while retaining dimensions and UV mapping.
 

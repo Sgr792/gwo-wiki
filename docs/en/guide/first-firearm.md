@@ -31,10 +31,10 @@ You may rename them, but every reference must change consistently.
 ## Step 0: Prepare the environment
 
 1. Install Minecraft 1.21.1, the matching NeoForge version, and GWO.
-2. Install Blender 3.3.
+2. Prepare only the application for your selected route: Blender or Blockbench.
 3. Install an editor that saves valid UTF-8 JSON.
 4. Download and extract the [empty content-pack template](/downloads/gwo_empty_content_pack_template.zip).
-5. Download the [Blender 3.3 arm template](/downloads/gwo_arms_template_blender33.blend).
+5. If authoring arm motion, choose the matching [arm template](./arm-templates.md).
 6. Rename the pack folder to `my_first_gwo_pack` and place it in `.minecraft/gwo/`.
 7. Rename `assets/example/` to `assets/tutorial/`.
 
@@ -74,15 +74,9 @@ Rules:
 
 ## Step 2: Build the first model
 
-In Blender 3.3:
+Complete the relevant [Blender Armature](./blender-skinning.md), [Blender Empty](./blender-empty.md), or [Blockbench](./blockbench.md) modeling steps. Blockbench users do not need Blender, and Empty users do not need an Armature or Skin.
 
-1. Point the muzzle along model `+X`.
-2. In Object Mode, apply rotation and scale to visible mesh objects.
-3. Do not casually apply Armature object transforms after animation work begins.
-4. Remove unused cameras, lights, duplicate meshes, and test objects.
-5. Keep mesh, skeleton, and animation bind spaces identical.
-
-Minimum reference nodes:
+The shared first-person hierarchy is:
 
 ```text
 root
@@ -90,40 +84,18 @@ root
    ├─ tag_camera
    └─ tag_ads
       └─ tag_weapon
-         └─ main weapon bone (for example, j_gunx)
-            ├─ weapon meshes and moving mechanisms
+         └─ weapon_body
+            ├─ weapon geometry and moving mechanisms
             ├─ tag_align_gun
             ├─ tag_weapon_focus (when needed)
             └─ tag_brass
 ```
 
-The indentation above is the required parent hierarchy, not merely a list of names. The main chain is `root → tag_view → tag_ads → tag_weapon → main weapon bone`. `tag_camera` is a sibling of `tag_ads` under `tag_view`; it is not a child of `tag_weapon`.
+A one-piece weapon places `tag_flash` on the moving weapon/barrel branch. Modular barrels may own it within their model. Do not parent moving anchors to the camera branch.
 
-| Child | Required parent | Reason |
-|---|---|---|
-| `tag_view` | `root` | Establishes the first-person view space |
-| `tag_camera` | `tag_view` | Carries camera-only animation |
-| `tag_ads` | `tag_view` | Owns hip-to-ADS pose transitions |
-| `tag_weapon` | `tag_ads` | Places the weapon and hands in the current aiming space |
-| Main weapon bone, such as `j_gunx` | `tag_weapon` | Carries weapon meshes and weapon animation |
-| `tag_align_gun`, `tag_weapon_focus`, `tag_brass` | A moving branch below the main weapon bone | These references must follow weapon animation; weapon-specific intermediate bones are allowed |
+Export the GLB model at the planned path, retaining the hierarchy and Skin only where applicable. Bedrock users export geometry JSON and substitute its resource path in `gltf_model`, for example `tutorial:models/training_rifle.geo.json`.
 
-For a modular weapon, `tag_flash` normally belongs to the barrel GLB below its `tag_barrel_attach` branch. For a one-piece model, place it below the moving main-weapon branch. Never parent it directly to `root`, `tag_view`, or `tag_camera`.
-
-`tag_view` is the first-person view reference. `tag_camera` carries camera animation and is not a replacement for `tag_view`. Put `tag_flash` at the real muzzle and `tag_brass` at the ejection port.
-
-Export the mesh, skeleton, skin, and nodes to:
-
-```text
-assets/tutorial/gltf/guns/training_rifle/training_rifle_receiver_default.glb
-```
-
-Use glTF Binary (`.glb`), export only required objects, retain skinning, and do not include unrelated Actions or NLA strips in the model GLB.
-
-Checkpoint:
-
-- Reimporting the GLB preserves `+X` muzzle direction, scale, hierarchy, and node names.
-- `tag_flash` and `tag_brass` are in the correct place.
+Checkpoint: reopen the export in your application; check scale, muzzle direction, unique node names, hierarchy, transparent parts, and muzzle/ejection anchors. Change bind/initial transforms only with matching model and animation updates.
 
 ## Step 3: Add textures and the item icon
 
@@ -140,40 +112,13 @@ The first file is base color/alpha, `_n` is the tangent-space normal map, and `_
 
 ## Step 4: Export a minimal animation library
 
-Create exactly these six Actions first:
+Start with `static_idle`, `draw`, `holster`, `fire`, `reload`, and `reload_empty`. Idle is the stable reference; draw ends there, holster leaves it, and fire/reload hand back without a jump.
 
-```text
-static_idle
-draw
-holster
-fire
-reload
-reload_empty
-```
+Create Armature Actions for the skinning route, object-transform tracks grouped into exported clips for Empty, or group animations in Blockbench. Use 30 FPS as this example's event-frame reference, unique clip names, and only intentional tracks.
 
-In Blender:
+Export GLB animation to the planned `.anim.glb` or Bedrock animation to `.animation.json`. Reference it from `animation_sources`; map full exported names in `animation_clips`. Names, hierarchy, and bind/initial reference must match the model.
 
-1. Select the main Armature.
-2. Open `Dope Sheet → Action Editor`.
-3. Create and immediately name each Action.
-4. Use 30 FPS for this tutorial.
-5. Key only nodes the Action actually owns.
-6. Remove empty Actions, `.001` duplicates, test NLA strips, and accidental static channels.
-7. Make `draw` end at the `static_idle` reference and prevent `fire` from leaving root displacement behind.
-
-Export the animation library to:
-
-```text
-assets/tutorial/gltf/animations/training_rifle_receiver_default.anim.glb
-```
-
-The model and animation GLBs must share bone names, hierarchy, and bind pose. See [Animation Authoring and Export Rules](animation.md) before adding additive or layered clips.
-
-Checkpoint:
-
-- All six clip names are present and unique.
-- Clips may start at frame 0.
-- There is no `applies to joints that are not from the same skin` warning.
+Checkpoint: all six clips exist, frame zero works, draw ends at idle, fire has no unintended root offset, and GLB exports have no cross-skin ownership warnings.
 
 ## Step 5: Define ammunition
 
@@ -203,7 +148,7 @@ Run:
 
 ```text
 /gwo reload
-/gwo give ammo tutorial:training_ammo
+/gwo give ammo "tutorial:training_ammo"
 ```
 
 Checkpoint: the ammo definition loads without an error and the command gives the item.
@@ -349,8 +294,8 @@ Restart the game for the first complex GLB load, then run:
 
 ```text
 /gwo reload
-/gwo give firearm tutorial:training_rifle
-/gwo give ammo tutorial:training_ammo
+/gwo give firearm "tutorial:training_rifle"
+/gwo give ammo "tutorial:training_ammo"
 ```
 
 Verify in order:
@@ -378,14 +323,18 @@ Common diagnosis:
 | Wrong muzzle/casing origin | `tag_flash` / `tag_brass` transform |
 | Changes appear ignored | duplicate IDs, folder plus ZIP, cache requiring restart |
 
-## Step 9: Add arms
+## Step 9: Use shared first-person arms
 
-Export the arm template to `assets/tutorial/gltf/arms/arms.glb` and add:
+Read [how authoring arms differ from runtime geometry](./arm-templates.md). Animate arms with the weapon; runtime uses shared geometry and the player's skin. A second animation set is not required.
+
+Add this to the render definition for the existing Armature arm workflow:
 
 ```jsonc
 "first_person_arms": true,
 "arms": {
-  "model": "tutorial:gltf/arms/arms.glb",
+  "enabled": true,
+  "left_holder_bone": "LEFT_ARM",
+  "right_holder_bone": "RIGHT_ARM",
   "poses": {
     "draw": {"blend_ticks": 5},
     "holster": {"blend_ticks": 5},
@@ -396,28 +345,66 @@ Export the arm template to `assets/tutorial/gltf/arms/arms.glb` and add:
 }
 ```
 
-The arm model and animation library must share skeleton names and bind pose. A mismatch should be fixed in authoring space, not hidden with a weapon-specific hardcoded arm offset.
+Omitting `arms.model` uses `gwo:gltf/arms/arms.glb`. Do not duplicate the mesh in every pack or weapon. Keep required arm reference nodes and tracks in the weapon animation. Holder names must exist; `blend_ticks` adjusts handoff rather than fixing missing tracks.
 
-## Step 10: Add aiming, audio, and modules separately
+A custom `arms.model` is an advanced replacement. The new Empty/Bedrock arm templates have not passed independent-arm runtime acceptance; substituting their paths is not sufficient proof of integration.
 
-Add one system per test cycle:
+Checkpoint: correct player skin and regular/slim/layer selection, stable grip through idle/fire/reload, no handoff jump, and no duplicate preview arm geometry.
 
-1. Add `aim_in`, `aim_out`, and `aim_fire`, then configure aim actions, channels, `tag_ads`, and paired actions.
-2. Register OGG Vorbis events in `sounds.json`; use weapon `sound_events` for firing and `animation_commands` for timed mechanical sounds.
-3. Separate one default part at a time. Each part needs its definition, render file, slot, `default_installed`, real `anchor_node`, module reference, and matching reference space.
-4. Add `draw_first`, last-round, dry-fire, inspect, sprint, fire-mode, melee, ammo-state, effects, Weapon Sway, and display transforms only after the previous pass is stable.
+## Step 10: Add aiming
 
-Weapon-specific branches:
+Add `aim_in`, `aim_out`, and `aim_fire`, then configure clip maps, event categories, `paired_aim_actions.fire`, the aim machine enter/loop/exit phases, controller channels, `tag_ads` ownership, and last-frame handling. Follow [Animation Rules](./animation.md).
+
+Checkpoint: iron sights align at screen center, ADS exits without a flash to an intermediate pose, and firing remains in the intended ADS pose. Do not move a reticle texture to hide wrong model alignment.
+
+## Step 11: Add audio
+
+Put OGG Vorbis under `assets/tutorial/sounds/training_rifle/`, register it in `sounds.json`, use gameplay `sound_events` for firing and render `animation_commands` for timed mechanical sounds.
+
+```json
+{
+  "training_rifle_fire": {"sounds": ["tutorial:training_rifle/fire"]},
+  "training_rifle_mag_in": {"sounds": ["tutorial:training_rifle/mag_in"]}
+}
+```
+
+Gameplay fragment:
+
+```jsonc
+"sound_events": {"fire": "tutorial:training_rifle_fire"}
+```
+
+Render fragment:
+
+```jsonc
+"animation_commands": {
+  "reload": [
+    {"frame": 39, "type": "sound", "sound": "tutorial:training_rifle_mag_in"}
+  ]
+}
+```
+
+Checkpoint: the fire sound happens once, mechanical events match the visible frame, and empty/normal reload event maps are correct.
+
+## Step 12: Split default modules
+
+Separate only one part per test cycle. Each needs a behavior JSON, render JSON, slot, `default_installed: true`, a real `anchor_node`, a weapon `modules` entry, and matching reference space and material paths. See [Attachments](./attachments-optics.md).
+
+Checkpoint: the part installs by default, appears in the appropriate modification slot, follows its animated anchor, and does not change the whole gun's scale or orientation.
+
+## Step 13: Complete weapon features
+
+Add only needed features: first draw; last-round/dry-fire and empty-state poses; inspection; sprint/super-sprint; fire-mode changes; weapon melee; ammo/follower poses; muzzle effects/smoke/tracers/casings; sway/recoil; third-person/stowed/frame/preview transforms; optional attachments.
 
 | Type | Rule |
-|---|---|
-| `xmaglrg` | keep separate `*_xmaglrg` states and commits |
-| `drummag` | keep separate `*_drummag` states; it is not xmaglrg |
-| tube shotgun | use `reload_system.type: tube_per_round`; author event frames only |
-| bolt-action rifle | add `fire_rechamber` and `aim_fire_rechamber` cycle recovery |
-| standalone melee | use `weapons/melee/` and its own combo machine |
+| --- | --- |
+| `xmaglrg` | Separate `*_xmaglrg` states and commits |
+| `drummag` | Independent `*_drummag` states; not xmaglrg |
+| Tube shotgun | `reload_system.type: tube_per_round`; event frames only |
+| Bolt-action | `fire_rechamber` / `aim_fire_rechamber` and cycle recovery |
+| Standalone melee | `weapons/melee/` and its own combo machine |
 
-## Final release checkpoint
+## Step 14: Final release checkpoint
 
 Complete [Debugging, Acceptance, and Release](debugging-release.md), then verify a clean game restart—not only hot reload. Do not ship duplicate packs, absolute local paths, source `.blend` files, diagnostics, caches, backups, or obsolete compatibility data. A release ZIP must expose `pack.mcmeta`, `weapons`, `attachments`, `bullets`, and `assets` at its root.
 

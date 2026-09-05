@@ -16,7 +16,7 @@ Create cubes, groups, UVs, and animation in Blockbench. Blender is not required.
 Use a development build containing the format update; visual acceptance is pending. Choose a Bedrock entity project, not a Java block/item project. A saved `.bbmodel` alone is not a runtime asset. Numeric keys are supported; Molang, entity controllers, and `poly_mesh` are not.
 :::
 
-## 1. Create a project
+## Create a project
 
 Create a Bedrock entity project in Blockbench, set its identifier and texture dimensions, and save the editable `.bbmodel`.
 
@@ -24,7 +24,7 @@ Export exactly one `minecraft:geometry` entry per file.
 
 **Checkpoint:** The project uses the Bedrock entity format.
 
-## 2. Cube modeling
+## Cube modeling
 
 Begin with a few cubes for the body and magazine. Orient the finished weapon to GWO's model-space muzzle `+X` convention.
 
@@ -32,7 +32,7 @@ Bedrock positions are converted at 16 model units per render unit. Do not apply 
 
 **Checkpoint:** Dimensions, positions, and overall direction are correct.
 
-## 3. Groups, pivots, and anchors
+## Groups, pivots, and anchors
 
 Groups become bone nodes on export. Put each mechanism's cubes in its group and place the group pivot at its rotation/movement reference.
 
@@ -42,7 +42,7 @@ Use named groups or supported locators as anchors, on the intended moving branch
 
 **Checkpoint:** Rotating a group moves only its branch and keeps its pivot in the intended location.
 
-## 4. UVs and textures
+## UVs and textures
 
 Assign cube UVs and create/import a PNG base color. Box and per-face UV are supported. Omitted per-face entries are not rendered.
 
@@ -50,7 +50,7 @@ Use a directional test texture to check orientation. Bind additional textures th
 
 **Checkpoint:** Texture directions match and no faces are unintentionally missing.
 
-## 5. Numeric animation
+## Numeric animation
 
 Create named clips in the animation workspace and key group position, rotation, and scale.
 
@@ -63,7 +63,7 @@ Start with idle and one simple action before adding draw/fire/reload. Set the in
 
 **Checkpoint:** Each action plays correctly, with static poses, loops, and one-shot actions distinguished.
 
-## 6. Export and verify
+## Export and verify
 
 Export:
 
@@ -80,3 +80,7 @@ Reopen the exported geometry and animation to verify hierarchy, pivots, UVs, and
 **Checkpoint:** Exports reproduce the model and animation. Continue to [Getting Started](./getting-started.md), [format configuration](./bedrock-empty.md), and [shared configuration](./first-firearm.md).
 
 GLB filenames in the shared tutorial are examples. Substitute your `.geo.json` and `.animation.json` paths; no GLB conversion is required.
+
+Do not use per-face `uv_rotation`; the current loader does not process it. Check the [implementation baseline and restrictions](./bedrock-empty.md).
+
+Implementation baseline: `b6d52ab` (2026-09-05); see [version and acceptance status](./bedrock-empty.md). This marker does not imply the feature is present in every build labeled 2.12.87.
