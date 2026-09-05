@@ -4,7 +4,7 @@ icon: home
 title: GWO Wiki
 heroText: 从零制作 GWO 内容包
 tagline: 模型、动画、枪械、配件和声音的完整制作文档
-heroImage: /assets/m4.png
+heroImage: /assets/gwo-logo.png
 actions:
   - text: 开始制作
     icon: rocket

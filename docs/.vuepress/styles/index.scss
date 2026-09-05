@@ -108,9 +108,11 @@ html[data-theme="dark"] .vp-navbar {
   grid-column: 2;
   grid-row: 1;
   width: min(100%, 470px);
+  aspect-ratio: 47 / 27;
+  height: auto;
   max-height: 270px;
   margin: 0 auto;
-  object-fit: contain;
+  object-fit: cover;
   filter: drop-shadow(0 20px 28px rgb(25 80 165 / 24%));
 }
 

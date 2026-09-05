@@ -4,7 +4,7 @@ icon: home
 title: GWO Wiki
 heroText: Build a GWO Content Pack from Zero
 tagline: Complete documentation for models, animation, firearms, attachments, and audio
-heroImage: /assets/m4.png
+heroImage: /assets/gwo-logo.png
 actions:
   - text: Start Building
     icon: rocket
