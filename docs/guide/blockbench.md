@@ -13,7 +13,7 @@ category:
 这条路线在 Blockbench 中完成方块模型、分组层级、UV 和动画，不需要先学习 Blender。
 
 ::: warning 使用前确认
-需要包含本次格式更新的开发版；游戏验收仍待完成。选择 Bedrock 实体模型格式，不是 Java 方块/物品模型，也不是仅保存 `.bbmodel` 就能放进游戏。当前支持数值关键帧，不支持 Molang、实体动画控制器和 `poly_mesh`。
+使用前请确认所安装版本包含对应格式支持。选择 Bedrock 实体模型格式，不是 Java 方块/物品模型，也不是仅保存 `.bbmodel` 就能放进游戏。当前支持数值关键帧，不支持 Molang、实体动画控制器和 `poly_mesh`。
 :::
 
 ## 创建工程
@@ -97,4 +97,4 @@ example.png
 
 不要使用每面 `uv_rotation`，当前加载器不处理该字段。版本要求见[实现基线与限制](./bedrock-empty.md)。
 
-实现基线为 `b6d52ab`（2026-09-05），详见[版本与验收状态](./bedrock-empty.md)；不能仅凭 2.12.87 版本号认定构建包含该功能。
+版本要求见[Bedrock 与 Empty 动画](./bedrock-empty.md)。请以所安装版本的更新说明为准。

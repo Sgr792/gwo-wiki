@@ -109,7 +109,7 @@ root（Armature 骨架对象，不是骨骼）
 
 ### Empty 与刚性节点
 
-新增开发版支持无 Skin GLB 的 Blender `Empty`/普通节点动画：保留父子级、局部变换与子网格，让位置、旋转、缩放轨道进入共用姿态流程。刚性网格不会变形；需要手臂等蒙皮变形时继续使用 Armature。此更新不扩大多 Armature 或混合骨架的兼容范围。
+支持该格式的版本可加载无 Skin GLB 的 Blender `Empty`/普通节点动画：保留父子级、局部变换与子网格，让位置、旋转、缩放轨道进入共用姿态流程。刚性网格不会变形；需要手臂等蒙皮变形时继续使用 Armature。此更新不扩大多 Armature 或混合骨架的兼容范围。
 
 也可使用 Bedrock 实体方块模型与数值动画。版本要求、配置示例和限制见 [Bedrock 与 Empty 动画](./bedrock-empty.md)。
 

@@ -354,7 +354,7 @@ Add this to the render definition for the existing Armature arm workflow:
 
 Omitting `arms.model` uses `gwo:gltf/arms/arms.glb`. Do not duplicate the mesh in every pack or weapon. Keep required arm reference nodes and tracks in the weapon animation. Holder names must exist; `blend_ticks` adjusts handoff rather than fixing missing tracks.
 
-A custom `arms.model` is an advanced replacement. The new Empty/Bedrock arm templates have not passed independent-arm runtime acceptance; substituting their paths is not sufficient proof of integration.
+A custom `arms.model` is an advanced replacement. For Empty or Bedrock arms, check the release requirements, export the matching runtime assets, and follow [Arm Templates](./arm-templates.md). Existing default-arm configurations do not need to change.
 
 Checkpoint: correct player skin and regular/slim/layer selection, stable grip through idle/fire/reload, no handoff jump, and no duplicate preview arm geometry.
 
@@ -413,7 +413,7 @@ Add only needed features: first draw; last-round/dry-fire and empty-state poses;
 
 ## Step 14: Final release checkpoint
 
-For optional custom arms, configure `arms.model` using the [arm-template guide](./arm-templates.md). Empty / Bedrock independent-arm child support requires a build containing `ad17487`; the default arms and existing pack configuration do not need changes.
+For optional custom arms, configure `arms.model` using the [arm-template guide](./arm-templates.md). Empty / Bedrock independent-arm child support requires a version with the corresponding arm support; the default arms and existing pack configuration do not need changes.
 
 Complete [Debugging, Acceptance, and Release](debugging-release.md), then verify a clean game restart—not only hot reload. Do not ship duplicate packs, absolute local paths, source `.blend` files, diagnostics, caches, backups, or obsolete compatibility data. A release ZIP must expose `pack.mcmeta`, `weapons`, `attachments`, `bullets`, and `assets` at its root.
 

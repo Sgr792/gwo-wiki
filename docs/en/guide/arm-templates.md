@@ -15,7 +15,7 @@ Choose your [workflow](./choose-workflow.md), then download its template. All th
 | Blockbench Bedrock | [Download arms_blockbench.bbmodel](/downloads/arms_blockbench.bbmodel) | Editable groups and cubes; accompanying [geometry JSON](/downloads/arms_blockbench.geo.json) |
 
 ::: warning Use a build containing the arm integration
-Revision `ad17487` adds independent-arm child selection and pose transforms for Empty GLB and Bedrock geometry. Automated tests cover both sides, regular/slim selection, outer layers, and relative child transforms. General gameplay regression passed, but dedicated visual acceptance of the two new templates is still pending. Copying editing sources into a pack does not enable them.
+For Empty or Bedrock independent arms, use a version with the corresponding arm support. Export the template to a runtime format and configure `arms.model`; copying editing sources into a pack does not enable custom arms.
 :::
 
 

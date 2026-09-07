@@ -30,7 +30,7 @@ You do not need to learn both applications. Complete one route, then continue to
 Rigid animation moves, rotates, or scales an entire mesh without weight-based deformation. Empty animation does not replace skinned arms or guarantee better FPS.
 
 ::: warning New workflow requirements
-No-Skin Empty animation and Bedrock support require the development build containing this format update. Automated tests pass; visual acceptance is pending. Earlier builds may not support them. The Blockbench route supports entity cubes and numeric keyframes, not Molang or entity controllers.
+Before using no-Skin Empty animation or Bedrock assets, check that the installed release supports these formats. The Blockbench route supports entity cubes and numeric keyframes, not Molang or entity controllers.
 :::
 
 ## Learning order
@@ -46,4 +46,4 @@ For arm creation, see the [arm authoring templates and downloads](./arm-template
 
 [Formats and Support Scope](./bedrock-empty.md) is a reference, not another required software route.
 
-Implementation baseline: `b6d52ab` (2026-09-05); see [version and acceptance status](./bedrock-empty.md). This marker does not imply the feature is present in every build labeled 2.12.87.
+See [Bedrock and Empty Animation](./bedrock-empty.md) for version requirements and check the installed release notes.

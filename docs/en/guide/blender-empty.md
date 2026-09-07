@@ -10,7 +10,7 @@ category:
 
 For rigid cube-style arms, download the [arm source templates](./arm-templates.md) and read the runtime limitations first.
 
-Use this for whole-part movement, rotation, and scale, not weight-deformed arms or cloth. Whole cube-style arm parts can be rigid authoring objects. It requires the new format-support development build; visual acceptance is pending.
+Use this for whole-part movement, rotation, and scale, not weight-deformed arms or cloth. Whole cube-style arm parts can be rigid authoring objects. Check that the installed release supports this format.
 
 ## Software and project
 
@@ -90,4 +90,4 @@ Reimport into an empty project and verify Empty nodes, clips, and mesh movement.
 
 **Checkpoint:** Reimport reproduces the animation. Continue through [format configuration](./bedrock-empty.md), [Getting Started](./getting-started.md), and [shared configuration](./first-firearm.md).
 
-Implementation baseline: `b6d52ab` (2026-09-05); see [version and acceptance status](./bedrock-empty.md). This marker does not imply the feature is present in every build labeled 2.12.87.
+See [Bedrock and Empty Animation](./bedrock-empty.md) for version requirements and check the installed release notes.

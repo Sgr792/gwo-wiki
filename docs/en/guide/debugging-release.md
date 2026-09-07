@@ -9,7 +9,7 @@ category:
 
 ### Optional module-setting warnings
 
-Since `ad17487`, string-valued numeric and boolean fields using the shared parser, including charm physics and laser settings, retain their defaults when missing or blank. Malformed numbers (including `NaN` and `Infinity`), integer overflow, and invalid booleans use defaults and emit an `Invalid module setting` warning. Further warnings for the same field and type are suppressed, with at most 128 warning categories per run.
+String-valued numeric and boolean fields using the shared parser, including charm physics and laser settings, retain their defaults when missing or blank. Malformed numbers (including `NaN` and `Infinity`), integer overflow, and invalid booleans use defaults and emit an `Invalid module setting` warning. Further warnings for the same field and type are suppressed, with at most 128 warning categories per run.
 
 Correct the field rather than relying on its fallback. Domain-specific ranges still apply. This is not a rule for every configuration field: required mechanics such as reload commits can still fail validation.
 

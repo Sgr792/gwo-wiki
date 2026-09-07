@@ -15,7 +15,7 @@ category:
 | Blockbench Bedrock | [下载 arms_blockbench.bbmodel](/downloads/arms_blockbench.bbmodel) | 可编辑分组与方块，另附[几何 JSON](/downloads/arms_blockbench.geo.json) |
 
 ::: warning 使用包含手臂适配的新构建
-提交 `ad17487` 已接入 Empty GLB 和 Bedrock 几何的独立手臂子网格选择与姿态变换。自动测试覆盖左右手、普通/纤细切换、外层和子网格相对变换。常规游戏回归已通过，但两套新模板的专门游戏画面验收仍待完成；仅把源文件放进内容包不会自动启用。
+使用 Empty 或 Bedrock 独立手臂时，请确认版本包含对应的手臂支持。模板需先导出为运行时格式，再配置 `arms.model`；仅复制编辑源文件不会启用自定义手臂。
 :::
 
 

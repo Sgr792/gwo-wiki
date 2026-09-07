@@ -25,8 +25,8 @@ GWO 使用以下主要资源格式：
 |---|---|
 | 枪械、配件、子弹、手臂模型 | `.glb` |
 | 独立动画库 | `.anim.glb` |
-| Bedrock 实体方块模型（新增开发版） | `.geo.json` |
-| Bedrock 数值动画库（新增开发版） | `.animation.json` |
+| Bedrock 实体方块模型（需对应格式支持） | `.geo.json` |
+| Bedrock 数值动画库（需对应格式支持） | `.animation.json` |
 | 基础色、法线、材质、自发光、图标 | `.png` |
 | 声音 | `.ogg`，Vorbis 编码 |
 | 行为和渲染配置 | `.json` |

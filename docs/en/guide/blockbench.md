@@ -13,7 +13,7 @@ Need a starting arm project? Download the [Blockbench arm source template](./arm
 Create cubes, groups, UVs, and animation in Blockbench. Blender is not required.
 
 ::: warning Before starting
-Use a development build containing the format update; visual acceptance is pending. Choose a Bedrock entity project, not a Java block/item project. A saved `.bbmodel` alone is not a runtime asset. Numeric keys are supported; Molang, entity controllers, and `poly_mesh` are not.
+Check that the installed release supports this format. Choose a Bedrock entity project, not a Java block/item project. A saved `.bbmodel` alone is not a runtime asset. Numeric keys are supported; Molang, entity controllers, and `poly_mesh` are not.
 :::
 
 ## Create a project
@@ -97,4 +97,4 @@ GLB filenames in the shared tutorial are examples. Substitute your `.geo.json` a
 
 Do not use per-face `uv_rotation`; the current loader does not process it. Check the [implementation baseline and restrictions](./bedrock-empty.md).
 
-Implementation baseline: `b6d52ab` (2026-09-05); see [version and acceptance status](./bedrock-empty.md). This marker does not imply the feature is present in every build labeled 2.12.87.
+See [Bedrock and Empty Animation](./bedrock-empty.md) for version requirements and check the installed release notes.

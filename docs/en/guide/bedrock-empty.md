@@ -5,7 +5,7 @@ category:
 ---
 
 ::: warning Build and validation status
-Requires a development build containing this format-support update. Earlier releases do not necessarily support it. Automated tests pass; in-game visual acceptance is still pending.
+Check the installed release notes for Bedrock model/animation and Blender Empty rigid-animation support. The `2.12.87` version label alone does not distinguish earlier builds.
 :::
 
 ## Choose a model workflow
@@ -98,7 +98,7 @@ Animations may also be embedded in the model GLB, in which case no separate `ani
 
 ## In-game acceptance
 
-Automated tests cover a real no-Skin GLB import, Empty tracks, parent transforms, Bedrock cubes/locators, UVs, and animation sampling. Passing tests and a build does not establish visual acceptance.
+
 
 Before publishing, check idle/draw/fire/reload/inspect, child meshes and moving locators, texture orientation, transparent nodes, normal rendering and Iris, and existing skinned GLB weapons.
 
@@ -106,8 +106,8 @@ Fields follow the [official Mojang geometry schemas](https://mojang.github.io/be
 
 ## Version baseline
 
-This format documentation is checked against the implementation introduced in commit `b6d52ab` (2026-09-05). It is a source revision marker, not a release download or an in-game acceptance certificate. The shared `2.12.87` label alone cannot distinguish older builds. Use a build explicitly containing that implementation; visual acceptance is still pending.
+Check the installed release notes for Bedrock model/animation and Blender Empty rigid-animation support. The `2.12.87` version label alone does not distinguish earlier builds.
 
-Independent-arm child geometry support was added in `ad17487`; see [arm templates and configuration](./arm-templates.md). That build passed 1346 automated tests, a full build, and reported general gameplay regression checks. Dedicated visual acceptance of the new Empty / Bedrock arm templates is still required. The accompanying cleanup does not change the content-pack format or existing assets.
+See [arm templates and configuration](./arm-templates.md) for Empty and Bedrock arm exports, child-mesh selection, and configuration.
 
 Per-face Bedrock `uv_rotation` is not currently processed. Do not use face UV rotation in exported assets; arrange the texture and UV rectangles so they do not need this field. A successful import does not prove that unsupported fields took effect.

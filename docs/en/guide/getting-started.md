@@ -17,7 +17,7 @@ Start with [Choose Your Workflow](./choose-workflow.md) if you have not selected
 
 GWO uses `.glb` for models, `.anim.glb` for animation libraries, `.png` for textures and icons, `.ogg` for sounds, and `.json` for behavior/render definitions. Use lowercase ASCII letters, digits, and underscores in resource paths.
 
-The new development build also accepts Bedrock entity cube `.geo.json` models, numeric `.animation.json` animation, and Blender Empty rigid GLBs. Blockbench can author the Bedrock workflow. Check [Bedrock and Empty Animation](./bedrock-empty.md) for build requirements, supported features, and configuration examples.
+Versions with the format update also accept Bedrock entity cube `.geo.json` models, numeric `.animation.json` animation, and Blender Empty rigid GLBs. Blockbench can author the Bedrock workflow. Check [Bedrock and Empty Animation](./bedrock-empty.md) for build requirements, supported features, and configuration examples.
 
 ## Pack location
 

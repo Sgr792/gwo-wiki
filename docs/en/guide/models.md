@@ -82,7 +82,7 @@ For reversed, offset, incorrectly scaled, or non-animated parts, check the share
 
 ## Empty nodes and arm template
 
-The new development build supports Blender Empty/spatial animation in no-Skin GLBs, preserving hierarchy, local transforms, and child meshes in the shared pose pipeline. Rigid meshes do not deform; use Armature skinning for deforming arms. Multi-Armature and mixed-rig compatibility are unchanged.
+Versions with the format update support Blender Empty/spatial animation in no-Skin GLBs, preserving hierarchy, local transforms, and child meshes in the shared pose pipeline. Rigid meshes do not deform; use Armature skinning for deforming arms. Multi-Armature and mixed-rig compatibility are unchanged.
 
 Bedrock entity cubes and numeric animations are also available. See [Bedrock and Empty Animation](./bedrock-empty.md) for build requirements, configuration, and limitations.
 

@@ -77,7 +77,7 @@ Magnified optics default to a strength of 0.15 when unspecified. Zero preserves 
 
 Hybrid and variable-magnification modes may override these optical fields and otherwise inherit shared settings. Projection uses the current node pose and existing lens stencil, independently of eye-box shadow displacement, with no previous-frame smoothing cache. Check centered alignment and relative reticle/lens motion during sway, reload, and fire.
 
-The eye-box shadow position uses the rear lens while obstruction strength still considers both lenses, avoiding position flips when their contributions cross. Do not move the reticle to repair the shadow. The shadow fix has received successful gameplay feedback; automated parallax/zeroing tests do not establish visual acceptance for every optic and shader combination.
+The eye-box shadow position uses the rear lens while obstruction strength still considers both lenses, avoiding position flips when their contributions cross. Do not move the reticle to repair the shadow. After making changes, check the shadow, parallax, and laser zeroing with each intended optic and shader configuration.
 
 ### Programmatic tactical stance
 
