@@ -23,6 +23,19 @@ function exists(file) {
 for (const file of pages) {
   const source = fs.readFileSync(file, 'utf8');
   const label = path.relative(root, file);
+  for (const image of source.matchAll(/<img\b([^>]+)>/g)) {
+    const attrs = image[1];
+    const src = /\bsrc="([^"]+)"/.exec(attrs)?.[1];
+    if (!src?.startsWith('/images/guide/')) continue;
+    const target = path.join(publicDir, src);
+    if (!fs.existsSync(target)) errors.push(`${label}: missing guide image ${src}`);
+    if (!/\balt="[^"]+"/.test(attrs)) errors.push(`${label}: guide image has no alt text`);
+    if (!/\bwidth="\d+"/.test(attrs) || !/\bheight="\d+"/.test(attrs)) {
+      errors.push(`${label}: guide image lacks intrinsic dimensions`);
+    }
+    const expectedLocale = file.startsWith(path.join(docs, 'en') + path.sep) ? '/en/' : '/zh/';
+    if (!src.includes(expectedLocale)) errors.push(`${label}: guide image locale mismatch`);
+  }
   for (const match of source.matchAll(/```(jsonc?)\s*\n([\s\S]*?)```/g)) {
     const body = match[2].trim();
     try {

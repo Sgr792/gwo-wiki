@@ -240,24 +240,11 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 
 ### 骨架、父子层级与坐标空间
 
-推荐第一人称层级：
-
-```text
-root
-├─ tag_view
-├─ tag_camera
-├─ tag_weapon
-│  ├─ 枪身机构骨骼
-│  ├─ 配件挂点
-│  └─ 弹药挂点
-└─ arms_root
-   ├─ RIGHT_ARM
-   └─ LEFT_ARM
-```
+第一人称层级统一按[模型规范的标准父子层级](./models.md#标准父子层级)建立。Blender 骨骼蒙皮路线的 `root` 是 Armature 骨架对象，不是骨骼；骨架内部的骨骼父子关系在编辑模式下设置。Empty 路线的根是 Empty，Blockbench 路线则使用根分组，不要混用对象类型。
 
 必须遵守：
 
-- `root` 是统一根节点，不能在不同模型和动画文件中拥有不同的绑定变换。
+- Blender 蒙皮路线的 `root` 骨架对象在模型与动画文件中必须保持一致的参考变换。
 - `tag_view` 决定第一人称视角参考位置；所有动作使用同一基准，不用它制作普通镜头摇晃。
 - `tag_camera` 只保存确实需要的相机动画。
 - `tag_weapon` 是枪械主体与手臂相对运动的核心参考。
@@ -267,6 +254,13 @@ root
 - 动画库和模型中的 skin 必须一致。出现 `applies to joints that are not from the same skin` 时不能忽略。
 
 ### 通道所有权与禁止轨道总表
+
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/animation-tracks.svg" target="_blank" rel="noopener" aria-label="查看原图：瞄准轨道：只让正确的节点参与">
+    <img src="/images/guide/zh/animation-tracks.svg" alt="瞄准轨道：只让正确的节点参与" width="960" height="635" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>检查轨道列表；没有运动的静态关键帧也可能覆盖别的层。 示意图，点击查看原图。</figcaption>
+</figure>
 
 “禁止轨道”表示动画文件中不应存在该节点的位置、旋转或缩放关键帧。即使整段数值不变，静态通道仍可能覆盖其他动画层。
 

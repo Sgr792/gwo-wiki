@@ -24,6 +24,13 @@ category:
 
 ## Empty 层级与挂点
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/hierarchy.svg" target="_blank" rel="noopener" aria-label="查看原图：第一人称主链：父级到子级">
+    <img src="/images/guide/zh/hierarchy.svg" alt="第一人称主链：父级到子级" width="960" height="630" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>在大纲中核对主链；相机和瞄准节点是兄弟节点。 示意图，点击查看原图。</figcaption>
+</figure>
+
 创建 Empty 作为参考节点，将网格设置为相应 Empty 的子物体。正式第一人称武器沿用以下主链：
 
 ```text
@@ -50,6 +57,13 @@ UV 在 Mesh 上制作，不是在 Empty 上制作。基础色、法线、材质�
 
 ## 刚性动画
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/rigid-pivot.svg" target="_blank" rel="noopener" aria-label="查看原图：谁驱动网格？枢轴放在哪里？">
+    <img src="/images/guide/zh/rigid-pivot.svg" alt="谁驱动网格？枢轴放在哪里？" width="960" height="600" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>旋转父 Empty 测试枢轴；不要把相同运动再烘焙到子网格。 示意图，点击查看原图。</figcaption>
+</figure>
+
 选中要运动的 Empty，在需要的帧设置位置、旋转或缩放关键帧。网格本身也可以有对象动画，但通常把机构运动集中在 Empty 上更易管理。
 
 - 使用唯一节点名。
@@ -60,6 +74,13 @@ UV 在 Mesh 上制作，不是在 Empty 上制作。基础色、法线、材质�
 **完成标准：**运动部件不变形，动作起止位置一致，没有父子双重运动。
 
 ## 导出与检查
+
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/export-check.svg" target="_blank" rel="noopener" aria-label="查看原图：导出完成，不等于已经导出正确">
+    <img src="/images/guide/zh/export-check.svg" alt="导出完成，不等于已经导出正确" width="960" height="640" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>先重新导入检查；成功导出不代表层级和动画一定正确。 示意图，点击查看原图。</figcaption>
+</figure>
 
 导出 GLB 时包含完整 Empty 层级及子网格，并启用动画导出。仅选择网格会丢失驱动节点。
 

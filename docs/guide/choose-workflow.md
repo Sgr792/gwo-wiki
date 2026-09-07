@@ -16,6 +16,13 @@ category:
 
 ## 不知道选哪条？
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/workflow.svg" target="_blank" rel="noopener" aria-label="查看原图：先选一条制作路线">
+    <img src="/images/guide/zh/workflow.svg" alt="先选一条制作路线" width="960" height="610" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>先选一条路线，再进入共用配置；不用同时学习两套软件。 示意图，点击查看原图。</figcaption>
+</figure>
+
 - 想制作精细枪模，同时制作会弯曲的手指和手臂：选择 **Blender 骨骼蒙皮**。
 - 已经会 Blender，只需要弹匣移动、枪机旋转等整块运动：选择 **Blender Empty**。
 - 喜欢方块风格，想在 Blockbench 中完成模型与动画：选择 **Blockbench Bedrock**。

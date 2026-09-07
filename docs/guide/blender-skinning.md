@@ -28,7 +28,14 @@ category:
 
 ## 骨架、挂点与权重
 
-按[模型规范的主链](./models.md)建立第一人称参考节点。用骨骼驱动需要运动的部分，挂点位于对应运动分支下。
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/rigid-pivot.svg" target="_blank" rel="noopener" aria-label="查看原图：谁驱动网格？枢轴放在哪里？">
+    <img src="/images/guide/zh/rigid-pivot.svg" alt="谁驱动网格？枢轴放在哪里？" width="960" height="600" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>逐个旋转骨骼，确认只有预期网格跟随。 示意图，点击查看原图。</figcaption>
+</figure>
+
+按[模型规范的主链](./models.md)建立第一人称参考节点。这里的 `root` 是骨架对象（Armature），不是名为 `root` 的骨骼；`tag_view` 等才是骨架内部的骨骼。不要为了照着图搭建而额外创建一根 `root` 骨骼。用骨骼驱动需要运动的部分，挂点位于对应运动分支下。
 
 - 刚性枪身部件：对应顶点对所属骨骼赋完整权重。
 - 使用提供的手臂模板时：检查左右手整体运动与握持位置，不把手臂网格误分配给枪身骨骼。自定义多关节手臂属于进阶工作，还需确认运行时支持。
@@ -53,6 +60,13 @@ Blender 中看到的材质节点效果不会全部自动转成 GWO 的材质配�
 **完成标准：**每个动作可以单独播放，起止姿态符合预期，动作名没有重复。
 
 ## 导出与检查
+
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/export-check.svg" target="_blank" rel="noopener" aria-label="查看原图：导出完成，不等于已经导出正确">
+    <img src="/images/guide/zh/export-check.svg" alt="导出完成，不等于已经导出正确" width="960" height="640" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>先重新导入检查；成功导出不代表层级和动画一定正确。 示意图，点击查看原图。</figcaption>
+</figure>
 
 推荐分别导出模型 `.glb` 与动画库 `.anim.glb`。包含所需 Armature、网格和蒙皮；动画库与模型的节点名、父子级及绑定姿态一致。
 

@@ -19,13 +19,13 @@ GWO 当前内容以枪口朝模型 `+X` 方向为基准。不要只靠 JSON 把�
 - 不要在导出前随意应用骨架对象变换。
 - 枪械、默认配件、动画库和独立手臂必须来自同一套骨骼命名和参考空间。
 
-### 主骨骼与常用挂点
+### 骨架对象、骨骼与常用挂点
 
 不同武器不必拥有所有节点，但已经写进配置的节点必须真实存在。
 
 | 节点 | 作用 |
 |---|---|
-| `root` | 枪械根节点 |
+| `root` | Blender 骨架对象（Armature），不是骨骼 |
 | `tag_weapon` | 第一人称枪械/手部主要参考节点 |
 | `tag_view` | 第一人称视角位置 |
 | `tag_camera` | 相机动画节点，只用于相机姿态 |
@@ -49,10 +49,17 @@ GWO 当前内容以枪口朝模型 `+X` 方向为基准。不要只靠 JSON 把�
 
 #### 标准父子层级
 
-第一人称主链应当按下面的方向建立：
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/hierarchy.svg" target="_blank" rel="noopener" aria-label="查看原图：第一人称主链：父级到子级">
+    <img src="/images/guide/zh/hierarchy.svg" alt="第一人称主链：父级到子级" width="960" height="630" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>按连线建立真实父子关系，不能仅靠名字相同。 示意图，点击查看原图。</figcaption>
+</figure>
+
+第一人称主链应当按下面的方向建立。Blender 蒙皮路线中，最上层 `root` 表示骨架对象，其下一层表示骨架内部的根骨骼；这一级是对象包含骨骼的关系，不是两根骨骼之间的父子关系。`tag_view` 以下才是骨骼父子层级。Empty 路线使用 Empty 对象，Bedrock 路线使用分组，不能把三者都称为骨骼。
 
 ```text
-root
+root（Armature 骨架对象，不是骨骼）
 └─ tag_view
    ├─ tag_camera
    └─ tag_ads
@@ -69,6 +76,13 @@ root
 模块化武器的 `tag_flash` 通常位于枪管 GLB 的 `tag_barrel_attach` 分支下；一体模型则放在枪械主体运动分支下。枪口、抛壳、挂点和需要随枪运动的网格都不能直接挂到 `root`、`tag_view` 或 `tag_camera`，否则瞄准、开火或动画混合时会留在错误空间。
 
 ### 默认部件
+
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/anchors.svg" target="_blank" rel="noopener" aria-label="查看原图：默认配件：对齐挂点，不是对齐世界原点">
+    <img src="/images/guide/zh/anchors.svg" alt="默认配件：对齐挂点，不是对齐世界原点" width="960" height="640" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>先核对主枪挂点，再核对部件的 anchor_node 和参考空间。 示意图，点击查看原图。</figcaption>
+</figure>
 
 主机匣模型必须保留供其他部件挂载的节点。默认部件模型在各自渲染文件中通过 `anchor_node` 挂到主枪节点。
 

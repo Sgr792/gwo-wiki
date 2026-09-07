@@ -24,6 +24,13 @@ Keep the muzzle along `+X`. Establish units and transforms before animation. Mes
 
 ## Empty hierarchy and anchors
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/hierarchy.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: First-person hierarchy: parent to child">
+    <img src="/images/guide/en/hierarchy.svg" alt="First-person hierarchy: parent to child" width="960" height="630" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Check the hierarchy: the camera and ADS nodes are siblings. Schematic; open the image for full size.</figcaption>
+</figure>
+
 Create Empty objects and parent meshes to them. A complete first-person reference chain is:
 
 ```text
@@ -50,6 +57,13 @@ Author UVs on the Mesh, not the Empty. Use the same [material configuration](./f
 
 ## Rigid animation
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/rigid-pivot.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: What moves the mesh? Where is the pivot?">
+    <img src="/images/guide/en/rigid-pivot.svg" alt="What moves the mesh? Where is the pivot?" width="960" height="600" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Test the pivot by rotating the parent Empty; do not bake the same motion twice. Schematic; open the image for full size.</figcaption>
+</figure>
+
 Keyframe location, rotation, or scale on the moving Empty. Mesh object animation also works, but organizing mechanism motion on Empty parents is easier to maintain.
 
 - Use unique node names.
@@ -60,6 +74,13 @@ Keyframe location, rotation, or scale on the moving Empty. Mesh object animation
 **Checkpoint:** Parts remain rigid and do not move twice because of parent/child keys.
 
 ## Export and verify
+
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/export-check.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: Export succeeded does not mean export is correct">
+    <img src="/images/guide/en/export-check.svg" alt="Export succeeded does not mean export is correct" width="960" height="640" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Reimport and inspect; a successful export does not guarantee correct hierarchy or animation. Schematic; open the image for full size.</figcaption>
+</figure>
 
 Include the complete Empty hierarchy and meshes in the GLB export, with animation enabled. Exporting only meshes loses their drivers.
 

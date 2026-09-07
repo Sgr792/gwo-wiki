@@ -16,6 +16,13 @@ You do not need to learn both applications. Complete one route, then continue to
 
 ## Which route should I choose?
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/workflow.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: Choose one authoring route">
+    <img src="/images/guide/en/workflow.svg" alt="Choose one authoring route" width="960" height="610" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Choose one route, then continue to shared configuration. Schematic; open the image for full size.</figcaption>
+</figure>
+
 - Detailed weapons and bending fingers/arms: **Blender skinning**.
 - Already using Blender and only need whole-part movement: **Blender Empty**.
 - Prefer cube-style modeling and Blockbench: **Bedrock entities**.

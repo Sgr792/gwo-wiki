@@ -34,6 +34,13 @@ Bedrock positions are converted at 16 model units per render unit. Do not apply 
 
 ## Groups, pivots, and anchors
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/rigid-pivot.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: What moves the mesh? Where is the pivot?">
+    <img src="/images/guide/en/rigid-pivot.svg" alt="What moves the mesh? Where is the pivot?" width="960" height="600" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Set the group pivot, rotate it, and check that its cubes move together. Schematic; open the image for full size.</figcaption>
+</figure>
+
 Groups become bone nodes on export. Put each mechanism's cubes in its group and place the group pivot at its rotation/movement reference.
 
 Use the `root → tag_view → tag_ads → tag_weapon` first-person chain. `tag_camera` and `tag_ads` are siblings. Node responsibilities in [Model Rules](./models.md) apply here without creating a Blender Armature.
@@ -64,6 +71,13 @@ Start with idle and one simple action before adding draw/fire/reload. Set the in
 **Checkpoint:** Each action plays correctly, with static poses, loops, and one-shot actions distinguished.
 
 ## Export and verify
+
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/export-check.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: Export succeeded does not mean export is correct">
+    <img src="/images/guide/en/export-check.svg" alt="Export succeeded does not mean export is correct" width="960" height="640" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Reimport and inspect; a successful export does not guarantee correct hierarchy or animation. Schematic; open the image for full size.</figcaption>
+</figure>
 
 Export:
 

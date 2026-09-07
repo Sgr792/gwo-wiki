@@ -7,6 +7,13 @@ category:
 
 ## Attachments
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/anchors.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: Default parts: align anchors, not world origins">
+    <img src="/images/guide/en/anchors.svg" alt="Default parts: align anchors, not world origins" width="960" height="640" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Anchor positions come from your model; the diagram is only an assembly example. Schematic; open the image for full size.</figcaption>
+</figure>
+
 Each attachment has behavior and render definitions. The render file binds its model and maps to an `anchor_node`; the behavior file declares compatible weapons/slots and stat modifiers. Use the real animated attachment point from the receiver rig.
 
 Nested points must follow the installed part that owns them. For example, a pistol optic attached to `tag_reflex` on an animated barrel must resolve that node through the barrel's current animated transform.

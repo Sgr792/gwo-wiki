@@ -58,6 +58,13 @@ category:
 
 ## 第 1 步：先规划名字，避免后期全盘重命名
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/resource-path.svg" target="_blank" rel="noopener" aria-label="查看原图：资源 ID 与文件夹：一眼对上路径">
+    <img src="/images/guide/zh/resource-path.svg" alt="资源 ID 与文件夹：一眼对上路径" width="960" height="646" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>把资源 ID 对应到 assets 下的真实文件，再进入下一步。 示意图，点击查看原图。</figcaption>
+</figure>
+
 创建下表中的目标路径：
 
 ```text

@@ -129,6 +129,13 @@ Not every weapon needs every state. A correctly named but unreferenced clip is n
 
 ## Channel ownership
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/animation-tracks.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: Aim tracks: animate only the owning nodes">
+    <img src="/images/guide/en/animation-tracks.svg" alt="Aim tracks: animate only the owning nodes" width="960" height="635" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Inspect the track list: constant keys can still override another layer. Schematic; open the image for full size.</figcaption>
+</figure>
+
 - Animate a node in the layer that owns it; avoid duplicate channels for the same target across independent armatures.
 - Missing additive channels must remain absent. Do not bake every static bone into every clip.
 - `tag_camera` contains camera motion only. `tag_view` is the view reference and should not duplicate camera shake.

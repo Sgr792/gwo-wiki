@@ -49,6 +49,13 @@ The game starts without content-pack JSON errors. An empty pack adds no item.
 
 ## Step 1: Create the target paths
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/resource-path.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: Match a resource ID to its file">
+    <img src="/images/guide/en/resource-path.svg" alt="Match a resource ID to its file" width="960" height="646" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Resolve the resource ID to a real file under assets before continuing. Schematic; open the image for full size.</figcaption>
+</figure>
+
 ```text
 my_first_gwo_pack/
 ├─ weapons/firearms/training_rifle.json

@@ -278,6 +278,13 @@ category:
 
 ## 材质与贴图
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/materials.svg" target="_blank" rel="noopener" aria-label="查看原图：贴图文件怎样接到游戏材质">
+    <img src="/images/guide/zh/materials.svg" alt="贴图文件怎样接到游戏材质" width="960" height="640" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>先确认基础色，再逐项启用法线、高光和发光。 示意图，点击查看原图。</figcaption>
+</figure>
+
 常用字段：
 
 ```jsonc

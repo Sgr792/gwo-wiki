@@ -34,6 +34,13 @@ Bedrock 位置按 16 模型单位对应 1 渲染单位换算。不要给位移�
 
 ## 分组、枢轴与挂点
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/rigid-pivot.svg" target="_blank" rel="noopener" aria-label="查看原图：谁驱动网格？枢轴放在哪里？">
+    <img src="/images/guide/zh/rigid-pivot.svg" alt="谁驱动网格？枢轴放在哪里？" width="960" height="600" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>在分组上设置枢轴，旋转后检查目标方块是否整体跟随。 示意图，点击查看原图。</figcaption>
+</figure>
+
 在大纲中建立分组；导出后分组对应骨骼节点。一个机构的方块放进同一组，把组的枢轴放在其转轴或运动参考点。
 
 正式第一人称武器沿用 `root → tag_view → tag_ads → tag_weapon`；`tag_camera` 与 `tag_ads` 同级。完整职责见[模型规范](./models.md)，其中的节点名同样适用，不需要创建 Blender Armature。
@@ -64,6 +71,13 @@ Bedrock 位置按 16 模型单位对应 1 渲染单位换算。不要给位移�
 **完成标准：**每个动作能独立播放，零时长静态姿态、循环动作和一次性动作区分清楚。
 
 ## 导出与检查
+
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/export-check.svg" target="_blank" rel="noopener" aria-label="查看原图：导出完成，不等于已经导出正确">
+    <img src="/images/guide/zh/export-check.svg" alt="导出完成，不等于已经导出正确" width="960" height="640" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>先重新导入检查；成功导出不代表层级和动画一定正确。 示意图，点击查看原图。</figcaption>
+</figure>
 
 分别导出：
 

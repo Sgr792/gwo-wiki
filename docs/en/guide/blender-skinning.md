@@ -28,7 +28,14 @@ Establish transforms and reference space before animating. Do not apply object o
 
 ## Rig, anchors, and weights
 
-Follow the first-person hierarchy in [Model Rules](./models.md). Parent anchors to the appropriate moving branch.
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/rigid-pivot.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: What moves the mesh? Where is the pivot?">
+    <img src="/images/guide/en/rigid-pivot.svg" alt="What moves the mesh? Where is the pivot?" width="960" height="600" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Rotate each bone and check that only the intended mesh follows. Schematic; open the image for full size.</figcaption>
+</figure>
+
+Follow the first-person hierarchy in [Model Rules](./models.md). Here, `root` is the Armature object, not a bone named `root`; nodes such as `tag_view` are bones inside that armature. Do not add an extra `root` bone to reproduce the diagram. Parent anchors to the appropriate moving branch.
 
 - Give rigid part vertices full weight to their intended bone.
 - With the supplied template, check whole-arm motion and grip alignment; do not bind arm meshes to the weapon-body bone. Custom multi-joint arms are advanced work requiring runtime validation.
@@ -53,6 +60,13 @@ Read [Animation Rules](./animation.md) for channel ownership, forbidden tracks, 
 **Checkpoint:** Each action plays independently with the intended start/end pose and unique name.
 
 ## Export and verify
+
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/export-check.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: Export succeeded does not mean export is correct">
+    <img src="/images/guide/en/export-check.svg" alt="Export succeeded does not mean export is correct" width="960" height="640" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Reimport and inspect; a successful export does not guarantee correct hierarchy or animation. Schematic; open the image for full size.</figcaption>
+</figure>
 
 Prefer separate model `.glb` and animation-library `.anim.glb` exports. Include the required Armature, meshes, and skinning. Names, hierarchy, and bind pose must agree between files.
 

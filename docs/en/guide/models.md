@@ -13,7 +13,7 @@ The muzzle points along model-space `+X`. Apply mesh rotation and scale, but do 
 
 | Node | Purpose |
 |---|---|
-| `root` | Weapon root |
+| `root` | Blender Armature object, not a bone |
 | `tag_weapon` | Primary first-person weapon/hand reference |
 | `tag_view` | First-person view reference |
 | `tag_camera` | Camera animation only |
@@ -30,8 +30,17 @@ The muzzle points along model-space `+X`. Apply mesh rotation and scale, but do 
 
 ### Required first-person hierarchy
 
+For Blender skinning, `root` is the Armature object containing the root bone, not an extra parent bone. Bone parenting begins inside that object, from `tag_view` downward. The Empty route uses Empty objects and the Bedrock route uses groups; these are not Blender Armature objects.
+
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/hierarchy.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: First-person hierarchy: parent to child">
+    <img src="/images/guide/en/hierarchy.svg" alt="First-person hierarchy: parent to child" width="960" height="630" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Build the actual parent relationships; matching names alone are insufficient. Schematic; open the image for full size.</figcaption>
+</figure>
+
 ```text
-root
+root (Armature object, not a bone)
 └─ tag_view
    ├─ tag_camera
    └─ tag_ads
@@ -50,6 +59,13 @@ For modular weapons, `tag_flash` normally lives in the barrel GLB below its `tag
 Never substitute `tag_camera` for `tag_view`.
 
 ## Default parts
+
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/anchors.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: Default parts: align anchors, not world origins">
+    <img src="/images/guide/en/anchors.svg" alt="Default parts: align anchors, not world origins" width="960" height="640" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Check the main-model anchor, the part's anchor_node, and its reference space. Schematic; open the image for full size.</figcaption>
+</figure>
 
 ```json
 {

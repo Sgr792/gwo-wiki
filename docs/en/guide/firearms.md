@@ -62,6 +62,13 @@ Muzzle flash and smoke use separate resources. Verify both first and third perso
 
 ## Texture channels
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/en/materials.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: How texture files connect to game materials">
+    <img src="/images/guide/en/materials.svg" alt="How texture files connect to game materials" width="960" height="640" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>Verify base color first, then add normal, specular, and emissive maps. Schematic; open the image for full size.</figcaption>
+</figure>
+
 - Base color: `*.png`
 - Tangent-space normal: `*_n.png`
 - GWO packed material/specular map: `*_s.png`

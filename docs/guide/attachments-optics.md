@@ -38,6 +38,13 @@ category:
 
 ### 配件挂点层级
 
+<figure class="gwo-guide-figure">
+  <a href="/images/guide/zh/anchors.svg" target="_blank" rel="noopener" aria-label="查看原图：默认配件：对齐挂点，不是对齐世界原点">
+    <img src="/images/guide/zh/anchors.svg" alt="默认配件：对齐挂点，不是对齐世界原点" width="960" height="640" loading="lazy" decoding="async" />
+  </a>
+  <figcaption>挂点位置由模型决定，图中位置仅作装配原理示意。 示意图，点击查看原图。</figcaption>
+</figure>
+
 配件可以挂在枪上，也可以挂在另一个配件上。例如激光器：
 
 ```json
