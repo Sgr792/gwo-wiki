@@ -29,7 +29,64 @@ Keep a consistent camera angle, silhouette size, margin, shadow, and brightness.
 
 ## Modification screen
 
-Weapon class, slot names, and attachment cards must be localized. Use `modify_screen` only for the static model's position, rotation, and scale. The model renders behind text and UI cards and must not run `idle` animation. Default parts must attach to their actual nodes in this static pose.
+Weapon class, slot names, and attachment cards must be localized. The base `modify_screen.translation`, `rotation`, and `scale` control the static weapon overview. The model renders behind text and UI cards and must not run `idle` animation. Default parts must attach to their actual nodes in this static pose.
+
+### Attachment detail views
+
+Edit `weapons/firearms/render/<weapon_id>.render.json`. Merge this fragment into its existing `modify_screen` object without replacing the weapon's base display settings:
+
+```jsonc
+"preview_camera": {
+  "transition_ms": 200,
+  "parts": {
+    "sight": {
+      "anchor_node": "tag_reflex",
+      "rotation": {"x": -20, "y": 0, "z": 0},
+      "zoom": 1.5,
+      "offset": {"x": 0, "y": 0, "z": 0},
+      "follow_node_rotation": false
+    }
+  },
+  "modules": {
+    "example_optic": {"zoom": 1.4}
+  }
+}
+```
+
+| Field | Meaning |
+| --- | --- |
+| `transition_ms` | Transition duration: 200 ms by default, range 0–2000; 0 switches immediately |
+| `parts` | Overrides keyed by slot, such as `sight`, `laser`, `magazine`, `stock`, `barrel`, or `muzzle` |
+| `modules` | Overrides keyed by an entry in this weapon's `modules`, not its display name |
+| `anchor_node` | Focus node; replace the example with a real model node, or omit to use the attachment anchor |
+| `rotation` | View rotation relative to the base preview, in degrees |
+| `zoom` | Detail-view scale, range 0.1–8; not ADS magnification |
+| `offset` | Translation in the focused preview space, not the UI-pixel offset used for cartridges below |
+| `follow_node_rotation` | Defaults to false (position only); true also follows the node's orientation |
+
+Module overrides take precedence over slot overrides; unspecified fields inherit slot and weapon-class presets. Rotation and offset also accept `[x, y, z]`. View direction is manually configured, not automatically chosen from the attachment's installation side. If a laser is hidden on the opposite side, adjust that module's rotation.
+
+Detail views focus on static attachment anchors and transition smoothly back to the overview. An unresolved or ambiguous anchor keeps the overview; specify `anchor_node` to resolve it. The ammunition page keeps the weapon overview rather than zooming into the magazine.
+
+### Cartridge preview below the receiver
+
+The ammunition page renders the ammunition definition's `models.cartridge` with its own material. Hovering a card changes the preview; leaving restores the selected ammunition. Hovering does not replace loaded rounds.
+
+Add this fragment inside the same `modify_screen` object:
+
+```jsonc
+"ammo_preview": {
+  "translation": {"x": 0, "y": 80, "z": 0}
+}
+```
+
+- `x`: horizontal offset from the receiver origin; positive moves right.
+- `y`: downward distance from the receiver origin; defaults to 80.
+- `z`: relative render depth; leave at 0 unless needed. It does not change size.
+
+Values use the 960×540 UI design coordinates and scale with the interface. Array form `"translation": [0, 80, 0]` is also supported; omitting the setting keeps these defaults. For example, `{"x": -20, "y": 100, "z": 0}` places the preview 20 units left and 100 below the receiver.
+
+Size follows the in-gun cartridge scale chain, including the weapon, magazine, marker, and ammunition's own scale, rather than fitting the preview area. This translation changes neither weapon placement nor cartridge size or orientation. Missing usable `models.cartridge` data displays a missing-model message. Use a mod version that supports these fields; adding them to a pack does not enable the feature in older versions.
 
 ## Configuration examples
 
