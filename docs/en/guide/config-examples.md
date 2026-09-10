@@ -17,14 +17,6 @@ Downloads are valid JSON. The first two are **fragments to merge into an existin
 ```json
 {
   "animation_fps": 30,
-  "animation_clips": {
-    "static_idle": "static_idle",
-    "fire_pre": "fire_pre",
-    "fire": "fire",
-    "fire_settle": "fire_settle",
-    "reload": "reload",
-    "reload_empty": "reload_empty"
-  },
   "animation_events": {
     "fire_pre": "fire",
     "fire": "fire",
@@ -149,6 +141,11 @@ Downloads are valid JSON. The first two are **fragments to merge into an existin
         "loop": false,
         "fade_in": 0,
         "fade_out": 0
+      },
+      "idle": {
+        "clip": "idle",
+        "layer": "base",
+        "loop": true
       }
     }
   }
@@ -172,7 +169,7 @@ This covers hip-fire teaching branches only. Add ADS, last-round, and dry-fire b
 ```json
 {
   "pose_graph": {
-    "base_clip": "static_idle",
+    "base_clip": "idle",
     "default_blend": "override",
     "layers": {
       "action": {

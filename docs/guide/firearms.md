@@ -106,8 +106,8 @@ category:
     "action_commit_ms": {
       "reload": 1300,
       "reload_empty": 1800,
-      "aim_reload": 1300,
-      "aim_reload_empty": 1800,
+      "reload_ads": 1300,
+      "reload_empty_ads": 1800,
       "melee": 233
     }
   },
@@ -161,13 +161,39 @@ category:
     "example_rifle_barrel_default": "attachments/barrels/example_rifle_barrel_default.json",
     "example_rifle_mag_default": "attachments/magazines/example_rifle_mag_default.json"
   },
-  "animation_clips": {
-    "static_idle": "static_idle",
-    "draw": "draw",
-    "holster": "holster",
-    "fire": "fire",
-    "reload": "reload",
-    "reload_empty": "reload_empty"
+  "animation_controller": {
+    "channels": {
+      "idle": {
+        "clip": "idle",
+        "layer": "base",
+        "loop": true
+      },
+      "raise": {
+        "clip": "raise",
+        "layer": "action",
+        "loop": false
+      },
+      "drop": {
+        "clip": "drop",
+        "layer": "action",
+        "loop": false
+      },
+      "fire": {
+        "clip": "fire",
+        "layer": "recoil",
+        "loop": false
+      },
+      "reload": {
+        "clip": "reload",
+        "layer": "action",
+        "loop": false
+      },
+      "reload_empty": {
+        "clip": "reload_empty",
+        "layer": "action",
+        "loop": false
+      }
+    }
   },
   "gltf_scale": 0.075,
   "first_person": {
@@ -257,7 +283,7 @@ category:
 - `inaccuracy`：子弹方向散布。
 - `recoil.vertical/horizontal`：视角/准心后坐。
 - `recoil.model_back`：枪械模型前后运动。
-- `fire`/`aim_fire` 动画：作者制作的枪械与手臂动作。
+- `fire`/`fire_ads` 动画：作者制作的枪械与手臂动作。
 
 ### 枪口效果、烟雾、尾迹和抛壳
 

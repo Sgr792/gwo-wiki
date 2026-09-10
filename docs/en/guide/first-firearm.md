@@ -119,11 +119,11 @@ The first file is base color/alpha, `_n` is the tangent-space normal map, and `_
 
 ## Step 4: Export a minimal animation library
 
-Start with `static_idle`, `draw`, `holster`, `fire`, `reload`, and `reload_empty`. Idle is the stable reference; draw ends there, holster leaves it, and fire/reload hand back without a jump.
+Start with `idle`, `raise`, `drop`, `fire`, `reload`, and `reload_empty`. Idle is the stable reference; draw ends there, holster leaves it, and fire/reload hand back without a jump.
 
 Create Armature Actions for the skinning route, object-transform tracks grouped into exported clips for Empty, or group animations in Blockbench. Use 30 FPS as this example's event-frame reference, unique clip names, and only intentional tracks.
 
-Export GLB animation to the planned `.anim.glb` or Bedrock animation to `.animation.json`. Reference it from `animation_sources`; map full exported names in `animation_clips`. Names, hierarchy, and bind/initial reference must match the model.
+Export GLB animation to the planned `.anim.glb` or Bedrock animation to `.animation.json`. Reference it from `animation_sources`; reference full exported names in the controller’s `clip`. Names, hierarchy, and bind/initial reference must match the model.
 
 Checkpoint: all six clips exist, frame zero works, draw ends at idle, fire has no unintended root offset, and GLB exports have no cross-skin ownership warnings.
 
@@ -230,17 +230,9 @@ Create `weapons/firearms/render/training_rifle.render.json` and copy the complet
   "normal": "tutorial:skins/guns/training_rifle_n.png",
   "specular": "tutorial:skins/guns/training_rifle_s.png",
   "icon_texture": "tutorial:textures/item/guns/training_rifle.png",
-  "animation_clips": {
-    "static_idle": "static_idle",
-    "draw": "draw",
-    "holster": "holster",
-    "fire": "fire",
-    "reload": "reload",
-    "reload_empty": "reload_empty"
-  },
   "animation_events": {
-    "draw": "draw",
-    "holster": "holster",
+    "raise": "raise",
+    "drop": "drop",
     "fire": "fire",
     "reload": "reload",
     "reload_empty": "reload_empty"
@@ -248,23 +240,50 @@ Create `weapons/firearms/render/training_rifle.render.json` and copy the complet
   "animation_machine": {
     "version": 2,
     "actions": {
-      "draw": {"type": "finite", "default_state": "draw"},
-      "holster": {"type": "finite", "default_state": "holster"},
+      "raise": {
+        "type": "finite",
+        "default_state": "raise"
+      },
+      "drop": {
+        "type": "finite",
+        "default_state": "drop"
+      },
       "fire": {
         "type": "finite",
         "default_state": "fire",
         "events": [
-          {"type": "shot_effects", "marker": "shot", "offset_ms": 0},
-          {"type": "fire_sound", "marker": "shot", "offset_ms": 0},
-          {"type": "recoil", "marker": "shot", "offset_ms": 0}
+          {
+            "type": "shot_effects",
+            "marker": "shot",
+            "offset_ms": 0
+          },
+          {
+            "type": "fire_sound",
+            "marker": "shot",
+            "offset_ms": 0
+          },
+          {
+            "type": "recoil",
+            "marker": "shot",
+            "offset_ms": 0
+          }
         ]
       },
       "reload": {
         "type": "finite",
         "default_state": "reload",
         "variants": [
-          {"state": "reload_empty", "priority": 100, "when": {"empty": "true"}},
-          {"state": "reload", "priority": 0}
+          {
+            "state": "reload_empty",
+            "priority": 100,
+            "when": {
+              "empty": "true"
+            }
+          },
+          {
+            "state": "reload",
+            "priority": 0
+          }
         ]
       }
     },
@@ -272,11 +291,43 @@ Create `weapons/firearms/render/training_rifle.render.json` and copy the complet
   },
   "animation_controller": {
     "channels": {
-      "draw": {"clip": "draw", "layer": "action", "loop": false, "duration_frame": 24},
-      "holster": {"clip": "holster", "layer": "action", "loop": false, "duration_frame": 21},
-      "fire": {"clip": "fire", "layer": "recoil", "loop": false, "duration_frame": 8},
-      "reload": {"clip": "reload", "layer": "action", "loop": false, "duration_frame": 76, "lock_fire": true},
-      "reload_empty": {"clip": "reload_empty", "layer": "action", "loop": false, "duration_frame": 81, "lock_fire": true}
+      "raise": {
+        "clip": "raise",
+        "layer": "action",
+        "loop": false,
+        "duration_frame": 24
+      },
+      "drop": {
+        "clip": "drop",
+        "layer": "action",
+        "loop": false,
+        "duration_frame": 21
+      },
+      "fire": {
+        "clip": "fire",
+        "layer": "recoil",
+        "loop": false,
+        "duration_frame": 8
+      },
+      "reload": {
+        "clip": "reload",
+        "layer": "action",
+        "loop": false,
+        "duration_frame": 76,
+        "lock_fire": true
+      },
+      "reload_empty": {
+        "clip": "reload_empty",
+        "layer": "action",
+        "loop": false,
+        "duration_frame": 81,
+        "lock_fire": true
+      },
+      "idle": {
+        "clip": "idle",
+        "layer": "base",
+        "loop": true
+      }
     }
   },
   "gltf_scale": 0.075,
@@ -284,12 +335,24 @@ Create `weapons/firearms/render/training_rifle.render.json` and copy the complet
     "anchor_node": "tag_camera",
     "camera_node": "tag_view",
     "use_camera_transform": true,
-    "translation": {"x": 0, "y": 0, "z": 0},
-    "rotation": {"x": 0, "y": 0, "z": 0},
+    "translation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
     "scale": 1
   },
-  "camera": {"model_fov": 50},
-  "shell_effect": {"anchor_bone": "tag_brass"}
+  "camera": {
+    "model_fov": 50
+  },
+  "shell_effect": {
+    "anchor_bone": "tag_brass"
+  }
 }
 ```
 
@@ -308,12 +371,12 @@ Restart the game for the first complex GLB load, then run:
 Verify in order:
 
 1. The weapon appears in inventory.
-2. Equip plays `draw`.
+2. Equip plays `raise`.
 3. Idle does not drift.
 4. Fire consumes ammunition and plays `fire`.
 5. Tactical reload commits at `action_commit_ms.reload`.
 6. Empty reload selects `reload_empty`.
-7. Holstering plays `holster`.
+7. Holstering plays `drop`.
 8. Muzzle effects originate at `tag_flash`.
 9. Logs contain no missing clip, missing node, cross-skin, or JSON error.
 
@@ -343,8 +406,8 @@ Add this to the render definition for the existing Armature arm workflow:
   "left_holder_bone": "LEFT_ARM",
   "right_holder_bone": "RIGHT_ARM",
   "poses": {
-    "draw": {"blend_ticks": 5},
-    "holster": {"blend_ticks": 5},
+    "raise": {"blend_ticks": 5},
+    "drop": {"blend_ticks": 5},
     "fire": {"blend_ticks": 2},
     "reload": {"blend_ticks": 6},
     "reload_empty": {"blend_ticks": 6}
@@ -360,7 +423,7 @@ Checkpoint: correct player skin and regular/slim/layer selection, stable grip th
 
 ## Step 10: Add aiming
 
-Add `aim_in`, `aim_out`, and `aim_fire`, then configure clip maps, event categories, `paired_aim_actions.fire`, the aim machine enter/loop/exit phases, controller channels, `tag_ads` ownership, and last-frame handling. Follow [Animation Rules](./animation.md).
+Add `ads_up`, `ads_down`, and `fire_ads`, then configure clip maps, event categories, `paired_aim_actions.fire`, the aim machine enter/loop/exit phases, controller channels, `tag_ads` ownership, and last-frame handling. Follow [Animation Rules](./animation.md).
 
 Checkpoint: iron sights align at screen center, ADS exits without a flash to an intermediate pose, and firing remains in the intended ADS pose. Do not move a reticle texture to hide wrong model alignment.
 
@@ -408,7 +471,7 @@ Add only needed features: first draw; last-round/dry-fire and empty-state poses;
 | `xmaglrg` | Separate `*_xmaglrg` states and commits |
 | `drummag` | Independent `*_drummag` states; not xmaglrg |
 | Tube shotgun | `reload_system.type: tube_per_round`; event frames only |
-| Bolt-action | `fire_rechamber` / `aim_fire_rechamber` and cycle recovery |
+| Bolt-action | `fire_rechamber` / `fire_rechamber_ads` and cycle recovery |
 | Standalone melee | `weapons/melee/` and its own combo machine |
 
 ## Step 14: Final release checkpoint

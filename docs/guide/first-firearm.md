@@ -205,9 +205,9 @@ assets/tutorial/textures/item/guns/training_rifle.png
 第一轮只做六个动作：
 
 ```text
-static_idle
-draw
-holster
+idle
+raise
+drop
 fire
 reload
 reload_empty
@@ -217,9 +217,9 @@ reload_empty
 
 | 动作 | 作用 | 第一帧/最后一帧要求 |
 |---|---|---|
-| `static_idle` | 正常持枪基础姿态 | 作为其他完整动作的稳定交接基准 |
-| `draw` | 普通掏枪 | 末帧接 `static_idle` |
-| `holster` | 收枪 | 首帧从 `static_idle` 离开 |
+| `idle` | 正常持枪基础姿态 | 作为其他完整动作的稳定交接基准 |
+| `raise` | 普通掏枪 | 末帧接 `idle` |
+| `drop` | 收枪 | 首帧从 `idle` 离开 |
 | `fire` | 普通开火 | 结束后回到基础持枪参考 |
 | `reload` | 弹匣内仍有弹时换弹 | 提交帧前后弹匣动作清晰 |
 | `reload_empty` | 完全空仓时换弹 | 包含需要的枪机/释放动作 |
@@ -240,13 +240,13 @@ GLB 路线的动画库保存为：
 assets/tutorial/gltf/animations/training_rifle_receiver_default.anim.glb
 ```
 
-Blockbench 路线改为独立 `.animation.json`，并在 `animation_sources` 中引用；`animation_clips` 右侧保留实际完整动作名。各路线模型与动画都要具有相匹配的节点、父子关系和参考姿态，不要单独移动动画根来掩盖错误。
+Blockbench 路线改为独立 `.animation.json`，并在 `animation_sources` 中引用；控制器的 `clip` 保留实际完整动作名。各路线模型与动画都要具有相匹配的节点、父子关系和参考姿态，不要单独移动动画根来掩盖错误。
 
 ### 完成标准
 
-- 导出的动画库中六个剪辑名称准确且唯一，与配置映射对应。
+- 导出的动画库中六个剪辑名称准确且唯一，与控制器引用对应。
 - 所有剪辑都能从第 0 帧开始。
-- `draw` 尾帧与 `static_idle` 对接。
+- `raise` 尾帧与 `idle` 对接。
 - `fire` 结束后不会留下额外根位移。
 - 没有 `applies to joints that are not from the same skin` 警告。
 
@@ -393,17 +393,9 @@ weapons/firearms/render/training_rifle.render.json
   "normal": "tutorial:skins/guns/training_rifle_n.png",
   "specular": "tutorial:skins/guns/training_rifle_s.png",
   "icon_texture": "tutorial:textures/item/guns/training_rifle.png",
-  "animation_clips": {
-    "static_idle": "static_idle",
-    "draw": "draw",
-    "holster": "holster",
-    "fire": "fire",
-    "reload": "reload",
-    "reload_empty": "reload_empty"
-  },
   "animation_events": {
-    "draw": "draw",
-    "holster": "holster",
+    "raise": "raise",
+    "drop": "drop",
     "fire": "fire",
     "reload": "reload",
     "reload_empty": "reload_empty"
@@ -411,21 +403,33 @@ weapons/firearms/render/training_rifle.render.json
   "animation_machine": {
     "version": 2,
     "actions": {
-      "draw": {
+      "raise": {
         "type": "finite",
-        "default_state": "draw"
+        "default_state": "raise"
       },
-      "holster": {
+      "drop": {
         "type": "finite",
-        "default_state": "holster"
+        "default_state": "drop"
       },
       "fire": {
         "type": "finite",
         "default_state": "fire",
         "events": [
-          {"type": "shot_effects", "marker": "shot", "offset_ms": 0},
-          {"type": "fire_sound", "marker": "shot", "offset_ms": 0},
-          {"type": "recoil", "marker": "shot", "offset_ms": 0}
+          {
+            "type": "shot_effects",
+            "marker": "shot",
+            "offset_ms": 0
+          },
+          {
+            "type": "fire_sound",
+            "marker": "shot",
+            "offset_ms": 0
+          },
+          {
+            "type": "recoil",
+            "marker": "shot",
+            "offset_ms": 0
+          }
         ]
       },
       "reload": {
@@ -435,7 +439,9 @@ weapons/firearms/render/training_rifle.render.json
           {
             "state": "reload_empty",
             "priority": 100,
-            "when": {"empty": "true"}
+            "when": {
+              "empty": "true"
+            }
           },
           {
             "state": "reload",
@@ -448,16 +454,16 @@ weapons/firearms/render/training_rifle.render.json
   },
   "animation_controller": {
     "channels": {
-      "draw": {
-        "clip": "draw",
+      "raise": {
+        "clip": "raise",
         "layer": "action",
         "fade_in": 0,
         "fade_out": 0,
         "loop": false,
         "duration_frame": 24
       },
-      "holster": {
-        "clip": "holster",
+      "drop": {
+        "clip": "drop",
         "layer": "action",
         "fade_in": 0,
         "fade_out": 0,
@@ -489,6 +495,11 @@ weapons/firearms/render/training_rifle.render.json
         "loop": false,
         "duration_frame": 81,
         "lock_fire": true
+      },
+      "idle": {
+        "clip": "idle",
+        "layer": "base",
+        "loop": true
       }
     }
   },
@@ -497,8 +508,16 @@ weapons/firearms/render/training_rifle.render.json
     "anchor_node": "tag_camera",
     "camera_node": "tag_view",
     "use_camera_transform": true,
-    "translation": {"x": 0, "y": 0, "z": 0},
-    "rotation": {"x": 0, "y": 0, "z": 0},
+    "translation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
     "scale": 1
   },
   "camera": {
@@ -554,13 +573,13 @@ weapons/firearms/render/training_rifle.render.json
 依次检查：
 
 1. 枪能出现在物品栏。
-2. 拿出时播放 `draw`。
+2. 拿出时播放 `raise`。
 3. 正常持有时位置稳定，不持续漂移。
 4. 左键能射击并扣除弹量。
 5. 开火时播放 `fire`。
 6. 弹匣有余弹时换弹，真正上弹发生在 `action_commit_ms.reload`。
 7. 完全打空后换弹，播放 `reload_empty`。
-8. 收起时播放 `holster`。
+8. 收起时播放 `drop`。
 9. 枪口效果和尾迹起点在 `tag_flash`。
 10. 日志没有缺失剪辑、缺失节点、跨 skin 或 JSON 解析错误。
 
@@ -573,7 +592,7 @@ weapons/firearms/render/training_rifle.render.json
 | 只显示一部分 | GLB 导出选择、节点可见性、材质透明度 |
 | 枪方向反了 | Blender 中是否让枪口朝 `+X` |
 | 枪大小错误 | 模型单位、应用缩放、`gltf_scale` |
-| 动画完全不播 | `animation_sources`、剪辑名、`animation_clips`、状态机引用 |
+| 动画完全不播 | `animation_sources`、剪辑名、控制器通道、状态机引用 |
 | 换弹播了但弹量不变 | `mechanics.action_commit_ms` 是否存在且位于动作有效时段 |
 | 枪口特效位置错 | `tag_flash` 的位置和朝向 |
 | 弹壳位置错 | `tag_brass` 的位置和朝向 |
@@ -594,8 +613,8 @@ weapons/firearms/render/training_rifle.render.json
   "left_holder_bone": "LEFT_ARM",
   "right_holder_bone": "RIGHT_ARM",
   "poses": {
-    "draw": {"blend_ticks": 5},
-    "holster": {"blend_ticks": 5},
+    "raise": {"blend_ticks": 5},
+    "drop": {"blend_ticks": 5},
     "fire": {"blend_ticks": 2},
     "reload": {"blend_ticks": 6},
     "reload_empty": {"blend_ticks": 6}
@@ -618,16 +637,16 @@ weapons/firearms/render/training_rifle.render.json
 在动画库增加：
 
 ```text
-aim_in
-aim_out
-aim_fire
+ads_up
+ads_down
+fire_ads
 ```
 
 再按[动画制作与导出规范](animation.md)补：
 
-- `animation_clips` 映射。
-- `animation_events` 的 `aim_in`、`aim_out` 和 `aim_fire` 分类。
-- `paired_aim_actions.fire = aim_fire`。
+- 控制器通道名与 `clip`。
+- `animation_events` 的 `ads_up`、`ads_down` 和 `fire_ads` 分类。
+- `paired_aim_actions.fire = fire_ads`。
 - `animation_machine.actions.aim` 的 enter/loop/exit。
 - `animation_controller.channels` 中的 `aim_transition` 和瞄准开火通道。
 - `tag_ads` 骨骼遮罩与 `keep_last_frame`。
@@ -638,7 +657,7 @@ aim_fire
 
 - 按住瞄准后机瞄中心稳定对准屏幕中心。
 - 退出瞄准不会闪回 idle 中间姿态。
-- 瞄准开火使用 `aim_fire`，结束后仍保持正确瞄准位置。
+- 瞄准开火使用 `fire_ads`，结束后仍保持正确瞄准位置。
 
 ## 第 11 步：加入声音
 
@@ -713,7 +732,7 @@ aim_fire
 
 按需要依次增加，不要为了“名字齐全”创建没有用途的空动画：
 
-1. `draw_first`。
+1. `raise_first`。
 2. `fire_last`、`dry_fire` 和空仓附加姿态。
 3. `inspect` 与 `inspect_empty`。
 4. `sprint_*` 与 `super_sprint_*`。
@@ -733,7 +752,7 @@ aim_fire
 | `xmaglrg` 大型箱式弹匣 | 独立 `*_xmaglrg` 状态和提交时间 |
 | `drummag` 鼓式弹匣 | 独立 `*_drummag` 状态，不能假装成 xmaglrg |
 | 管式霰弹枪 | `reload_system.type: tube_per_round`，事件只写帧 |
-| 栓动狙击枪 | `fire_rechamber` / `aim_fire_rechamber` 和循环恢复 |
+| 栓动狙击枪 | `fire_rechamber` / `fire_rechamber_ads` 和循环恢复 |
 | 独立近战 | 放 `weapons/melee/`，使用自己的组合攻击状态机 |
 
 ## 第 14 步：最终发布前验收

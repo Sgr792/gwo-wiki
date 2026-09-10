@@ -69,3 +69,5 @@ toc: false
     <a href="./reference.html"><b>参考</b><strong>当前格式参考</strong><small>典型文件名称、有效字段、已废弃字段和排错入口。</small></a>
   </div>
 </div>
+
+[动画名称规范与完整清单](./animation-names.md)：当前默认包的命名、迁移脚本与六把枪的实际剪辑。

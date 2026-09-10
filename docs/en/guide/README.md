@@ -69,3 +69,5 @@ toc: false
     <a href="./reference.html"><b>Reference</b><strong>Current Format Reference</strong><small>Typical filenames, active fields, removed fields, and troubleshooting entry points.</small></a>
   </div>
 </div>
+
+[Animation Names and Complete Inventory](./animation-names.md): current default-pack names, migration script, and the six weapon clip inventories.

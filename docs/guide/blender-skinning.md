@@ -53,7 +53,7 @@ Blender 中看到的材质节点效果不会全部自动转成 GWO 的材质配�
 
 ## 动画制作
 
-先制作 `static_idle`、`draw`、`fire`，需要换弹时再加入 `reload` 与 `reload_empty`。
+先制作 `idle`、`raise`、`fire`，需要换弹时再加入 `reload` 与 `reload_empty`。
 
 给骨骼的局部变换设置关键帧，并给每个剪辑明确名字。姿态层、相机轨道、禁止轨道与动作交接必须按[动画规范](./animation.md)检查；不是所有骨骼都应该在所有动作里打关键帧。
 

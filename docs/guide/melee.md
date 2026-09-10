@@ -60,7 +60,7 @@ category:
 
 1. 在 `weapons/melee/` 创建逻辑文件。
 2. 在 `weapons/melee/render/` 创建渲染文件。
-3. 先只提供 `static_idle`、`draw_first`、`holster` 和一个攻击动作。
+3. 先只提供 `idle`、`raise_first`、`drop` 和一个攻击动作。
 4. 确认拿出、收起、待机与攻击的手臂参考空间正确。
 5. 在 `melee.combos.primary.attacks` 中加入第二、第三个攻击。
 6. 分别设置每段的 `duration_ms`、`commit_ms` 和 `chain_open_ms`。
@@ -80,8 +80,8 @@ category:
 
 - 武器模型和手臂动画库必须共享参考空间。
 - 如果右手看起来黏死在刀上或方向反了，检查右手通道所有权、绑定姿态和武器根变换。
-- `static_idle`、`draw_first`、`holster` 和 `inspect` 的右手都应来自实际动画，不应复用枪械的持枪手臂层。
-- 攻击结束回到 `static_idle` 时，不应出现一帧姿态跳变。
+- `idle`、`raise_first`、`drop` 和 `inspect` 的右手都应来自实际动画，不应复用枪械的持枪手臂层。
+- 攻击结束回到 `idle` 时，不应出现一帧姿态跳变。
 - 奔跑动画必须按近战武器自己的基础持有姿态混合，不能直接套枪械的反向叠加结果。
 
 ### 声音验收

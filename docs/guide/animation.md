@@ -45,23 +45,23 @@ category:
 普通弹匣式枪械常用：
 
 ```text
-static_idle
-draw
-draw_first
-holster
-aim_in
-aim_out
+idle
+raise
+raise_first
+drop
+ads_up
+ads_down
 fire_pre
 fire
-aim_fire
+fire_ads
 fire_last
 fire_last_ads
 dry_fire
 aim_dry_fire
 reload
 reload_empty
-aim_reload
-aim_reload_empty
+reload_ads
+reload_empty_ads
 inspect
 inspect_empty
 sprint_in / sprint_loop / sprint_out
@@ -77,28 +77,28 @@ melee_fatal_*
 
 ```text
 fire_rechamber
-aim_fire_rechamber
+fire_rechamber_ads
 reload_start
 reload_loop
 reload_end
 reload_empty_chamber_start
 reload_empty_start
 reload_empty_chamber_end
-aim_reload_start
-aim_reload_loop
-aim_reload_end
-aim_reload_empty_chamber_start
-aim_reload_empty_start
-aim_reload_empty_chamber_end
+reload_start_ads
+reload_loop_ads
+reload_end_ads
+reload_empty_chamber_start_ads
+reload_empty_start_ads
+reload_empty_chamber_end_ads
 shell_additive_*
 ```
 
-栓动狙击枪通常增加 `fire_rechamber` 和 `aim_fire_rechamber`。独立近战武器使用自己的动作集合，例如：
+栓动狙击枪通常增加 `fire_rechamber` 和 `fire_rechamber_ads`。独立近战武器使用自己的动作集合，例如：
 
 ```text
-static_idle
-draw_first
-holster
+idle
+raise_first
+drop
 inspect
 swipe_01 / swipe_02 / swipe_03
 stab_01 / stab_02
@@ -106,54 +106,42 @@ sprint_in / sprint_loop / sprint_out
 super_sprint_in / super_sprint_loop / super_sprint_out
 ```
 
-#### 动画状态与 GLB 剪辑不是一回事
+#### 直接使用真实剪辑名
 
-`animation_clips` 左侧是 GWO 状态名，右侧才是 `.anim.glb` 内的实际剪辑名。例如：
+当前默认包的 Blender Action、GLB 剪辑和控制器状态使用同一短名称，不添加旧名称别名表。完整清单与迁移步骤见[动画名称规范](./animation-names.md)。通过 `animation_controller.channels` 声明能力，并让每个通道的 `clip` 与通道名一致。
 
-```jsonc
-"animation_clips": {
-  "reload_xmaglrg": "reload_xmaglrg",
-  "reload_drummag": "reload_drummag"
-}
-```
-
-状态名必须在 `animation_controller`、`animation_machine` 和配件 `animation_override` 中一致声明；剪辑名可以不同，但必须真实存在。下表描述的是“状态用途”，同一状态可以映射到内容作者自己的剪辑名。
-
-`xmaglrg` 和 `drummag` 不是同义词：`xmaglrg` 表示大型箱式扩容弹匣，`drummag` 表示鼓式弹匣。运行时允许状态映射到不同剪辑名，但新内容如果同时拥有这两套动作，必须保留两组独立状态，不能把鼓式弹匣全部塞进 `*_xmaglrg` 分支。
+M4 的扩容弹匣保留 `xmaglrg`；RM277 的鼓式弹匣动画使用 `drum`，配件资源 ID 不随动画改名。
 
 #### `animation_events` 只声明可派发动作
 
 `animation_events` 把动画状态归类到运行时动作通道，例如 `fire`、`reload`、`inspect`、`aim`、`sprint` 和 `melee`。显式映射仍是当前格式，可以保留；它不是废弃配置。
 
-不要把 `static_idle`、`bullet_additive`、`empty_additive`、`aim_additive`、`aim_up_additive` 或 `shell_additive_*` 写进 `animation_events`。这些是基础姿态或附加姿态层，不是可派发事件，应只出现在 `animation_clips`、控制器或姿态图中。事件值必须是 GWO 支持的逻辑事件，不能简单复制任意剪辑名。
+不要把 `idle`、`bullet_additive`、`empty_additive`、`ads_up_additive` 或 `shell_additive_*` 写进 `animation_events`。这些是基础姿态或附加姿态层，不是可派发事件，应只出现在控制器或姿态图中。事件值必须是 GWO 支持的逻辑事件，不能简单复制任意剪辑名。
 
-状态名与剪辑名相同时，`"fire": "fire"` 之类的 `animation_clips` 映射依然合法，也可以作为内容包的显式能力声明；不要仅因左右名称相同就当作旧兼容字段删除。
+默认包不使用 `animation_clips` 别名表；基础与附加姿态通过控制器声明。旧格式解析能力仍存在，但不作为新默认包的命名方案。
 
 #### 基础、装备与展示动画
 
 | 状态 | 触发时机与作用 | 与相近状态的区别 |
 |---|---|---|
-| `static_idle` | 第一人称正常持有时的稳定基础姿态，也是多数完整动作的交接基准 | 不是展示框姿态，也不应包含空仓、弹量或射击模式状态 |
-| `draw` | 普通装备、切回或再次拿出武器 | 每次普通装备可播放；不同于只在首次装备使用的 `draw_first` |
-| `draw_first` | 该武器实例在当前会话中首次满足条件的成功装备 | 可选；成功开始后才记为已播放，预览与预热不消耗它 |
-| `holster` | 正常状态收起武器 | 从正常持有姿态离开画面 |
-| `holster_empty` | 空仓状态收起武器 | 仅在空仓机构姿态与普通状态不同且配置了分支时需要 |
-| `ground_idle` | 地面掉落物使用的静态/循环状态别名 | 不参与第一人称持枪状态机；通常可映射到简单 `idle` 剪辑 |
-| `third_person_idle` | 第三人称持有展示使用的状态别名 | 不替代 `third_person_pose` 的位置配置，也不参与第一人称动作 |
+| `idle` | 第一人称正常持有时的稳定基础姿态，也是多数完整动作的交接基准 | 不是展示框姿态，也不应包含空仓、弹量或射击模式状态 |
+| `raise` | 普通装备、切回或再次拿出武器 | 每次普通装备可播放；不同于只在首次装备使用的 `raise_first` |
+| `raise_first` | 该武器实例在当前会话中首次满足条件的成功装备 | 可选；成功开始后才记为已播放，预览与预热不消耗它 |
+| `drop` | 正常状态收起武器 | 从正常持有姿态离开画面 |
+| `drop_empty` | 空仓状态收起武器 | 仅在空仓机构姿态与普通状态不同且配置了分支时需要 |
 
 #### 瞄准、射击与枪机循环
 
 | 状态 | 触发时机与作用 | 与相近状态的区别 |
 |---|---|---|
-| `aim_in` | 从腰射进入普通瞄准 | 只负责进入过程；尾帧是瞄准基准 |
-| `aim_out` | 从普通瞄准退出到腰射 | 是 `aim_in` 的反向交接，不应简单跳回 idle |
-| `aim_down_settle` | 某些武器退出瞄准后的短暂稳定段 | 可选；不是 `aim_out` 的替代品，只处理退出后的余势 |
-| `aim_additive` | GWO 使用的瞄准附加状态名 | 常映射到名为 `aim_up_additive` 的 GLB 剪辑，不需要再做一份同内容动画 |
-| `aim_up_additive` | 常见的实际瞄准附加剪辑名，用于修正 `tag_weapon` | 是局部增量，不是完整瞄准姿态，不包含手臂和 `tag_ads` |
-| `aim_idle` | 可选的瞄准保持循环 | 只有 `animation_machine.actions.aim.phase_states.loop` 明确引用时才使用；默认内容也可用 `static_idle` 加瞄准层保持 |
+| `ads_up` | 从腰射进入普通瞄准 | 只负责进入过程；尾帧是瞄准基准 |
+| `ads_down` | 从普通瞄准退出到腰射 | 是 `ads_up` 的反向交接，不应简单跳回 idle |
+| `ads_down_settle` | 某些武器退出瞄准后的短暂稳定段 | 可选；不是 `ads_down` 的替代品，只处理退出后的余势 |
+| `ads_up_additive` | 常见的实际瞄准附加剪辑名，用于修正 `tag_weapon` | 是局部增量，不是完整瞄准姿态，不包含手臂和 `tag_ads` |
+| `aim_idle` | 可选的瞄准保持循环 | 只有 `animation_machine.actions.aim.phase_states.loop` 明确引用时才使用；默认内容也可用 `idle` 加瞄准层保持 |
 | `fire_pre` | 正式开火动作前的极短准备段 | 可选，必须在 fire sequence 中显式引用；不是枪口火焰或扣弹事件本身 |
-| `fire` | 非瞄准普通射击动作 | 与 `aim_fire` 的区别是腰射参考姿态 |
-| `aim_fire` | 普通瞄准状态射击动作 | 不应再次携带 `tag_ads`，否则会重复叠加瞄准偏移 |
+| `fire` | 非瞄准普通射击动作 | 与 `fire_ads` 的区别是腰射参考姿态 |
+| `fire_ads` | 普通瞄准状态射击动作 | 不应再次携带 `tag_ads`，否则会重复叠加瞄准偏移 |
 | `fire_last` | 腰射打出弹匣/膛内最后一发 | 负责进入空仓机构姿态；不是普通 `fire` 的声音变体 |
 | `fire_last_ads` | 瞄准状态打出最后一发 | 是 `fire_last` 的瞄准版本，不能用普通最后一发动作硬替 |
 | `fire_settle` | 普通射击脉冲后的恢复/稳定段 | 不再次开火、不扣弹，只交回稳定姿态 |
@@ -161,7 +149,7 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 | `dry_fire` | 腰射状态无弹空击 | 不生成弹丸、枪口效果或抛壳 |
 | `aim_dry_fire` | 瞄准状态无弹空击 | 使用瞄准参考姿态，不能让枪瞬间回到腰射位置 |
 | `fire_rechamber` | 腰射开火后进行泵动或拉栓 | 是独立机械循环，不等于开火后坐动画 |
-| `aim_fire_rechamber` | 瞄准状态进行泵动或拉栓 | 必须从瞄准开火尾姿态开始，并回到瞄准持有姿态 |
+| `fire_rechamber_ads` | 瞄准状态进行泵动或拉栓 | 必须从瞄准开火尾姿态开始，并回到瞄准持有姿态 |
 
 #### 弹匣式换弹、检视与射击模式
 
@@ -169,19 +157,19 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 |---|---|---|
 | `reload` | 膛内仍有弹时的普通换弹 | 通常不需要拉机柄/释放套筒，提交时机与 `reload_empty` 不同 |
 | `reload_empty` | 弹匣和膛内均空时换弹 | 包含必要的上膛或枪机释放动作 |
-| `aim_reload` | 保持瞄准参考空间的普通换弹 | 不是把 `reload` 整体缩放；手和枪必须按瞄准姿态制作 |
-| `aim_reload_empty` | 保持瞄准参考空间的空仓换弹 | 对应 `reload_empty`，同时保持瞄准层所有权 |
+| `reload_ads` | 保持瞄准参考空间的普通换弹 | 不是把 `reload` 整体缩放；手和枪必须按瞄准姿态制作 |
+| `reload_empty_ads` | 保持瞄准参考空间的空仓换弹 | 对应 `reload_empty`，同时保持瞄准层所有权 |
 | `reload_xmaglrg` / `reload_empty_xmaglrg` | 大型箱式扩容弹匣的普通/空仓换弹 | 只用于 `xmaglrg`，不代表鼓式弹匣 |
-| `aim_reload_xmaglrg` / `aim_reload_empty_xmaglrg` | 大型箱式扩容弹匣换弹的瞄准版本 | 时长、提交帧、声音和显隐必须独立配置 |
+| `reload_xmaglrg_ads` / `reload_empty_xmaglrg_ads` | 大型箱式扩容弹匣换弹的瞄准版本 | 时长、提交帧、声音和显隐必须独立配置 |
 | `reload_drummag` / `reload_empty_drummag` | 鼓式弹匣的普通/空仓换弹 | 鼓体尺寸和握持方式不同，应与 `xmaglrg` 分开制作 |
-| `aim_reload_drummag` / `aim_reload_empty_drummag` | 鼓式弹匣换弹的瞄准版本 | 必须保持瞄准参考空间，并使用鼓式弹匣自己的事件帧 |
+| `reload_drum_ads` / `reload_empty_drum_ads` | 鼓式弹匣换弹的瞄准版本 | 必须保持瞄准参考空间，并使用鼓式弹匣自己的事件帧 |
 | `inspect` | 非空仓检视 | 应显示当前真实弹量、弹匣和膛内弹状态 |
 | `inspect_empty` | 空仓检视 | 使用真实空仓机构姿态 |
 | `inspect_xmaglrg` / `inspect_empty_xmaglrg` | 大型箱式扩容弹匣的正常/空仓检视 | 只有外形或动作确实不同才需要 |
 | `inspect_drummag` / `inspect_empty_drummag` | 鼓式弹匣的正常/空仓检视 | 不与 `xmaglrg` 共用状态和声音时间线 |
 | `switch_fire_mode` | 通用射击模式切换动作 | 不区分切换目标，适合多个模式共享动作 |
-| `switch_to_auto` / `switch_to_semi` | 分别切到全自动/半自动 | 目标模式明确，可表现不同方向的选择器运动 |
-| `aim_switch_fire_mode` / `aim_switch_to_auto` / `aim_switch_to_semi` | 瞄准状态下的对应切换动作 | 保持瞄准参考姿态，不能闪回腰射 |
+| `selectsemi_off` / `selectsemi_on` | 分别切到全自动/半自动 | 目标模式明确，可表现不同方向的选择器运动 |
+| `aim_switch_fire_mode` / `selectsemi_off_ads` / `selectsemi_on_ads` | 瞄准状态下的对应切换动作 | 保持瞄准参考姿态，不能闪回腰射 |
 | `select_fire_empty` / `aim_select_fire_empty` | 空仓时切换射击模式的腰射/瞄准动作 | 仅在空仓机构会改变手部或选择器动作时需要 |
 | `firemode_auto_static` / `firemode_semi_static` | 持续保持快慢机在指定模式的静态状态层 | 只控制选择器骨骼，不是一次性的切换动作 |
 
@@ -195,8 +183,8 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 | `reload_empty_chamber_start` | 完全空仓时先把第一发直接送入膛内 | 与 `reload_empty_start` 的主要区别是第一发进入 chamber |
 | `reload_empty_start` | 空仓第一发直接入膛后，继续向管式弹仓装入下一发 | 使用独立的 `empty_start_commit_frame`，之后才进入重复 `reload_loop` |
 | `reload_empty_chamber_end` | 直接入膛动作与后续弹仓循环之间的交接段 | 可选；用于整理手和枪的姿态，不应再次提交同一发 |
-| `aim_reload_start` / `aim_reload_loop` / `aim_reload_end` | 非空仓逐发装填三段的瞄准版本 | 与非 `aim_` 版本流程相同，但参考姿态不同 |
-| `aim_reload_empty_chamber_start` / `aim_reload_empty_start` / `aim_reload_empty_chamber_end` | 空仓逐发装填三段的瞄准版本 | 必须与对应腰射状态逐一配对，不能混用世界姿态 |
+| `reload_start_ads` / `reload_loop_ads` / `reload_end_ads` | 非空仓逐发装填三段的瞄准版本 | 与非 `aim_` 版本流程相同，但参考姿态不同 |
+| `reload_empty_chamber_start_ads` / `reload_empty_start_ads` / `reload_empty_chamber_end_ads` | 空仓逐发装填三段的瞄准版本 | 必须与对应腰射状态逐一配对，不能混用世界姿态 |
 
 #### 持续状态层、奔跑与近战
 
@@ -217,7 +205,7 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 | `swipe_*` / `stab_*` | 独立近战武器的横砍/刺击剪辑 | 名称本身不决定伤害；顺序、随机、提交和连段窗口由 `melee.combos` 配置 |
 
 ::: tip
-并非每把武器都需要以上全部动画。只导出真实使用、并被 `animation_clips`、控制器或动画机引用的剪辑；未引用的动画不会因为名字正确就自动播放。
+并非每把武器都需要以上全部动画。只导出真实使用、并被 控制器或动画机引用的剪辑；未引用的动画不会因为名字正确就自动播放。
 :::
 
 ### 动画制作的基本原则
@@ -232,11 +220,11 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 8. 动画开始帧、结束帧、事件帧、提交帧和声音帧必须在同一个时间基准上。
 9. 动画文件只负责姿态。弹量、伤害、换弹提交和服务器判定仍由配置与游戏逻辑决定。
 
-`draw_first` 是可选的首次装备动作。它按武器实例身份记录：同一客户端会话中，该实例第一次被成功装备时播放一次，之后播放 `draw`；离开世界、玩家死亡或客户端运行时重置后会重新允许首次装备。预览、改装界面和资源预热不会消耗 `draw_first`。如果只配置 `draw`，所有装备都播放 `draw`；如果希望普通装备也有动作，应同时提供 `draw`，不要只留下 `draw_first`。
+`raise_first` 是可选的首次装备动作。它按武器实例身份记录：同一客户端会话中，该实例第一次被成功装备时播放一次，之后播放 `raise`；离开世界、玩家死亡或客户端运行时重置后会重新允许首次装备。预览、改装界面和资源预热不会消耗 `raise_first`。如果只配置 `raise`，所有装备都播放 `raise`；如果希望普通装备也有动作，应同时提供 `raise`，不要只留下 `raise_first`。
 
-首次掏枪还要求枪内有可用弹药，并且配置存在 `draw_first` 控制器通道。空仓首次拿出不会选择它；满足条件后才有机会播放。独立近战不受枪械弹量条件限制。最终状态还会经过动画机分支选择，只有 GLB 内同名剪辑而没有通道配置是不够的。
+首次掏枪还要求枪内有可用弹药，并且配置存在 `raise_first` 控制器通道。空仓首次拿出不会选择它；满足条件后才有机会播放。独立近战不受枪械弹量条件限制。最终状态还会经过动画机分支选择，只有 GLB 内同名剪辑而没有通道配置是不够的。
 
-`fire_pre` 也是可选动作，用于需要在真正开火动作之前执行极短准备段的武器。它应通过 `animation_machine.actions.fire.sequences` 接到 `fire`、`aim_fire` 或最后一发动作之前；普通武器不需要为了凑齐名称而添加它。
+`fire_pre` 也是可选动作，用于需要在真正开火动作之前执行极短准备段的武器。它应通过 `animation_machine.actions.fire.sequences` 接到 `fire`、`fire_ads` 或最后一发动作之前；普通武器不需要为了凑齐名称而添加它。
 
 ### 骨架、父子层级与坐标空间
 
@@ -248,7 +236,7 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 - `tag_view` 决定第一人称视角参考位置；所有动作使用同一基准，不用它制作普通镜头摇晃。
 - `tag_camera` 只保存确实需要的相机动画。
 - `tag_weapon` 是枪械主体与手臂相对运动的核心参考。
-- 手臂在动作中应相对 `tag_weapon` 保持作者制作的关系，不能在运行时需要跟枪的动作里又回到 `static_idle` 空间。
+- 手臂在动作中应相对 `tag_weapon` 保持作者制作的关系，不能在运行时需要跟枪的动作里又回到 `idle` 空间。
 - 默认部件和活动部件必须挂在正确节点上。泵动护木使用随泵动作移动的挂点，枪机、套筒、弹匣也必须跟随各自机构。
 - 同名骨骼只能有一个明确所有者。多个 Armature 中重复出现同名目标会导致 duplicate target 或 ambiguous owner。
 - 动画库和模型中的 skin 必须一致。出现 `applies to joints that are not from the same skin` 时不能忽略。
@@ -266,52 +254,51 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 
 | 动画类型 | 允许控制的主要通道 | 禁止或应删除的通道 |
 |---|---|---|
-| `aim_in`、`aim_out`、`aim_down_settle` | 仅 `tag_ads` | `tag_weapon`、`tag_camera`、`tag_view`、`arms_root`、左右手、枪机、弹匣、`j_ammo_*` |
-| `aim_additive` / `aim_up_additive` | 仅 `tag_weapon` | `tag_ads`、`tag_camera`、`tag_view`、左右手、弹药、弹匣和无关机构 |
+| `ads_up`、`ads_down`、`ads_down_settle` | 仅 `tag_ads` | `tag_weapon`、`tag_camera`、`tag_view`、`arms_root`、左右手、枪机、弹匣、`j_ammo_*` |
 | `bullet_additive` | `j_ammo_*` 与配置指定的 follower | 枪身、手臂、瞄准、相机、枪机和配件挂点 |
 | `shell_additive_*` | 管式弹仓的弹壳节点与 follower | 枪身、手臂、瞄准、相机、护木和枪机 |
 | `empty_additive` | 该枪配置中用于保持空仓姿态的机构 | `tag_weapon`、`tag_ads`、`tag_camera`、`tag_view`、左右手；其余必须与 `bone_mask` 一致 |
 | `firemode_*_static` | 仅快慢机/选择器，例如 `j_firesel` | 枪身、手臂、瞄准、相机、弹药和弹匣 |
-| `fire*`、`aim_fire*`、`dry_fire*` | 后坐、枪机、套筒、击锤及作者制作的手臂动作 | `tag_ads`；没有相机动作时删除 `tag_camera` 静态轨道 |
-| `reload*`、`aim_reload*`、`inspect*`、`draw*`、`holster*`、近战攻击 | 动作需要的枪身、手臂、弹匣、机构和相机 | `tag_ads`；不参与动作的骨骼不得批量烘焙 |
+| `fire*`、`fire_ads*`、`dry_fire*` | 后坐、枪机、套筒、击锤及作者制作的手臂动作 | `tag_ads`；没有相机动作时删除 `tag_camera` 静态轨道 |
+| `reload*`、`reload_ads*`、`inspect*`、`draw*`、`holster*`、近战攻击 | 动作需要的枪身、手臂、弹匣、机构和相机 | `tag_ads`；不参与动作的骨骼不得批量烘焙 |
 | `sprint_*`、`super_sprint_*` | 奔跑需要的枪身、手臂和相机 | `tag_ads`、弹量状态、快慢机状态和无关配件骨骼 |
-| `static_idle` | 基础持枪姿态 | 空仓、弹量、射击模式和临时动作状态 |
+| `idle` | 基础持枪姿态 | 空仓、弹量、射击模式和临时动作状态 |
 
-`bullet_additive` / `shell_additive_*` 只控制配置中的弹药节点与 follower，`aim_in` / `aim_out` 只控制 `tag_ads`，`aim_additive` 只控制 `tag_weapon`。内容作者修改 `bone_mask` 后，动画通道必须同步服从新的所有权范围。
+`bullet_additive` / `shell_additive_*` 只控制配置中的弹药节点与 follower，`ads_up` / `ads_down` 只控制 `tag_ads`，`ads_up_additive` 只控制 `tag_weapon`。内容作者修改 `bone_mask` 后，动画通道必须同步服从新的所有权范围。
 
 当前侧瞄由运行时根据 `canted_aim` 配置程序化生成，不需要制作 `canted_aim_in` / `canted_aim_out`。不要用旧侧瞄动画重复旋转 `tag_ads`，否则会与程序化姿态叠加。
 
-### 基础姿态 `static_idle`
+### 基础姿态 `idle`
 
 - 只描述武器正常持有时的基础姿态。
 - 武器、左右手和必要机构应处于稳定位置。
 - 不要写空仓枪机、弹托高度、快慢机选择等状态，这些由专用状态层控制。
 - 首尾姿态必须一致；循环播放时不能跳变。
 - 手臂、枪身和 `tag_weapon` 的相对关系是其他完整动作的基准。
-- 改装界面、展示框、右下角动态图标和副手收纳使用静态模型姿态，不应依赖歪斜的 `static_idle` 修正模型展示。
+- 改装界面、展示框、右下角动态图标和副手收纳使用静态模型姿态，不应依赖歪斜的 `idle` 修正模型展示。
 
 ### 掏枪与收枪
 
-- `draw` / `draw_first` 从屏幕外或收纳姿态进入 `static_idle`。
-- `holster` / `holster_empty` 从当前持有姿态完整离开画面。
-- `draw` 最后一帧必须与 `static_idle` 对齐。
-- `holster` 第一帧必须与对应的正常/空仓持有姿态对齐。
+- `raise` / `raise_first` 从屏幕外或收纳姿态进入 `idle`。
+- `drop` / `drop_empty` 从当前持有姿态完整离开画面。
+- `raise` 最后一帧必须与 `idle` 对齐。
+- `drop` 第一帧必须与对应的正常/空仓持有姿态对齐。
 - 动画结束前不能提前回到 idle，也不能在最后一帧停留后再闪回 idle。
 - 正常与空仓使用不同收枪动作时，两者的手臂、枪机和弹匣状态必须分别正确。
 - 动作可包含 `tag_camera`，但没有相机动画时必须删除该静态通道。
 
 ### 瞄准进入、退出与瞄准附加姿态
 
-- `aim_in`、`aim_out` 只制作 `tag_ads`，不制作手臂和枪身动作。
-- `aim_in` 最后一帧是开镜保持姿态；`aim_out` 第一帧应从该姿态开始，最后回到非瞄准姿态。
-- 使用 `aim_up_additive` 的武器由该动画修正 `tag_weapon`，不能再在 `aim_in` 内重复修正枪身。
-- `aim_up_additive` 不包含手臂。手臂跟随由瞄准动作配对和运行时相对枪身姿态完成。
-- `aim_reload`、`aim_fire` 等动作自身不能再写 `tag_ads`，否则会与瞄准过渡层争夺同一节点。
+- `ads_up`、`ads_down` 只制作 `tag_ads`，不制作手臂和枪身动作。
+- `ads_up` 最后一帧是开镜保持姿态；`ads_down` 第一帧应从该姿态开始，最后回到非瞄准姿态。
+- 使用 `ads_up_additive` 的武器由该动画修正 `tag_weapon`，不能再在 `ads_up` 内重复修正枪身。
+- `ads_up_additive` 不包含手臂。手臂跟随由瞄准动作配对和运行时相对枪身姿态完成。
+- `reload_ads`、`fire_ads` 等动作自身不能再写 `tag_ads`，否则会与瞄准过渡层争夺同一节点。
 - 普通瞄具、增倍镜、双用瞄具的视觉切换由瞄具配置控制，不要在武器动画中重复制作镜片画面或准心移动。
 
 ### 射击、最后一发与空击
 
-- `fire` 与 `aim_fire` 分别制作腰射和瞄准射击姿态。
+- `fire` 与 `fire_ads` 分别制作腰射和瞄准射击姿态。
 - `fire_last` / `fire_last_ads` 负责最后一发及空仓机构动作。
 - `fire_settle` 只描述射击后枪械恢复/稳定阶段，不得重复包含完整开火脉冲。
 - `dry_fire` / `aim_dry_fire` 只描述空击机构动作。
@@ -324,7 +311,7 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 ### 换弹动画
 
 - `reload` 用于膛内仍有弹的普通换弹；`reload_empty` 用于空仓换弹。
-- `aim_reload` / `aim_reload_empty` 是瞄准状态对应动作，不能简单把普通换弹整体缩小。
+- `reload_ads` / `reload_empty_ads` 是瞄准状态对应动作，不能简单把普通换弹整体缩小。
 - `remove_mag`、`insert_mag`、`commit`、`bolt`、`finish` 等阶段必须与画面一致。
 - `commit` 决定弹量真正更新的时刻；不能只看动画结束帧。
 - 弹匣在手上、枪内和备用弹匣之间的显隐必须与事件帧一致。
@@ -375,19 +362,19 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 
 | 参数 | 对应动画 | 作用 |
 |---|---|---|
-| `start_commit_frame` | `reload_start` / `aim_reload_start` | 非空仓流程第一发真正加入武器的帧 |
-| `insert_commit_frame` | `reload_loop` / `aim_reload_loop` | 每次循环真正增加一发并扣除一颗备弹的帧 |
-| `empty_chamber_start_commit_frame` | `reload_empty_chamber_start` / `aim_reload_empty_chamber_start` | 完全空仓时第一发真正加入武器的帧 |
-| `empty_start_commit_frame` | `reload_empty_start` / `aim_reload_empty_start` | 空仓流程继续向管内装入下一发的帧 |
-| `rechamber_eject_frame` | `fire_rechamber` / `aim_fire_rechamber` | 真正生成并抛出弹壳的帧 |
-| `rechamber_commit_frame` | `fire_rechamber` / `aim_fire_rechamber` | 护木复位、下一发进入膛内并解除待循环状态的帧 |
-| `insert_sound_frame` | `reload_loop` / `aim_reload_loop` | 装弹声音的作者参考帧；实际声音事件仍在渲染配置的 `animation_commands` 中声明 |
+| `start_commit_frame` | `reload_start` / `reload_start_ads` | 非空仓流程第一发真正加入武器的帧 |
+| `insert_commit_frame` | `reload_loop` / `reload_loop_ads` | 每次循环真正增加一发并扣除一颗备弹的帧 |
+| `empty_chamber_start_commit_frame` | `reload_empty_chamber_start` / `reload_empty_chamber_start_ads` | 完全空仓时第一发真正加入武器的帧 |
+| `empty_start_commit_frame` | `reload_empty_start` / `reload_empty_start_ads` | 空仓流程继续向管内装入下一发的帧 |
+| `rechamber_eject_frame` | `fire_rechamber` / `fire_rechamber_ads` | 真正生成并抛出弹壳的帧 |
+| `rechamber_commit_frame` | `fire_rechamber` / `fire_rechamber_ads` | 护木复位、下一发进入膛内并解除待循环状态的帧 |
+| `insert_sound_frame` | `reload_loop` / `reload_loop_ads` | 装弹声音的作者参考帧；实际声音事件仍在渲染配置的 `animation_commands` 中声明 |
 
 `frame_lengths` 是各阶段动画的总帧数：`start`、`insert`、`end`、`end_rechamber`、`empty_chamber_start`、`empty_start`、`empty_chamber_end`、`rechamber` 分别对应同名 `clips` 阶段。正常情况下运行时优先读取 GLB 剪辑真实时长；这些数值用于缺失时长信息时的阶段持续时间回退，必须与导出的动画长度一致。弹量 HUD 与真正射击判定读取机械提交结果；`shell_additive_*` 和弹壳显隐只负责模型表现，不能代替提交帧。
 
 ### 泵动与栓动 `rechamber`
 
-- `fire_rechamber` / `aim_fire_rechamber` 在开火动作提交后按配置延迟进入。
+- `fire_rechamber` / `fire_rechamber_ads` 在开火动作提交后按配置延迟进入。
 - 泵动霰弹枪的 `j_pump`、`tag_guard_attach` 和左手必须保持同一运动关系。
 - 栓动步枪的枪机、弹壳、右手和抛壳事件必须按机械顺序制作。
 - 动画第一帧应对齐开火结束姿态，最后一帧应对齐对应的腰射或瞄准持枪姿态。
@@ -407,7 +394,7 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 - 使用明确的 `sprint_in → sprint_loop → sprint_out` 和 `super_sprint_in → super_sprint_loop → super_sprint_out`。
 - `*_in` 最后一帧必须与 `*_loop` 第 0 帧一致。
 - `*_loop` 首尾帧必须连续，不能包含回到 idle 的中间帧。
-- `*_out` 第 0 帧必须与 loop 姿态一致，最后一帧必须与 `static_idle` 一致。
+- `*_out` 第 0 帧必须与 loop 姿态一致，最后一帧必须与 `idle` 一致。
 - 奔跑动画只保留最终需要的枪身、手臂和相机通道；不使用的左右手 IK 通道不要混入导出结果。
 - 奔跑动画不能携带弹量、空仓和 `tag_ads` 状态轨道。
 - 循环动画每一帧都可烘焙，但不能把其他骨架的静态通道一起烘焙进去。
@@ -473,7 +460,7 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 - `.anim.glb` 中动作数量和名称正确。
 - 每个动作时长与 Blender 一致。
 - 没有 duplicate target、ambiguous owner 或跨 skin 警告。
-- `aim_in/out` 仅有 `tag_ads`，`aim_additive` 仅有 `tag_weapon`。
+- `ads_up` / `ads_down` 仅有 `tag_ads`，`ads_up_additive` 仅有 `tag_weapon`。
 - `bullet_additive` / `shell_additive_*` 仅有弹药与 follower。
 - 游戏内测试 idle、瞄准、射击、最后一发、空击、所有已配置的换弹分支、检视、奔跑、近战和切枪。
 - 每个动作都测试腰射与瞄准、正常与空仓、默认与替换配件、第一人称与第三人称。
@@ -503,17 +490,17 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 "animation_machine": {
   "version": 2,
   "actions": {
-    "draw": {"type": "finite", "default_state": "draw"},
-    "holster": {"type": "finite", "default_state": "holster"},
+    "raise": {"type": "finite", "default_state": "raise"},
+    "drop": {"type": "finite", "default_state": "drop"},
     "fire": {"type": "finite", "default_state": "fire"},
     "reload": {"type": "finite", "default_state": "reload"},
     "inspect": {"type": "finite", "default_state": "inspect"},
     "aim": {
       "type": "continuous",
       "phase_states": {
-        "enter": "aim_in",
-        "loop": "static_idle",
-        "exit": "aim_out"
+        "enter": "ads_up",
+        "loop": "idle",
+        "exit": "ads_down"
       }
     },
     "sprint": {

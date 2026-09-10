@@ -165,8 +165,8 @@ These examples use the same fields as the Chinese reference. Replace resource ID
     "action_commit_ms": {
       "reload": 1300,
       "reload_empty": 1800,
-      "aim_reload": 1300,
-      "aim_reload_empty": 1800,
+      "reload_ads": 1300,
+      "reload_empty_ads": 1800,
       "melee": 233
     }
   },
@@ -191,13 +191,39 @@ These examples use the same fields as the Chinese reference. Replace resource ID
     "example_rifle_barrel_default": "attachments/barrels/example_rifle_barrel_default.json",
     "example_rifle_mag_default": "attachments/magazines/example_rifle_mag_default.json"
   },
-  "animation_clips": {
-    "static_idle": "static_idle",
-    "draw": "draw",
-    "holster": "holster",
-    "fire": "fire",
-    "reload": "reload",
-    "reload_empty": "reload_empty"
+  "animation_controller": {
+    "channels": {
+      "idle": {
+        "clip": "idle",
+        "layer": "base",
+        "loop": true
+      },
+      "raise": {
+        "clip": "raise",
+        "layer": "action",
+        "loop": false
+      },
+      "drop": {
+        "clip": "drop",
+        "layer": "action",
+        "loop": false
+      },
+      "fire": {
+        "clip": "fire",
+        "layer": "recoil",
+        "loop": false
+      },
+      "reload": {
+        "clip": "reload",
+        "layer": "action",
+        "loop": false
+      },
+      "reload_empty": {
+        "clip": "reload_empty",
+        "layer": "action",
+        "loop": false
+      }
+    }
   },
   "gltf_scale": 0.075,
   "first_person": {

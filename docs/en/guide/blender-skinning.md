@@ -53,7 +53,7 @@ Blender material-node effects are not automatically converted into GWO material 
 
 ## Animation
 
-Start with `static_idle`, `draw`, and `fire`; add `reload` and `reload_empty` when needed. Keyframe local bone transforms and name every clip.
+Start with `idle`, `raise`, and `fire`; add `reload` and `reload_empty` when needed. Keyframe local bone transforms and name every clip.
 
 Read [Animation Rules](./animation.md) for channel ownership, forbidden tracks, camera tracks, pose layers, and handoff. Do not key every bone in every action.
 

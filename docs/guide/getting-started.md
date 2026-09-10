@@ -192,7 +192,7 @@ assets/example/gltf/...
 2. 先导出机匣主模型和最小动画库。
 3. 制作弹药定义。
 4. 制作枪械逻辑 JSON。
-5. 制作枪械渲染 JSON，只启用 `static_idle`、`draw`、`holster`、`fire`、`reload`。
+5. 制作枪械渲染 JSON，只启用 `idle`、`raise`、`drop`、`fire`、`reload`。
 6. 进游戏确认枪能生成、模型方向正确、可以射击和换弹。
 7. 分离并挂载默认配件。
 8. 增加完整动画机、瞄准、奔跑、空仓、检视、近战和声音事件。

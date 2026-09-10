@@ -17,6 +17,7 @@ export default {
         "models",
         "bedrock-empty",
         "animation",
+        "animation-names",
         "firing-reload",
         "config-examples",
         "firearms",

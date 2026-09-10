@@ -1,6 +1,6 @@
 {
   "pose_graph": {
-    "base_clip": "static_idle",
+    "base_clip": "idle",
     "default_blend": "override",
     "layers": {
       "action": {

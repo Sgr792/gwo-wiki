@@ -36,8 +36,8 @@ assets/example/textures/example.png
   "texture": "example:textures/example.png",
   "animation_sources": ["example:animations/example.animation.json"],
   "animation_clips": {
-    "static_idle": "animation.example.idle",
-    "draw": "animation.example.draw",
+    "idle": "animation.example.idle",
+    "raise": "animation.example.raise",
     "fire": "animation.example.fire"
   }
 }
