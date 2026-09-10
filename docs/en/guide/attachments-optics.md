@@ -231,3 +231,26 @@ For a full fixed scope and a physics charm starting configuration, use [Configur
 An avatar charm's head and nameplate must not receive the chain material. Its configured player name/UUID and geometry names must be your own; do not depend on a particular supporter example from another pack.
 
 For independent teaching configurations without default-pack assets, see [Configuration Examples](./config-examples.md). Existing valid fields and explicit defaults should be preserved when merging examples.
+
+### Dynamic rangefinder screens
+
+Development builds can display range on the active first-person optic's model screen. Raptor-FVM40 is fixed at 8x and does not define `sight.optic` switching modes. Configure these fields under the attachment render definition's `states`:
+
+```json
+{
+  "rangefinder_screen_node": "rangefinder_screen_stencil",
+  "rangefinder_screen_right": "+z",
+  "rangefinder_screen_down": "-y",
+  "rangefinder_max_distance": 320
+}
+```
+
+The right/down axes are in GLB model space and require a planar screen mesh. Measurements update about 10 times per second while holding the weapon, including on the physical screen outside ADS, displaying one block as one metre. The nearest block, fluid surface, or pickable entity wins. Sky, out-of-range targets, and unavailable terrain produce `---- m`. Text follows the optic with normal depth testing; third-person synchronization is not included.
+
+While aiming through a rangefinder optic, press V (the existing weapon-alt key) to lock a valid distance; L marks the locked reading. Press V again while aiming to resume live ranging. Invalid readings cannot be locked. Lowering the sight retains the lock. Outside ADS, the key retains its existing melee action.
+
+Red distance digits appear at the upper left inside the scope and on the physical screen, sharing one reading. While aiming, V locks a valid range and adds L to both displays; V again resumes live ranging. Invalid readings show ---- m and cannot be locked. Lowering ADS retains the lock; changing weapons or sights clears it. The scope remains fixed at 8x with its original reticle. Ballistic prediction and the separate holdover marker are not included.
+
+`rangefinder_screen_stencil` supplies the text plane position, orientation and dimensions; `rangefinder_screen_background` is the physical backplate. Configure the text plane in `transparent_nodes` with `alpha: 0` and `depth_write: false` to exclude its mesh from opaque and transparent drawing while retaining its geometry for text placement. Red full-bright text uses normal occlusion and no extra black rectangle.
+
+Range is the straight-line eye-to-surface distance along the player's view, rounded to an integer. Entities use their bounding-box surface. The default maximum is 320 metres, configurable from 1 to 1024, without loading chunks. In-scope digits are clipped to the lens. Shader appearance and visual reticle alignment still require in-game acceptance testing.

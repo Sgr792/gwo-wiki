@@ -69,11 +69,12 @@ const samples = Object.fromEntries(walk(exampleDir, '.json').map(file => {
   return [path.basename(file), value];
 }));
 const routing = samples['animation-routing.json'];
+assert.ok(!Object.hasOwn(routing, 'animation_clips'), 'Use direct clip names, not alias mappings');
 for (const action of Object.values(routing.animation_machine.actions)) {
   const states = [action.default_state, ...(action.variants || []).map(v => v.state),
     ...(action.sequences || []).flatMap(s => s.steps.map(step => step.state))];
   for (const state of states) {
-    assert.ok(routing.animation_clips[state], `Missing clip mapping: ${state}`);
+    assert.ok(typeof state === 'string' && state.length > 0, 'Missing direct animation name');
     assert.ok(routing.animation_controller.channels[state], `Missing channel: ${state}`);
   }
   const markers = new Set((action.sequences || []).flatMap(s => s.steps.map(step => step.marker)));

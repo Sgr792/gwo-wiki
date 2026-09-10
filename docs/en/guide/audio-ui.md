@@ -133,3 +133,10 @@ A 256×256 transparent PNG is a useful item-icon starting size. Creators may use
 Default modules need behavior/render files, module registration, default installation, a real anchor, and matching reference space. Selecting an ammunition type in the modification UI selects the next reload's ammunition; it should not silently replace currently loaded rounds. Survival requires available ammunition, while creative inventory rules differ.
 
 Provide valid `lang/zh_cn.json` and `lang/en_us.json` objects for localized UI and names. Inline display names can be used initially; no comments or trailing commas belong in runtime JSON.
+
+
+### HUD scaling and status notifications
+
+Weapon icons, ammunition and armor plate HUD elements scale with window dimensions and GUI scale. The weapon HUD stays anchored at the bottom right; the plate HUD keeps its bottom spacing above the vanilla hotbar when resizing.
+
+Weapon status notifications are no longer sent to the action bar or chat, including laser, optic, zoom, tactical stance, range lock, reload and refit results. Actions and validation still run; instrument readings and persistent HUD displays remain. Legacy animation commands named `show_msg` still parse but display no text.
