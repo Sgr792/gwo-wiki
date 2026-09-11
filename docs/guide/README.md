@@ -14,6 +14,7 @@ toc: false
   </div>
 
   <div class="gwo-guide-format-note">
+    <p><a href="./content-editor.html">GWO 内容编辑器：下载、工作台与近期更新 →</a></p>
     <p><a href="./visual-guide.html">图解索引：层级、挂点、轨道、材质和导出检查 →</a></p>
     <strong>代码块标记</strong>
     <code>json</code> 表示可以独立保存的完整文件；<code>jsonc</code> 表示需要插入父对象的配置片段。实际内容包 JSON 不允许注释或尾随逗号。

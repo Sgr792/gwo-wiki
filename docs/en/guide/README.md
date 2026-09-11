@@ -14,6 +14,7 @@ toc: false
   </div>
 
   <div class="gwo-guide-format-note">
+    <p><a href="./content-editor.html">GWO Content Editor: downloads, workflow, and recent updates →</a></p>
     <p><a href="./visual-guide.html">Visual index: hierarchy, anchors, tracks, materials, and export checks →</a></p>
     <strong>Code-block labels</strong>
     <code>json</code> is a complete file that can be saved directly. <code>jsonc</code> is a fragment that belongs inside its stated parent object. Actual content-pack JSON must not contain comments or trailing commas.

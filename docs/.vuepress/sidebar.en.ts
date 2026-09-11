@@ -8,6 +8,7 @@ export default {
       link: "/en/guide/",
       collapsible: false,
       children: [
+        "content-editor",
         "choose-workflow",
         "visual-guide",
         { text: "Model and animation routes", collapsible: true, children: ["blender-skinning", "blender-empty", "blockbench", "arm-templates"] },
