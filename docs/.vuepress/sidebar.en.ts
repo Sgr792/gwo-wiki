@@ -8,6 +8,7 @@ export default {
       link: "/en/guide/",
       collapsible: false,
       children: [
+        "updates",
         "content-editor",
         "choose-workflow",
         "visual-guide",

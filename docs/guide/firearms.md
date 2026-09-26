@@ -143,6 +143,10 @@ category:
 
 `creative_sort` 控制同一分类内的排序，数值较小的项目排在前面。未知分类会回退为 `assault_rifle`，因此不要自创拼写。
 
+从 2026-09-26 的本体更新起，普通枪械的注册物品 ID 也按上述类别区分，例如 `gwo:assault_rifle`、`gwo:shotgun`、`gwo:pistol`。配置了 `transformation` 的枪械使用 `gwo:transforming_gun`，切换形态不会更换物品 ID；近战武器仍是 `gwo:melee_weapon`。具体是哪把枪仍由物品组件中的内容 ID 决定，因此 `example:example_rifle` 这样的内容定义 ID 不需要改成物品注册 ID。
+
+旧 `gwo:gun` 已取消注册，**不会自动迁移旧存档中的物品**。升级前请备份存档，并在旧版本中记录或处理背包、容器里的枪械；升级后用 `/gwo give firearm "<命名空间>:<枪械 ID>"` 或工作台重新取得。不要在内容包配方中把注册物品 ID 当成 `result.id`；工作台的 `result.id` 仍填内容定义 ID。参见[近期更新](./updates.md)。
+
 ## 创建枪械渲染 JSON
 
 最小骨架：

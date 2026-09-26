@@ -2,6 +2,7 @@ import type { NavbarConfig } from "vuepress-theme-hope";
 
 export default [
   "/",
+  { text: "近期更新", link: "/guide/updates" },
   {
     text: "内容包教程",
     icon: "book-open",

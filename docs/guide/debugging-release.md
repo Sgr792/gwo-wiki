@@ -35,6 +35,8 @@ category:
 /gwo give ammo "example:example_ammo"
 ```
 
+升级到分类枪械物品 ID 的版本前，请先备份世界并处理旧 `gwo:gun` 物品；新版本没有自动存档迁移。内容包的枪械定义 ID 保持不变，命令仍使用定义 ID，详见[枪械分类与迁移](./firearms.md#武器分类)。
+
 ## ZIP 打包与分发
 
 开发和调试阶段建议直接使用普通文件夹。需要分发时，将内容包压缩为 ZIP；ZIP 根目录必须直接包含 `pack.mcmeta`、逻辑目录和 `assets`，不能额外套一层同名文件夹。

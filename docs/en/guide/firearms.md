@@ -28,6 +28,10 @@ Magazine-fed finite actions use `mechanics.action_commit_ms`. A tube-fed shotgun
 
 Use `creative_category` to select both the creative-tab group and the weapon-type label shown in the modification screen. Standard values are `assault_rifle`, `battle_rifle`, `submachine_gun`, `shotgun`, `light_machine_gun`, `marksman_rifle`, `sniper_rifle`, `pistol`, `launcher`, and `melee`. `creative_sort` controls ordering within a category. Unknown values fall back to `assault_rifle`.
 
+As of the 2026-09-26 core update, a normal firearm's registered item ID also follows its category, such as `gwo:assault_rifle`, `gwo:shotgun`, or `gwo:pistol`. A firearm with `transformation` uses `gwo:transforming_gun` in both forms. Melee weapons still use `gwo:melee_weapon`. The item component continues to identify the particular content-pack weapon, so content definition IDs such as `example:example_rifle` do not change.
+
+The old `gwo:gun` registration has been removed **without automatic migration of saved items**. Back up your world and deal with guns in inventories and containers on the older version before upgrading; afterward, restore them with `/gwo give firearm "<namespace>:<weapon ID>"` or the gunsmith workbench. Workbench `result.id` still takes a content definition ID, not the registered item ID. See [recent updates](./updates.md).
+
 ## Firearm render JSON
 
 The render file binds model, animation library, arms, materials, nodes, action names, and display transforms. Typical declarations include:

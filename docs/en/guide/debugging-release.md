@@ -15,6 +15,8 @@ Correct the field rather than relying on its fallback. Domain-specific ranges st
 
 Use `/gwo reload` to rescan external firearm and ammunition definitions. It does not rebuild uploaded GPU model or material caches. Use resource reload (`F3+T`) for models, textures, sounds, animations, `transparent_nodes`, and other render-material changes. Restart the game whenever a loader, renderer, cache, or binary resource remains resident.
 
+Before upgrading to category-specific firearm item IDs, back up the world and handle any old `gwo:gun` items. There is no automatic saved-item migration. Content-pack weapon IDs and the `/gwo give firearm` command still use the content definition ID; see [firearm categories and migration](./firearms.md).
+
 Test with folder packs first. ZIP only after the folder build passes. The ZIP root must directly contain `pack.mcmeta` and content folders.
 
 ## Performance rules
