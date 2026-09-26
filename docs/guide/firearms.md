@@ -143,9 +143,13 @@ category:
 
 `creative_sort` 控制同一分类内的排序，数值较小的项目排在前面。未知分类会回退为 `assault_rifle`，因此不要自创拼写。
 
-从 2026-09-26 的本体更新起，普通枪械的注册物品 ID 也按上述类别区分，例如 `gwo:assault_rifle`、`gwo:shotgun`、`gwo:pistol`。配置了 `transformation` 的枪械使用 `gwo:transforming_gun`，切换形态不会更换物品 ID；近战武器仍是 `gwo:melee_weapon`。具体是哪把枪仍由物品组件中的内容 ID 决定，因此 `example:example_rifle` 这样的内容定义 ID 不需要改成物品注册 ID。
+普通枪械的注册物品 ID 也按上述类别区分，例如 `gwo:assault_rifle`、`gwo:shotgun`、`gwo:pistol`。配置了 `transformation` 的枪械使用 `gwo:transforming_gun`，切换形态不会更换物品 ID；近战武器仍是 `gwo:melee_weapon`。具体是哪把枪仍由物品组件中的内容 ID 决定，因此 `example:example_rifle` 这样的内容定义 ID 不需要改成物品注册 ID。
 
-旧 `gwo:gun` 已取消注册，**不会自动迁移旧存档中的物品**。升级前请备份存档，并在旧版本中记录或处理背包、容器里的枪械；升级后用 `/gwo give firearm "<命名空间>:<枪械 ID>"` 或工作台重新取得。不要在内容包配方中把注册物品 ID 当成 `result.id`；工作台的 `result.id` 仍填内容定义 ID。参见[近期更新](./updates.md)。
+旧 `gwo:gun` 已取消注册，**不会自动迁移旧存档中的物品**。升级前请备份存档，并在旧版本中记录或处理背包、容器里的枪械；升级后用 `/gwo give firearm "<命名空间>:<枪械 ID>"` 或工作台重新取得。不要在内容包配方中把注册物品 ID 当成 `result.id`；工作台的 `result.id` 仍填内容定义 ID。配方写法见[枪械工作台教程](./gunsmith-workbench.md)。
+
+### 双形态枪械
+
+两份枪械定义相互指定 `transformation.target`；例如形态 A 指向 `example:form_b`，形态 B 指回 `example:form_a`。`state` 是该方向的变形动作名，`duration_ms` 为逻辑锁定时长（100～10000 毫秒），`display_root` 默认 `tag_weapon`。两个形态必须使用相同的弹匣容量、弹药设置、模块树及模型引用，不能把它们写成互不相关的两把枪。切换后保留同一件物品和弹量；请分别验证两个方向的动画、换弹、瞄准与声音。
 
 ## 创建枪械渲染 JSON
 

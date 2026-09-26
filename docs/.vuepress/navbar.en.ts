@@ -2,7 +2,6 @@ import type { NavbarConfig } from "vuepress-theme-hope";
 
 export default [
   "/en/",
-  { text: "Updates", link: "/en/guide/updates" },
   {
     text: "Content Pack Guide",
     icon: "book-open",
@@ -21,6 +20,8 @@ export default [
       { text: "Animation Rules", link: "animation" },
       { text: "Configuration Examples", link: "config-examples" },
       { text: "Firearms and Ammo", link: "firearms" },
+      { text: "Gunsmith Workbench", link: "gunsmith-workbench" },
+      { text: "Training Target", link: "training-target" },
       { text: "Attachments and Optics", link: "attachments-optics" },
       { text: "Melee Weapons", link: "melee" },
       { text: "Audio and UI", link: "audio-ui" },

@@ -8,7 +8,6 @@ export default {
       link: "/guide/",
       collapsible: false,
       children: [
-        "updates",
         "content-editor",
         "choose-workflow",
         "visual-guide",
@@ -23,6 +22,8 @@ export default {
         "firing-reload",
         "config-examples",
         "firearms",
+        "gunsmith-workbench",
+        "training-target",
         "attachments-optics",
         "melee",
         "audio-ui",

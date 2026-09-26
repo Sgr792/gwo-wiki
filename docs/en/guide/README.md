@@ -63,6 +63,8 @@ toc: false
     <a href="./models.html"><b>Models</b><strong>Model Rules</strong><small>Blender 3.3, coordinates, skeletons, Empty/rigid nodes, anchors, and GLB export.</small></a>
     <a href="./animation.html"><b>Animation</b><strong>Animation Rules</strong><small>Clip purpose, state differences, channel ownership, handoff, and machine configuration.</small></a>
     <a href="./firearms.html"><b>Firearms</b><strong>Firearms and Ammunition</strong><small>Behavior, ballistics, display transforms, recoil, effects, and materials.</small></a>
+    <a href="./gunsmith-workbench.html"><b>Crafting</b><strong>Gunsmith Workbench</strong><small>Using the workbench, authoring recipes, and result IDs.</small></a>
+    <a href="./training-target.html"><b>Range</b><strong>Metal Training Target</strong><small>Placement, scoring hits, falling, and reset.</small></a>
     <a href="./attachments-optics.html"><b>Modules</b><strong>Attachments and Optics</strong><small>Anchors, replacement animation, optics, tactical stance, and dynamic charms.</small></a>
     <a href="./melee.html"><b>Melee</b><strong>Standalone Melee</strong><small>Attack sets, combos, hit windows, interruption, and sound events.</small></a>
     <a href="./audio-ui.html"><b>Interface</b><strong>Audio and UI</strong><small>Sound events, language files, item icons, HUD, and modification-screen assets.</small></a>
