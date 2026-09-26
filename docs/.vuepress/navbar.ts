@@ -21,7 +21,6 @@ export default [
       { text: "配置示例", link: "config-examples" },
       { text: "枪械与弹药", link: "firearms" },
       { text: "枪械工作台", link: "gunsmith-workbench" },
-      { text: "金属倒伏靶", link: "training-target" },
       { text: "配件与瞄具", link: "attachments-optics" },
       { text: "近战武器", link: "melee" },
       { text: "声音与界面", link: "audio-ui" },

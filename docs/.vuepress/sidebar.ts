@@ -23,7 +23,6 @@ export default {
         "config-examples",
         "firearms",
         "gunsmith-workbench",
-        "training-target",
         "attachments-optics",
         "melee",
         "audio-ui",

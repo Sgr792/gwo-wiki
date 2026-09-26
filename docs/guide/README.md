@@ -64,7 +64,6 @@ toc: false
     <a href="./animation.html"><b>动画</b><strong>动画制作与导出</strong><small>动画用途、状态区别、通道所有权、交接与动画机配置。</small></a>
     <a href="./firearms.html"><b>枪械</b><strong>枪械、弹药与材质</strong><small>枪械逻辑、弹道、显示变换、后坐力、特效和贴图。</small></a>
     <a href="./gunsmith-workbench.html"><b>制作</b><strong>枪械工作台</strong><small>工作台使用、内容包配方和产物 ID。</small></a>
-    <a href="./training-target.html"><b>靶场</b><strong>金属倒伏靶</strong><small>放置、有效命中、倒地和复位。</small></a>
     <a href="./attachments-optics.html"><b>配件</b><strong>配件、瞄具与挂饰</strong><small>挂点、替换动画、倍镜、侧瞄和动态挂饰。</small></a>
     <a href="./melee.html"><b>近战</b><strong>独立近战武器</strong><small>动作集合、连段、命中窗口、打断和声音事件。</small></a>
     <a href="./audio-ui.html"><b>界面</b><strong>声音、图标与界面</strong><small>声音事件、语言文件、物品图标、HUD 和改装界面资源。</small></a>
