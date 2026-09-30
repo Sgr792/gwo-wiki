@@ -57,6 +57,9 @@ toc: false
   </div>
 
   <div class="gwo-chapter-grid">
+    <a href="./parameters.html"><b>参数</b><strong>内容包参数作用</strong><small>字段用途、单位、默认值和调参影响。</small></a>
+    <a href="./lua-animation.html"><b>Lua</b><strong>内容包动画机</strong><small>脚本接入、通道、混合、分支、打断与下载示例。</small></a>
+
     <a href="./arm-templates.html"><b>手臂</b><strong>手臂制作模板</strong><small>制作动作与共用游戏手臂的区别、模板选择和下载。</small></a>
     <a href="./config-examples.html"><b>示例</b><strong>配置示例与接入</strong><small>分支、序列、姿态层、倍率镜与物理挂饰的独立示例。</small></a>
     <a href="./bedrock-empty.html"><b>格式</b><strong>格式与支持范围</strong><small>文件格式、配置映射、版本要求与功能限制参考。</small></a>

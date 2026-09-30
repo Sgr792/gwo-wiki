@@ -5,6 +5,8 @@ category:
   - 零基础入门
 ---
 
+> **Lua 动画机 API 1：** 新版动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段仍用于说明数据结构和旧包兼容；不要与 Lua 重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
+
 # 从零制作第一把枪
 
 这是三条制作路线共用的内容包配置教程。尚未制作模型与动画时，请先[选择制作方式](./choose-workflow.md)。本章文件名以 GLB 为例；Blockbench 路线按[格式配置](./bedrock-empty.md)替换为自己的几何与动画 JSON 路径，逻辑、材质与事件配置仍共用。Blender 蒙皮专属操作不适用于纯刚性模型。

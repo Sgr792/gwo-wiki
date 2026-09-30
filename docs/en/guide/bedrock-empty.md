@@ -4,6 +4,8 @@ category:
   - Content-Pack Authoring
 ---
 
+> **Lua animation API 1:** New animation data lives in pack scripts under `config`. JSON animation fragments below explain the data structure and legacy compatibility; do not duplicate them alongside Lua. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
+
 ::: warning Build and validation status
 Check the installed release notes for Bedrock model/animation and Blender Empty rigid-animation support. The `2.12.87` version label alone does not distinguish earlier builds.
 :::

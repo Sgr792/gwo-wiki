@@ -2,6 +2,8 @@
 title: Advanced Firing and Reloading
 ---
 
+> **Lua animation API 1:** New animation data lives in pack scripts under `config`. JSON animation fragments below explain the data structure and legacy compatibility; do not duplicate them alongside Lua. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
+
 # Advanced Firing and Reloading
 
 Start with [Animation Rules](./animation.md) and [Configuration Examples](./config-examples.md). These are partial configurations: merge them into your render definition and use timings from your own animation.

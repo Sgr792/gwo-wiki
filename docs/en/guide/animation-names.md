@@ -3,6 +3,8 @@ title: Animation Names and Complete Inventory
 order: 3.1
 ---
 
+> **Lua animation API 1:** New animation data lives in pack scripts under `config`. JSON animation fragments below explain the data structure and legacy compatibility; do not duplicate them alongside Lua. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
+
 This page describes the default-pack migration of 2026-09-10. It uses short COD-style names, preserving weapon-specific suffixes while placing `ads` last for ADS fire and reload clips. This is a GWO convention, not a claim that every original COD table uses identical names.
 
 Use the same name for the Blender Action, exported GLB clip, controller channel, and its `clip`. The default pack uses these names directly without legacy aliases. Update the mod JAR, animation GLBs, and pack configuration together.

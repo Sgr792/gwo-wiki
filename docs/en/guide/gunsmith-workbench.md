@@ -44,3 +44,6 @@ Create `recipes/gunsmith/craft_example_rifle.json`:
 Duplicate recipe IDs disable every recipe with that ID. Each JSON file is limited to 8192 characters, and all enabled packs together may define at most 512 recipes. After editing, run `/gwo reload` or `/reload` and reopen the workbench; an active job keeps the materials and output captured when it began.
 
 If a recipe is missing, verify that its `result.id` definition loaded, then inspect the invalid-recipe log entry. See the [core workbench reference](https://github.com/Sgr792/gwo/blob/main/docs/gunsmith-workbench.md) for the complete server-side rules.
+
+
+For field purpose, units, defaults and adjustment effects, see the [parameter reference](parameters.md). For animation control/blending, see [Lua animation machines](lua-animation.md).

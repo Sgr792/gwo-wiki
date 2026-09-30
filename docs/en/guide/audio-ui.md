@@ -140,3 +140,6 @@ Provide valid `lang/zh_cn.json` and `lang/en_us.json` objects for localized UI a
 Weapon icons, ammunition and armor plate HUD elements scale with window dimensions and GUI scale. The weapon HUD stays anchored at the bottom right; the plate HUD keeps its bottom spacing above the vanilla hotbar when resizing.
 
 Weapon status notifications are no longer sent to the action bar or chat, including laser, optic, zoom, tactical stance, range lock, reload and refit results. Actions and validation still run; instrument readings and persistent HUD displays remain. Legacy animation commands named `show_msg` still parse but display no text.
+
+
+For field purpose, units, defaults and adjustment effects, see the [parameter reference](parameters.md). For animation control/blending, see [Lua animation machines](lua-animation.md).

@@ -5,6 +5,8 @@ category:
   - Content-Pack Authoring
 ---
 
+> **Lua animation API 1:** New animation data lives in pack scripts under `config`. JSON animation fragments below explain the data structure and legacy compatibility; do not duplicate them alongside Lua. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
+
 ## Ammunition
 
 An ammunition definition owns caliber identity, damage/ballistics, inventory icon, loaded-round model, and spent-case model. A weapon references compatible ammunition IDs; magazines change capacity and animation behavior but do not replace the caliber definition.

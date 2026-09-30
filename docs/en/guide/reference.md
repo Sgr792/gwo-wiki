@@ -44,3 +44,6 @@ The following names are ignored or explicitly removed legacy syntax. Do not add 
 Do not classify explicit current defaults or valid identity animation mappings as legacy. Remove only obsolete names or formats that the loader explicitly rejects.
 
 For independent teaching configurations without default-pack assets, see [Configuration Examples](./config-examples.md). Existing valid fields and explicit defaults should be preserved when merging examples.
+
+
+For field purpose, units, defaults and adjustment effects, see the [parameter reference](parameters.md). For animation control/blending, see [Lua animation machines](lua-animation.md).

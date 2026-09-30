@@ -4,6 +4,8 @@ category:
   - 内容包制作
 ---
 
+> **Lua 动画机 API 1：** 新版动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段仍用于说明数据结构和旧包兼容；不要与 Lua 重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
+
 ::: warning 版本要求
 使用前请确认所安装版本的更新说明包含 Bedrock 模型、动画与 Blender Empty 刚性动画支持；仅凭 `2.12.87` 版本号无法区分早期构建。
 :::

@@ -5,6 +5,8 @@ category:
   - 内容包制作
 ---
 
+> **Lua 动画机 API 1：** 新版动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段仍用于说明数据结构和旧包兼容；不要与 Lua 重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
+
 ## 独立近战武器
 
 近战武器放在 `weapons/melee/`，不是 `weapons/firearms/`，也不应伪装成弹量为 0 的枪。

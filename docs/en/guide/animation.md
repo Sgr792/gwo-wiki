@@ -5,6 +5,8 @@ category:
   - Content-Pack Authoring
 ---
 
+> **Lua animation API 1:** New animation data lives in pack scripts under `config`. JSON animation fragments below explain the data structure and legacy compatibility; do not duplicate them alongside Lua. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
+
 ## Animation library contract
 
 For first-shot preparation, recovery, replacement magazines, and belts, see [Advanced Firing and Reloading](./firing-reload.md).

@@ -5,6 +5,8 @@ category:
   - Beginner Course
 ---
 
+> **Lua animation API 1:** New animation data lives in pack scripts under `config`. JSON animation fragments below explain the data structure and legacy compatibility; do not duplicate them alongside Lua. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
+
 # Build Your First Firearm
 
 This is the shared configuration tutorial after any of the three authoring routes. [Choose Your Workflow](./choose-workflow.md) first if you have not built the assets. GLB paths below are examples: Blockbench users should substitute their geometry/animation JSON paths using [format configuration](./bedrock-empty.md). Behavior, materials, and events remain shared; Blender skinning-specific steps do not apply to pure rigid models.

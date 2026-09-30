@@ -4,6 +4,8 @@ category:
   - Content-Pack Authoring
 ---
 
+> **Lua animation API 1:** New animation data lives in pack scripts under `config`. JSON animation fragments below explain the data structure and legacy compatibility; do not duplicate them alongside Lua. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
+
 # Configuration examples and integration
 
 These examples contain no weapon models, textures, sounds, or animations and do not depend on the default pack. They are configuration starting points, not a playable pack. Dimensions and timings are instructional values to replace with your own.

@@ -44,3 +44,6 @@ category:
 重复配方 ID 会使同 ID 的配方全部失效。单份 JSON 不超过 8192 字符，所有内容包合计最多 512 条配方。修改后运行 `/gwo reload` 或 `/reload`，重新打开工作台检查列表；已经开始的加工仍按启动时的材料和产物快照完成。
 
 调试时先确认 `result.id` 对应的内容包已加载，再检查日志中的无效配方原因。完整字段与服务端规则见[本体工作台说明](https://github.com/Sgr792/gwo/blob/main/docs/gunsmith-workbench.md)。
+
+
+字段的作用、单位、默认值和调参影响可查 [内容包参数参考](parameters.md)。动画控制与混合见 [Lua 动画机](lua-animation.md)。

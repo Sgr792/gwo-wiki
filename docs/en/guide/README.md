@@ -57,6 +57,9 @@ toc: false
   </div>
 
   <div class="gwo-chapter-grid">
+    <a href="./parameters.html"><b>Fields</b><strong>Parameter reference</strong><small>Purpose, units, defaults and tuning effects.</small></a>
+    <a href="./lua-animation.html"><b>Lua</b><strong>Pack animation machines</strong><small>Script setup, channels, blending, branches and interrupts.</small></a>
+
     <a href="./arm-templates.html"><b>Arms</b><strong>Arm authoring templates</strong><small>Shared runtime arms, authoring tracks, and source downloads.</small></a>
     <a href="./config-examples.html"><b>Examples</b><strong>Configuration examples</strong><small>Animation routing, pose layers, scopes, and charms.</small></a>
     <a href="./bedrock-empty.html"><b>Formats</b><strong>Formats and Support Scope</strong><small>File formats, configuration mapping, build requirements, and limitations.</small></a>
