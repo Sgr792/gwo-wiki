@@ -155,7 +155,7 @@ Downloads are valid JSON. The first two are **fragments to merge into an existin
 ```
 
 
-1. Supply all referenced clips and matching channels with real durations. For Bedrock, use full exported clip names on the right.
+1. Supply all referenced clips and matching channels with real durations. Use full exported clip names on the right.
 2. `variants` selects a state by `when`, with higher-priority matching rules first. Here empty reload selects `reload_empty`.
 3. `sequences` splits firing into preparation, shot, and recovery. A `marker` locates a sequence step; it is not a model bone.
 4. The three visual firing events use the `shot` marker and zero offset from that step. They do not replace server ammunition, damage, or reload commits.

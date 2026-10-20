@@ -10,14 +10,14 @@ category:
 Start with [Choose Your Workflow](./choose-workflow.md) if you have not selected an authoring route. Complete that route, then return for the shared environment setup.
 
 - Minecraft 1.21.1, the matching NeoForge build, and GWO.
-- Blender (the template uses 3.3) or Blockbench, depending on your route; both are not required.
+- Blender (the template uses 3.3).
 - [Arm templates: choose a workflow and download](./arm-templates.md).
 - A UTF-8 JSON editor, a PNG editor, and an OGG Vorbis encoder.
 - The [GWO empty content-pack template](/downloads/gwo_empty_content_pack_template.zip), which uses the current directory format and contains no legacy compatibility content.
 
 GWO uses `.glb` for models, `.anim.glb` for animation libraries, `.png` for textures and icons, `.ogg` for sounds, and `.json` for behavior/render definitions. Use lowercase ASCII letters, digits, and underscores in resource paths.
 
-Versions with the format update also accept Bedrock entity cube `.geo.json` models, numeric `.animation.json` animation, and Blender Empty rigid GLBs. Blockbench can author the Bedrock workflow. Check [Bedrock and Empty Animation](./bedrock-empty.md) for build requirements, supported features, and configuration examples.
+Blender Empty rigid GLBs are also supported. See [GLB and Empty Animation](./bedrock-empty.md).
 
 ## Pack location
 

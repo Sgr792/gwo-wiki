@@ -11,7 +11,7 @@ category:
 
 首发准备、射击恢复、换弹新旧弹匣与弹链配置见[射击与换弹进阶](./firing-reload.md)。
 
-本页主要介绍 GLB 骨骼制作路线；Bedrock 数值动画和无 Skin Empty 刚性动画见 [Bedrock 与 Empty 动画](./bedrock-empty.md)。GWO 状态名、事件配置仍共用，但 Bedrock 轨道是相对初始姿态的变化，不应直接当作 GLB 局部变换使用。
+本页主要介绍 GLB 骨骼制作路线；无 Skin Empty 刚性动画见 [GLB 与 Empty 动画](./bedrock-empty.md)。GWO 状态名和事件配置共用。
 
 ### 模型与动画分离
 
@@ -230,7 +230,7 @@ M4 的扩容弹匣保留 `xmaglrg`；RM277 的鼓式弹匣动画使用 `drum`，
 
 ### 骨架、父子层级与坐标空间
 
-第一人称层级统一按[模型规范的标准父子层级](./models.md#标准父子层级)建立。Blender 骨骼蒙皮路线的 `root` 是 Armature 骨架对象，不是骨骼；骨架内部的骨骼父子关系在编辑模式下设置。Empty 路线的根是 Empty，Blockbench 路线则使用根分组，不要混用对象类型。
+第一人称层级统一按[模型规范的标准父子层级](./models.md#标准父子层级)建立。Blender 骨骼蒙皮路线的 `root` 是 Armature 骨架对象，不是骨骼；骨架内部的骨骼父子关系在编辑模式下设置。Empty 路线的根是 Empty，不要混用对象类型。
 
 必须遵守：
 

@@ -30,7 +30,7 @@ The muzzle points along model-space `+X`. Apply mesh rotation and scale, but do 
 
 ### Required first-person hierarchy
 
-For Blender skinning, `root` is the Armature object containing the root bone, not an extra parent bone. Bone parenting begins inside that object, from `tag_view` downward. The Empty route uses Empty objects and the Bedrock route uses groups; these are not Blender Armature objects.
+For Blender skinning, `root` is the Armature object containing the root bone, not an extra parent bone. Bone parenting begins inside that object, from `tag_view` downward. The Empty route uses Empty objects rather than Blender Armature objects.
 
 <figure class="gwo-guide-figure">
   <a href="/images/guide/en/hierarchy.svg" target="_blank" rel="noopener" aria-label="Open full-size diagram: First-person hierarchy: parent to child">
@@ -82,9 +82,8 @@ For reversed, offset, incorrectly scaled, or non-animated parts, check the share
 
 ## Empty nodes and arm template
 
-Versions with the format update support Blender Empty/spatial animation in no-Skin GLBs, preserving hierarchy, local transforms, and child meshes in the shared pose pipeline. Rigid meshes do not deform; use Armature skinning for deforming arms. Multi-Armature and mixed-rig compatibility are unchanged.
+Blender Empty rigid GLBs are also supported. See [GLB and Empty Animation](./bedrock-empty.md).
 
-Bedrock entity cubes and numeric animations are also available. See [Bedrock and Empty Animation](./bedrock-empty.md) for build requirements, configuration, and limitations.
 
 Download the [Arm templates: choose a workflow and download](./arm-templates.md); if you change its skeleton, update the weapon animation library and independent arm model together.
 

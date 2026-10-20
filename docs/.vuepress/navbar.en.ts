@@ -11,7 +11,6 @@ export default [
       { text: "Choose Your Workflow", link: "choose-workflow" },
       { text: "Blender Skinning Route", link: "blender-skinning" },
       { text: "Blender Empty Route", link: "blender-empty" },
-      { text: "Blockbench Route", link: "blockbench" },
       { text: "Arm Templates", link: "arm-templates" },
       { text: "Getting Started", link: "getting-started" },
       { text: "Empty Template", link: "empty-template" },

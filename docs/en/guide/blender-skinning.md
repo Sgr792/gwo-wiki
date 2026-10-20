@@ -72,4 +72,4 @@ Prefer separate model `.glb` and animation-library `.anim.glb` exports. Include 
 
 Reimport into an empty project and verify clip count, duration, first/last frames, weights, and anchors.
 
-**Checkpoint:** Reimport matches the source. Continue to [Getting Started](./getting-started.md) and [shared configuration](./first-firearm.md). You do not need the Empty or Blockbench route.
+**Checkpoint:** Reimport matches the source. Continue to [Getting Started](./getting-started.md) and [shared configuration](./first-firearm.md). You do not need the Empty route.

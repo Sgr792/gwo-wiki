@@ -9,7 +9,7 @@ category:
 
 # 从零制作第一把枪
 
-这是三条制作路线共用的内容包配置教程。尚未制作模型与动画时，请先[选择制作方式](./choose-workflow.md)。本章文件名以 GLB 为例；Blockbench 路线按[格式配置](./bedrock-empty.md)替换为自己的几何与动画 JSON 路径，逻辑、材质与事件配置仍共用。Blender 蒙皮专属操作不适用于纯刚性模型。
+这是两条制作路线共用的内容包配置教程。尚未制作模型与动画时，请先[选择制作方式](./choose-workflow.md)。本章文件名以 GLB 为例；逻辑、材质与事件配置共用。Blender 蒙皮专属操作不适用于纯刚性模型。
 
 本章面向第一次制作 GWO 内容包的人。目标不是第一遍就做出完整商业级武器，而是按固定顺序得到一把能加载、能显示、能射击、能换弹，再逐步加入瞄准、手臂、声音和配件的枪。
 
@@ -42,7 +42,7 @@ category:
 ## 第 0 步：准备环境
 
 1. 安装 Minecraft 1.21.1、匹配版本 NeoForge 和 GWO。
-2. 只准备所选路线的软件：Blender 或 Blockbench。
+2. 只准备所选路线的软件：Blender。
 3. 准备 VS Code 或其他能保存 UTF-8 JSON 的编辑器。
 4. 下载并解压[空内容包模板](/downloads/gwo_empty_content_pack_template.zip)。
 5. 需要制作手臂动作时，按路线下载[手臂制作模板](./arm-templates.md)。
@@ -110,9 +110,8 @@ tutorial:skins/guns/training_rifle.png
 
 - [Blender 骨架](./blender-skinning.md)：骨架、网格和绑定姿态一致。
 - [Blender Empty](./blender-empty.md)：保留父级 Empty 与子网格，不要求 Armature 或 Skinning。
-- [Blockbench](./blockbench.md)：使用 Bedrock 实体方块、分组和数值动画，不需要安装 Blender。
 
-三条路线都要检查模型方向、比例、节点命名和无用对象。软件操作按对应路线完成，本章不再要求所有作者使用同一种导出器。
+两条路线都要检查模型方向、比例、节点命名和无用对象。软件操作按对应路线完成，本章不再要求所有作者使用同一种导出器。
 
 ### 第一版至少需要的节点
 
@@ -166,7 +165,7 @@ root
 assets/tutorial/gltf/guns/training_rifle/training_rifle_receiver_default.glb
 ```
 
-骨架路线保留所需骨架与 Skinning；Empty 路线保留驱动节点及子网格。Blockbench 则导出几何 JSON，并把后文 `gltf_model` 替换为对应路径，例如 `tutorial:models/training_rifle.geo.json`。静态模型不需要混入无关动作库。
+骨架路线保留所需骨架与 Skinning；Empty 路线保留驱动节点及子网格。静态模型不需要混入无关动作库。
 
 不要改变模型与动画的节点名、绑定/初始姿态后只重导其中一个文件。
 
@@ -230,7 +229,6 @@ reload_empty
 
 - Blender 骨架：给所属骨架建立 Action。
 - Blender Empty：给运动节点制作对象变换关键帧，并按导出器的 Action/NLA 组织方式归入同名剪辑；不要误选不存在的 Armature。
-- Blockbench：在动画工作区创建动作，给分组制作数值关键帧。
 
 本例统一使用 30 FPS 作为配置帧基准。为动作命名、保留有效轨道，删除无关的批量静态轨道和重复动作。具体软件操作见对应路线，所有路线共同遵守[动画通道所有权](./animation.md)。
 
@@ -242,7 +240,7 @@ GLB 路线的动画库保存为：
 assets/tutorial/gltf/animations/training_rifle_receiver_default.anim.glb
 ```
 
-Blockbench 路线改为独立 `.animation.json`，并在 `animation_sources` 中引用；控制器的 `clip` 保留实际完整动作名。各路线模型与动画都要具有相匹配的节点、父子关系和参考姿态，不要单独移动动画根来掩盖错误。
+独立动画导出为 GLB，并在 `animation_sources` 中引用；控制器的 `clip` 保留实际完整动作名。各路线模型与动画都要具有相匹配的节点、父子关系和参考姿态，不要单独移动动画根来掩盖错误。
 
 ### 完成标准
 
@@ -626,7 +624,7 @@ weapons/firearms/render/training_rifle.render.json
 
 未填写 `arms.model` 时使用内置 `gwo:gltf/arms/arms.glb`。不需要每把枪或每个包重复导出一份手臂网格；但枪械动画中有效的手臂节点与轨道必须保留。两个 holder 名称需要对应实际动画节点，`blend_ticks` 调整交接，不代替正确的轨道和参考空间。
 
-如确实需要自定义手臂外观，可额外配置 `arms.model` 并提供匹配的模型，这是进阶选项。Empty / Bedrock 独立手臂的配置方法与检查项目见[手臂模板](./arm-templates.md)。默认手臂和现有配置无需修改。
+如确实需要自定义手臂外观，可额外配置 `arms.model` 并提供匹配的模型，这是进阶选项。Empty 独立手臂的配置方法与检查项目见[手臂模板](./arm-templates.md)。默认手臂和现有配置无需修改。
 
 ### 完成标准
 

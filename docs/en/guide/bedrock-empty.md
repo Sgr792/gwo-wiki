@@ -1,67 +1,14 @@
 ---
-title: Formats and Support Scope
+title: GLB and Empty Animation
 category:
-  - Content-Pack Authoring
+  - Models and animation
 ---
 
-> **Lua animation API 1:** New animation data lives in pack scripts under `config`. JSON animation fragments below explain the data structure and legacy compatibility; do not duplicate them alongside Lua. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
+# GLB and Empty Animation
 
-::: warning Build and validation status
-Check the installed release notes for Bedrock model/animation and Blender Empty rigid-animation support. The `2.12.87` version label alone does not distinguish earlier builds.
-:::
+Gun content packs no longer load Bedrock `.geo.json` models or `.animation.json` animations. `.bbmodel` is an editing source, not a runtime format. Use GLB/glTF models and GLB animation libraries. Skinned GLB and Blender Empty rigid animation remain supported.
 
-## Choose a model workflow
-
-This page is a format/configuration reference. For authoring steps, [choose a workflow](./choose-workflow.md) and follow its separate Blender or Blockbench route.
-
-GWO now routes three workflows through its existing configuration, animation states, and rendering infrastructure:
-
-- Existing GLB Armature/Skin models.
-- Rigid GLB models animated through Blender Empty parents and child meshes.
-- Blockbench Bedrock entity cube geometry and numeric animation JSON.
-
-No offline compilation or conversion tool is required. The fragments below belong inside an existing GWO weapon definition; they are not complete definitions.
-
-## Bedrock files and configuration
-
-Place files in your own namespace:
-
-```text
-assets/example/models/example.geo.json
-assets/example/animations/example.animation.json
-assets/example/textures/example.png
-```
-
-```jsonc
-{
-  "gltf_model": "example:models/example.geo.json",
-  "texture": "example:textures/example.png",
-  "animation_sources": ["example:animations/example.animation.json"],
-  "animation_clips": {
-    "idle": "animation.example.idle",
-    "raise": "animation.example.raise",
-    "fire": "animation.example.fire"
-  }
-}
-```
-
-The existing `gltf_model` field also accepts `.geo.json`. Include the file extension. Values in `animation_clips` must match the full names in the animation JSON; GWO does not strip the `animation.` prefix.
-
-Normal maps, emission, specular materials, transparent nodes, and attachment anchors still use GWO configuration. Configure firing, ammunition commits, and sound events in GWO; Bedrock entity events are not imported.
-
-### Implemented scope
-
-- One `minecraft:geometry` entry containing entity cubes, bone hierarchy, pivots, and bind rotations.
-- Cube origin, size, pivot, rotation, and inflate. Cubes on the same bone share a mesh.
-- Box UV, per-face UV, negative `uv_size`, and mirror. Omitted per-face UV entries are not drawn.
-- Named locators with offset and rotation for anchors.
-- Numeric position, rotation, and scale constants/keyframes; linear and Catmull-Rom interpolation; pre/post values.
-- Looping, non-looping, `hold_on_last_frame`, and zero-duration static poses.
-- Positions use 16 model units per render unit. Rotations use degrees and animation is resolved relative to the model's initial pose.
-
-This is not a Bedrock entity engine. Molang, entity animation controllers, and entity particle/sound events do not run. `poly_mesh`, per-face `material_instance`, `relative_to`, `ignore_inherited_scale`, and runtime animation-time expressions are not supported. Unsupported transform fields produce errors rather than silently displaying a different pose. Bake expressions into numeric keyframes before export.
-
-Keep exactly one geometry entry per file.
+The built-in target and workbench use separate internal readers; their JSON assets are not a gun-pack format.
 
 ## Blender Empty rigid animation
 
@@ -103,13 +50,3 @@ Animations may also be embedded in the model GLB, in which case no separate `ani
 
 
 Before publishing, check idle/draw/fire/reload/inspect, child meshes and moving locators, texture orientation, transparent nodes, normal rendering and Iris, and existing skinned GLB weapons.
-
-Fields follow the [official Mojang geometry schemas](https://mojang.github.io/bedrock-samples/Schemas.html). The list above describes GWO's implemented subset, not the entire Bedrock format.
-
-## Version baseline
-
-Check the installed release notes for Bedrock model/animation and Blender Empty rigid-animation support. The `2.12.87` version label alone does not distinguish earlier builds.
-
-See [arm templates and configuration](./arm-templates.md) for Empty and Bedrock arm exports, child-mesh selection, and configuration.
-
-Per-face Bedrock `uv_rotation` is not currently processed. Do not use face UV rotation in exported assets; arrange the texture and UV rectangles so they do not need this field. A successful import does not prove that unsupported fields took effect.

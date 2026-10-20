@@ -74,4 +74,4 @@ Blender 中看到的材质节点效果不会全部自动转成 GWO 的材质配�
 
 **完成标准：**重新导入后的模型与动画正确。随后进入[快速开始](./getting-started.md)和[共用配置教程](./first-firearm.md)。
 
-不需要再学习 Empty 或 Blockbench 路线。
+不需要再学习 Empty 路线。

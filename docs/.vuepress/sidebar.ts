@@ -11,7 +11,7 @@ export default {
         "content-editor",
         "choose-workflow",
         "visual-guide",
-        { text: "模型与动画制作路线", collapsible: true, children: ["blender-skinning", "blender-empty", "blockbench", "arm-templates"] },
+        { text: "模型与动画制作路线", collapsible: true, children: ["blender-skinning", "blender-empty", "arm-templates"] },
         "getting-started",
         "empty-template",
         "first-firearm",

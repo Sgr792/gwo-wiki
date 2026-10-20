@@ -1,68 +1,14 @@
 ---
-title: 格式与支持范围
+title: GLB 与 Empty 动画
 category:
-  - 内容包制作
+  - 模型与动画
 ---
 
-> **Lua 动画机 API 1：** 新版动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段仍用于说明数据结构和旧包兼容；不要与 Lua 重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
+# GLB 与 Empty 动画
 
-::: warning 版本要求
-使用前请确认所安装版本的更新说明包含 Bedrock 模型、动画与 Blender Empty 刚性动画支持；仅凭 `2.12.87` 版本号无法区分早期构建。
-:::
+枪械内容包已取消 Bedrock `.geo.json` 模型和 `.animation.json` 动画的直接加载。`.bbmodel` 是编辑源文件，不能直接加载。请使用 GLB/glTF 模型和 GLB 动画库；骨骼蒙皮与 Blender Empty 刚性动画继续支持。
 
-## 接入方式
-
-本页只作格式与配置参考。软件操作请先[选择制作方式](./choose-workflow.md)，进入独立的 Blender 或 Blockbench 路线。
-
-以下三种模型使用相同的 GWO 配置、动画状态和渲染流程：
-
-- 原有 GLB Armature / Skin 骨骼模型。
-- Blender Empty 父子层级、网格作为子物体的刚性 GLB。
-- Blockbench 导出的 Bedrock 实体几何 JSON 与数值动画 JSON。
-
-不需要离线编译、格式转换工具或其他模组。以下配置片段添加到已有 GWO 枪械定义中；它们不是完整的枪械定义。
-
-## Bedrock 文件与配置
-
-将资源放入自己的命名空间，例如：
-
-```text
-assets/example/models/example.geo.json
-assets/example/animations/example.animation.json
-assets/example/textures/example.png
-```
-
-```jsonc
-{
-  "gltf_model": "example:models/example.geo.json",
-  "texture": "example:textures/example.png",
-  "animation_sources": ["example:animations/example.animation.json"],
-  "animation_clips": {
-    "idle": "animation.example.idle",
-    "raise": "animation.example.raise",
-    "fire": "animation.example.fire"
-  }
-}
-```
-
-`gltf_model` 保留现有字段名，现在也接受 `.geo.json`。路径需要包含扩展名。
-`animation_clips` 右侧必须与动画 JSON 中的完整名字一致，不会自动删除 `animation.` 前缀。
-法线、自发光、反射、透明节点与配件挂点仍使用 GWO 自己的配置。
-开火、装弹提交和声音事件仍配置在 GWO 中，不导入 Bedrock 实体事件。
-
-### 本版支持范围
-
-- 单个 `minecraft:geometry` 的实体立方体模型、骨骼层级、pivot 和初始旋转。
-- cube origin、size、pivot、rotation、inflate；同一骨骼的方块合为一个网格。
-- 盒式 UV、每面 UV、负 `uv_size`、mirror；每面 UV 中省略的面不会绘制。
-- locator 作为命名挂点，支持 offset 和 rotation。
-- 动画 position / rotation / scale 数值常量、数值关键帧、linear / catmullrom 插值、pre / post。
-- 循环、非循环、`hold_on_last_frame` 和没有时长的静态姿态。
-- 位置单位按 16 模型单位 = 1 渲染单位换算；旋转是角度，并以模型初始姿态为基准。
-
-本版不运行 Molang、Bedrock 实体动画控制器、实体粒子/声音事件；不支持 `poly_mesh`、每面 `material_instance`、`relative_to`、`ignore_inherited_scale` 和运行时动画时间表达式。
-相关不支持的变换字段会明确报错，避免静默显示错误姿态。需要表达式效果时，先在制作工具中烘焙成数值关键帧。
-一个几何文件只放一个 geometry；不要把多个实体定义混在一起。
+内置靶子和工作台使用独立读取器，它们的 JSON 资源不属于枪械内容包格式。
 
 ## Blender Empty 刚性 GLB
 
@@ -106,17 +52,6 @@ root (Empty)
 发布内容包前，请在游戏中检查以下项目：
 
 - 基础姿态、掏出、开火、换弹和检视。
-- Empty 子网格和 Bedrock locator 是否跟随。
+- Empty 子网格和挂点 是否跟随。
 - 纹理方向、透明节点、普通环境与 Iris 光影。
 - 原有骨骼 GLB 枪械是否保持正常。
-
-格式字段以 [Mojang 官方模型 Schema](https://mojang.github.io/bedrock-samples/Schemas.html) 为依据；本页列出的是 GWO 当前实现范围，而不是整个 Bedrock 实体引擎。
-
-
-## 版本基线
-
-使用前请确认所安装版本的更新说明包含 Bedrock 模型、动画与 Blender Empty 刚性动画支持；仅凭 `2.12.87` 版本号无法区分早期构建。
-
-Empty 与 Bedrock 独立手臂的导出、子网格选择和配置方式见[手臂模板与配置](./arm-templates.md)。
-
-当前加载器未处理 Bedrock 每面 UV 的 `uv_rotation`。导出资源不要依赖面 UV 旋转，应调整贴图布局与 UV 矩形使其无需此字段。导入成功不表示未支持字段已经生效。

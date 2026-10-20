@@ -11,7 +11,6 @@ You do not need to learn both applications. Complete one route, then continue to
 <div class="gwo-beginner-route">
   <a href="./blender-skinning.html"><span>01 · BLENDER</span><strong>Armature and skinning</strong><small>Detailed meshes and deforming arms, exported as GLB.</small></a>
   <a href="./blender-empty.html"><span>02 · BLENDER</span><strong>Empty rigid animation</strong><small>Move whole meshes through parent objects for mechanical parts.</small></a>
-  <a href="./blockbench.html"><span>03 · BLOCKBENCH</span><strong>Bedrock entities</strong><small>Build cubes, groups, pivots, and numeric animations; export JSON.</small></a>
 </div>
 
 ## Which route should I choose?
@@ -25,12 +24,11 @@ You do not need to learn both applications. Complete one route, then continue to
 
 - Detailed weapons and bending fingers/arms: **Blender skinning**.
 - Already using Blender and only need whole-part movement: **Blender Empty**.
-- Prefer cube-style modeling and Blockbench: **Bedrock entities**.
 
 Rigid animation moves, rotates, or scales an entire mesh without weight-based deformation. Empty animation does not replace skinned arms or guarantee better FPS.
 
 ::: warning New workflow requirements
-Before using no-Skin Empty animation or Bedrock assets, check that the installed release supports these formats. The Blockbench route supports entity cubes and numeric keyframes, not Molang or entity controllers.
+Before using no-Skin Empty animation, check that the installed release supports rigid GLB animation.
 :::
 
 ## Learning order
@@ -46,4 +44,4 @@ For arm creation, see the [arm authoring templates and downloads](./arm-template
 
 [Formats and Support Scope](./bedrock-empty.md) is a reference, not another required software route.
 
-See [Bedrock and Empty Animation](./bedrock-empty.md) for version requirements and check the installed release notes.
+See [GLB and Empty Animation](./bedrock-empty.md) for version requirements and check the installed release notes.

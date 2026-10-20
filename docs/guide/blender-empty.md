@@ -90,4 +90,4 @@ UV 在 Mesh 上制作，不是在 Empty 上制作。基础色、法线、材质�
 
 **完成标准：**重新导入后动作正确。按[格式配置示例](./bedrock-empty.md)接入，再进入[快速开始](./getting-started.md)和[共用配置教程](./first-firearm.md)。
 
-版本要求见[Bedrock 与 Empty 动画](./bedrock-empty.md)。请以所安装版本的更新说明为准。
+版本要求见[GLB 与 Empty 动画](./bedrock-empty.md)。请以所安装版本的更新说明为准。

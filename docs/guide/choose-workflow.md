@@ -11,7 +11,6 @@ category:
 <div class="gwo-beginner-route">
   <a href="./blender-skinning.html"><span>01 · BLENDER</span><strong>骨骼蒙皮</strong><small>制作精细网格与需要弯曲变形的手臂，导出 GLB。</small></a>
   <a href="./blender-empty.html"><span>02 · BLENDER</span><strong>Empty 刚性动画</strong><small>使用空物体带动整块网格，适合枪械机构与机械部件。</small></a>
-  <a href="./blockbench.html"><span>03 · BLOCKBENCH</span><strong>Bedrock 实体模型</strong><small>通过方块、分组和枢轴制作模型与数值动画，导出 JSON。</small></a>
 </div>
 
 ## 不知道选哪条？
@@ -25,12 +24,11 @@ category:
 
 - 想制作精细枪模，同时制作会弯曲的手指和手臂：选择 **Blender 骨骼蒙皮**。
 - 已经会 Blender，只需要弹匣移动、枪机旋转等整块运动：选择 **Blender Empty**。
-- 喜欢方块风格，想在 Blockbench 中完成模型与动画：选择 **Blockbench Bedrock**。
 
 “刚性”指一块网格整体移动、旋转或缩放，不会因为权重而弯曲。Empty 路线不替代手臂蒙皮，也不保证比骨骼路线有更高帧率。
 
 ::: warning 新增路线的版本要求
-使用 Empty 无 Skin 动画与 Bedrock 资源前，请确认所安装版本包含对应格式支持。Blockbench 路线只支持实体方块模型与数值关键帧，不运行 Molang 或实体控制器。
+使用 Empty 无 Skin 动画前，请确认所安装版本包含刚性 GLB 支持。
 :::
 
 ## 教程顺序
@@ -46,4 +44,4 @@ category:
 
 [格式与支持范围](./bedrock-empty.md)供需要查询具体字段的创作者使用，不是另一条必须学习的路线。
 
-版本要求见[Bedrock 与 Empty 动画](./bedrock-empty.md)。请以所安装版本的更新说明为准。
+版本要求见[GLB 与 Empty 动画](./bedrock-empty.md)。请以所安装版本的更新说明为准。

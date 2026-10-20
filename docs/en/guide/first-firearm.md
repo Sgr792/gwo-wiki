@@ -9,7 +9,7 @@ category:
 
 # Build Your First Firearm
 
-This is the shared configuration tutorial after any of the three authoring routes. [Choose Your Workflow](./choose-workflow.md) first if you have not built the assets. GLB paths below are examples: Blockbench users should substitute their geometry/animation JSON paths using [format configuration](./bedrock-empty.md). Behavior, materials, and events remain shared; Blender skinning-specific steps do not apply to pure rigid models.
+This is the shared configuration tutorial after any of the two authoring routes. [Choose Your Workflow](./choose-workflow.md) first if you have not built the assets. GLB paths below are examples; use your own model and GLB animation paths. Behavior, materials, and events remain shared; Blender skinning-specific steps do not apply to pure rigid models.
 
 This chapter is for a creator who has never made a GWO pack. Follow the checkpoints in order: first load a definition, then render a model, then verify shooting and reloading, and only then add arms, aiming, audio, attachments, and advanced states.
 
@@ -33,7 +33,7 @@ You may rename them, but every reference must change consistently.
 ## Step 0: Prepare the environment
 
 1. Install Minecraft 1.21.1, the matching NeoForge version, and GWO.
-2. Prepare only the application for your selected route: Blender or Blockbench.
+2. Prepare only the application for your selected route: Blender.
 3. Install an editor that saves valid UTF-8 JSON.
 4. Download and extract the [empty content-pack template](/downloads/gwo_empty_content_pack_template.zip).
 5. If authoring arm motion, choose the matching [arm template](./arm-templates.md).
@@ -83,7 +83,7 @@ Rules:
 
 ## Step 2: Build the first model
 
-Complete the relevant [Blender Armature](./blender-skinning.md), [Blender Empty](./blender-empty.md), or [Blockbench](./blockbench.md) modeling steps. Blockbench users do not need Blender, and Empty users do not need an Armature or Skin.
+Complete the relevant [Blender Armature](./blender-skinning.md) or [Blender Empty](./blender-empty.md) modeling steps. Empty users do not need an Armature or Skin.
 
 The shared first-person hierarchy is:
 
@@ -102,7 +102,7 @@ root
 
 A one-piece weapon places `tag_flash` on the moving weapon/barrel branch. Modular barrels may own it within their model. Do not parent moving anchors to the camera branch.
 
-Export the GLB model at the planned path, retaining the hierarchy and Skin only where applicable. Bedrock users export geometry JSON and substitute its resource path in `gltf_model`, for example `tutorial:models/training_rifle.geo.json`.
+Export the GLB model at the planned path, retaining the hierarchy and Skin only where applicable.
 
 Checkpoint: reopen the export in your application; check scale, muzzle direction, unique node names, hierarchy, transparent parts, and muzzle/ejection anchors. Change bind/initial transforms only with matching model and animation updates.
 
@@ -123,9 +123,9 @@ The first file is base color/alpha, `_n` is the tangent-space normal map, and `_
 
 Start with `idle`, `raise`, `drop`, `fire`, `reload`, and `reload_empty`. Idle is the stable reference; draw ends there, holster leaves it, and fire/reload hand back without a jump.
 
-Create Armature Actions for the skinning route, object-transform tracks grouped into exported clips for Empty, or group animations in Blockbench. Use 30 FPS as this example's event-frame reference, unique clip names, and only intentional tracks.
+Create Armature Actions for the skinning route, object-transform tracks grouped into exported clips for Empty. Use 30 FPS as this example's event-frame reference, unique clip names, and only intentional tracks.
 
-Export GLB animation to the planned `.anim.glb` or Bedrock animation to `.animation.json`. Reference it from `animation_sources`; reference full exported names in the controller’s `clip`. Names, hierarchy, and bind/initial reference must match the model.
+Export GLB animation to the planned `.anim.glb`. Reference it from `animation_sources`; reference full exported names in the controller’s `clip`. Names, hierarchy, and bind/initial reference must match the model.
 
 Checkpoint: all six clips exist, frame zero works, draw ends at idle, fire has no unintended root offset, and GLB exports have no cross-skin ownership warnings.
 
@@ -419,7 +419,7 @@ Add this to the render definition for the existing Armature arm workflow:
 
 Omitting `arms.model` uses `gwo:gltf/arms/arms.glb`. Do not duplicate the mesh in every pack or weapon. Keep required arm reference nodes and tracks in the weapon animation. Holder names must exist; `blend_ticks` adjusts handoff rather than fixing missing tracks.
 
-A custom `arms.model` is an advanced replacement. For Empty or Bedrock arms, check the release requirements, export the matching runtime assets, and follow [Arm Templates](./arm-templates.md). Existing default-arm configurations do not need to change.
+A custom `arms.model` is an advanced replacement. For Empty arms, check the release requirements, export the matching runtime assets, and follow [Arm Templates](./arm-templates.md). Existing default-arm configurations do not need to change.
 
 Checkpoint: correct player skin and regular/slim/layer selection, stable grip through idle/fire/reload, no handoff jump, and no duplicate preview arm geometry.
 
@@ -478,7 +478,7 @@ Add only needed features: first draw; last-round/dry-fire and empty-state poses;
 
 ## Step 14: Final release checkpoint
 
-For optional custom arms, configure `arms.model` using the [arm-template guide](./arm-templates.md). Empty / Bedrock independent-arm child support requires a version with the corresponding arm support; the default arms and existing pack configuration do not need changes.
+For optional custom arms, configure `arms.model` using the [arm-template guide](./arm-templates.md). Empty independent-arm child support requires a version with the corresponding arm support; the default arms and existing pack configuration do not need changes.
 
 Complete [Debugging, Acceptance, and Release](debugging-release.md), then verify a clean game restart—not only hot reload. Do not ship duplicate packs, absolute local paths, source `.blend` files, diagnostics, caches, backups, or obsolete compatibility data. A release ZIP must expose `pack.mcmeta`, `weapons`, `attachments`, `bullets`, and `assets` at its root.
 

@@ -11,7 +11,7 @@ export default {
         "content-editor",
         "choose-workflow",
         "visual-guide",
-        { text: "Model and animation routes", collapsible: true, children: ["blender-skinning", "blender-empty", "blockbench", "arm-templates"] },
+        { text: "Model and animation routes", collapsible: true, children: ["blender-skinning", "blender-empty", "arm-templates"] },
         "getting-started",
         "empty-template",
         "first-firearm",

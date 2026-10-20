@@ -21,7 +21,7 @@ actions:
 features:
   - title: 01 · 选择制作方式
     icon: folder-plus
-    details: 选择 Blender 骨骼、Blender Empty 或 Blockbench 路线。
+    details: 选择 Blender 骨骼或 Blender Empty 路线。
     link: /guide/choose-workflow.html
   - title: 02 · 完成模型与动画
     icon: box
@@ -76,5 +76,5 @@ footer: GWO Wiki · Guns Workshop Origins
 
 <div class="gwo-home-start-note">
   <strong>第一次制作？</strong>
-  先选择“Blender 骨骼 / Blender Empty / Blockbench”制作路线，完成模型与动画后，再进入“快速开始 → 空模板 → 共用配置 → 游戏验收”。
+  先选择“Blender 骨骼 / Blender Empty”制作路线，完成模型与动画后，再进入“快速开始 → 空模板 → 共用配置 → 游戏验收”。
 </div>

@@ -56,7 +56,7 @@ GWO 当前内容以枪口朝模型 `+X` 方向为基准。不要只靠 JSON 把�
   <figcaption>按连线建立真实父子关系，不能仅靠名字相同。 示意图，点击查看原图。</figcaption>
 </figure>
 
-第一人称主链应当按下面的方向建立。Blender 蒙皮路线中，最上层 `root` 表示骨架对象，其下一层表示骨架内部的根骨骼；这一级是对象包含骨骼的关系，不是两根骨骼之间的父子关系。`tag_view` 以下才是骨骼父子层级。Empty 路线使用 Empty 对象，Bedrock 路线使用分组，不能把三者都称为骨骼。
+第一人称主链应当按下面的方向建立。Blender 蒙皮路线中，最上层 `root` 表示骨架对象，其下一层表示骨架内部的根骨骼；这一级是对象包含骨骼的关系，不是两根骨骼之间的父子关系。`tag_view` 以下才是骨骼父子层级。Empty 路线使用 Empty 对象，不能把 Empty 称为骨骼。
 
 ```text
 root（Armature 骨架对象，不是骨骼）
@@ -111,7 +111,7 @@ root（Armature 骨架对象，不是骨骼）
 
 支持该格式的版本可加载无 Skin GLB 的 Blender `Empty`/普通节点动画：保留父子级、局部变换与子网格，让位置、旋转、缩放轨道进入共用姿态流程。刚性网格不会变形；需要手臂等蒙皮变形时继续使用 Armature。此更新不扩大多 Armature 或混合骨架的兼容范围。
 
-也可使用 Bedrock 实体方块模型与数值动画。版本要求、配置示例和限制见 [Bedrock 与 Empty 动画](./bedrock-empty.md)。
+也可使用 Blender Empty 刚性 GLB；配置见 [GLB 与 Empty 动画](./bedrock-empty.md)。
 
 ### 手臂制作模板（Blender 3.3）
 

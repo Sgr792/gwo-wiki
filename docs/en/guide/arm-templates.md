@@ -6,16 +6,15 @@ category:
 
 # Arm authoring templates
 
-Choose your [workflow](./choose-workflow.md), then download its template. All three are based on the same arms.
+Choose your [workflow](./choose-workflow.md), then download its template. Both are based on the same arms.
 
 | Workflow | Editable source | Notes |
 | --- | --- | --- |
 | Blender Armature | [Download arms.blend](/downloads/gwo_arms_template_blender33.blend) | Original Blender 3.3 template |
 | Blender Empty | [Download arms_empty.blend](/downloads/arms_empty.blend) | Blender 3.3; parented meshes without skinning |
-| Blockbench Bedrock | [Download arms_blockbench.bbmodel](/downloads/arms_blockbench.bbmodel) | Editable groups and cubes; accompanying [geometry JSON](/downloads/arms_blockbench.geo.json) |
 
 ::: warning Use a build containing the arm integration
-For Empty or Bedrock independent arms, use a version with the corresponding arm support. Export the template to a runtime format and configure `arms.model`; copying editing sources into a pack does not enable custom arms.
+For Empty independent arms, use a version with the corresponding arm support. Export the template to a runtime format and configure `arms.model`; copying editing sources into a pack does not enable custom arms.
 :::
 
 
@@ -38,7 +37,7 @@ The original Armature arms remain the default. Rigid arms reuse the shared playe
 
 ## Open and choose an arm variant
 
-Open `.blend` in Blender or `.bbmodel` in Blockbench. Each template includes left/right arms, regular-width `MALE`, slim-width `SLIM`, and outer skin `LAYER` parts.
+Open the `.blend` template in Blender. It includes left/right holders, regular-width MALE, slim-width SLIM, and outer LAYER parts.
 
 - Regular and slim arms are alternatives; do not preview both together.
 - The Empty template hides SLIM only in the viewport. Check export selection and visibility separately.
@@ -60,19 +59,18 @@ arms_root
 
 Slashes denote separate sibling nodes. Empty part nodes have `_mesh` children. Preserve names and parent relationships; do not parent the arms directly to the weapon mesh.
 
-Animate Empty transforms in Blender or group transforms in Blockbench. These move whole arm parts without skinned elbow or finger deformation. No idle, fire, or reload animations are supplied.
+Animate Empty transforms in Blender. These move whole arm parts without skinned elbow or finger deformation. No idle, fire, or reload animations are supplied.
 
 ## Scale, UVs, and export
 
-The Empty version preserves the original meshes and UVs. The Blockbench version reconstructs the subdivided boxes as 8 editable cubes while retaining dimensions and UV mapping.
+The Empty template preserves the original mesh and UVs.
 
-Bedrock uses 16 model units per render unit. This conversion is already included to match the original model's size; do not multiply by 16 or scale to 0.25 again. BBMODEL editor coordinates and Bedrock export coordinates use different X-axis conventions; do not copy coordinates manually between them.
 
-`.blend` and `.bbmodel` are editing sources, not runtime files. Follow the [Empty route](./blender-empty.md) to export GLB or the [Blockbench route](./blockbench.md) to export geometry and animation JSON. Reopen exports to check them.
+`.blend` is an editing source. Export GLB following the [Empty route](./blender-empty.md), then reimport to check it.
 
 ## Enable in a content pack
 
-These are fragments of the weapon configuration. Choose one `arms.model`; do not add duplicate `arms` objects.
+These are fragments of the weapon configuration. Set `arms.model`; do not add duplicate `arms` objects.
 
 For Empty, export to `assets/example/gltf/arms/arms_empty.glb`:
 
@@ -81,19 +79,6 @@ For Empty, export to `assets/example/gltf/arms/arms_empty.glb`:
   "arms": {
     "enabled": true,
     "model": "example:gltf/arms/arms_empty.glb",
-    "left_holder_bone": "LEFT_ARM",
-    "right_holder_bone": "RIGHT_ARM"
-  }
-}
-```
-
-For Bedrock, place geometry at `assets/example/models/arms/arms_blockbench.geo.json`:
-
-```json
-{
-  "arms": {
-    "enabled": true,
-    "model": "example:models/arms/arms_blockbench.geo.json",
     "left_holder_bone": "LEFT_ARM",
     "right_holder_bone": "RIGHT_ARM"
   }

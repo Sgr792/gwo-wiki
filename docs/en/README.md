@@ -21,7 +21,7 @@ actions:
 features:
   - title: 01 · Choose Your Workflow
     icon: folder-plus
-    details: Choose Blender skinning, Blender Empty, or Blockbench.
+    details: Choose Blender skinning or Blender Empty.
     link: /en/guide/choose-workflow.html
   - title: 02 · Build Models and Animation
     icon: box
@@ -76,5 +76,5 @@ footer: GWO Wiki · Guns Workshop Origins
 
 <div class="gwo-home-start-note">
   <strong>First content pack?</strong>
-  Choose Blender skinning, Blender Empty, or Blockbench first. Finish models and animation, then continue to Getting Started → Empty Template → Shared Configuration → In-Game Validation.
+  Choose Blender skinning or Blender Empty first. Finish models and animation, then continue to Getting Started → Empty Template → Shared Configuration → In-Game Validation.
 </div>

@@ -12,7 +12,7 @@ category:
 建议准备：
 
 - Minecraft 1.21.1、匹配版本的 NeoForge 和 GWO。
-- 制作软件按路线选择：Blender（模板使用 3.3）或 Blockbench；不要求同时安装。
+- 制作软件：Blender（模板使用 3.3）。
 - [手臂制作模板：选择路线与下载](./arm-templates.md)，用于建立与示例骨架一致的第一人称手臂。
 - 能保存 UTF-8 无 BOM JSON 的编辑器，例如 VS Code。
 - PNG 图片编辑工具。
@@ -25,8 +25,6 @@ GWO 使用以下主要资源格式：
 |---|---|
 | 枪械、配件、子弹、手臂模型 | `.glb` |
 | 独立动画库 | `.anim.glb` |
-| Bedrock 实体方块模型（需对应格式支持） | `.geo.json` |
-| Bedrock 数值动画库（需对应格式支持） | `.animation.json` |
 | 基础色、法线、材质、自发光、图标 | `.png` |
 | 声音 | `.ogg`，Vorbis 编码 |
 | 行为和渲染配置 | `.json` |
@@ -34,7 +32,7 @@ GWO 使用以下主要资源格式：
 
 文件名、目录名和资源 ID 一律建议使用小写英文字母、数字和下划线。不要使用空格、中文、括号或大写字母作为资源路径。
 
-Blender 也可制作 Empty 刚性 GLB；使用 Blockbench 的创作者可选择 Bedrock 实体模型。先阅读 [Bedrock 与 Empty 动画](./bedrock-empty.md)的版本要求、支持范围和配置示例。
+也可使用 Blender Empty 刚性 GLB；配置见 [GLB 与 Empty 动画](./bedrock-empty.md)。
 
 ## 内容包放在哪里
 

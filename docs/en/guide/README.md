@@ -10,7 +10,7 @@ toc: false
 <div class="gwo-guide-hub">
   <div class="gwo-guide-lead">
     <span>GWO CONTENT-PACK AUTHORING</span>
-    <p>Choose your modeling and animation workflow first and learn only the application you use. After export, all three routes join the shared configuration and in-game validation tutorials.</p>
+    <p>Choose your modeling and animation workflow first and learn only the application you use. After export, both routes join the shared configuration and in-game validation tutorials.</p>
   </div>
 
   <div class="gwo-guide-format-note">
@@ -29,7 +29,6 @@ toc: false
   <div class="gwo-beginner-route">
     <a href="./blender-skinning.html"><span>BLENDER</span><strong>Skinning route</strong><small>Detailed meshes, deforming arms, bone animation, and GLB export.</small></a>
     <a href="./blender-empty.html"><span>BLENDER</span><strong>Empty rigid route</strong><small>Parent nodes, mechanical movement, and no-Skin GLB export.</small></a>
-    <a href="./blockbench.html"><span>BLOCKBENCH</span><strong>Bedrock entity route</strong><small>Cubes, groups, pivots, numeric animation, and JSON export.</small></a>
   </div>
   <div class="gwo-guide-section-heading compact"><span>After export · Shared tutorials</span><h2>Configure the pack and test in game</h2></div>
 

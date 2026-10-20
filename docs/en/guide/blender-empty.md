@@ -90,4 +90,4 @@ Reimport into an empty project and verify Empty nodes, clips, and mesh movement.
 
 **Checkpoint:** Reimport reproduces the animation. Continue through [format configuration](./bedrock-empty.md), [Getting Started](./getting-started.md), and [shared configuration](./first-firearm.md).
 
-See [Bedrock and Empty Animation](./bedrock-empty.md) for version requirements and check the installed release notes.
+See [GLB and Empty Animation](./bedrock-empty.md) for version requirements and check the installed release notes.
