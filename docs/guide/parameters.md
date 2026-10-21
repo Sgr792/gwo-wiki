@@ -33,6 +33,7 @@ category:
 | `mechanics.rpm` | rounds/min | 850; 1..3000 | 整数射速元数据，与 fire_interval_ms 对应。 |
 | `mechanics.fire_interval_ms` | ms | round(60000/rpm); 1..5000 | 真正开火间隔；与 rpm 换算差超过 1ms 会被拒绝。沙鹰 167/360，Staccato 462/130。 |
 | `mechanics.action_commit_ms.<动作/action>` | ms | 0..60000 | 普通有限动作的机械提交时刻，例如换弹真正更新弹量；不等于声音帧或动画总长。 |
+| `reload_system.cycle_after_shot.enabled` | bool | 显式对象内 false | 是否在每次射击后执行机械循环；管式省略整个对象保留旧隐式泵动，弹匣式省略则不循环。见[逐发装填](animation.md#装填与射后循环独立设置)。 |
 | `inaccuracy.stand / move / sneak / lie / aim` | spread coefficient | 5 / 5.75 / 3.5 / 2.5 / .15 | 站立、移动、蹲伏、趴伏、完全瞄准散布。值越大越散；不是角度或后坐力，每发选一个姿态而非五项相乘。 |
 | `ballistics.muzzle_velocity` | blocks/s | 500; 1..4000 | 枪口初速；提高会缩短飞行时间。 |
 | `ballistics.gravity` | blocks/s² | 9.8; 0..200 | 弹丸下坠加速度；0 表示不施加此下坠。 |
@@ -100,7 +101,8 @@ category:
 | `recoil.recovery_delay_ms / recovery_duration_ms` | ms | 按射速推导 / 0 | 停止射击后的回正延迟/可选回正时长；0 时长使用现有弹簧恢复。 |
 | `recoil.hip / recoil.ads` | objects | 各自基础配置 / distinct base profiles | 分别控制腰射和瞄准；下列参数在两者中均可填写。 |
 | `<recoil profile>.vertical / horizontal / model_back / randomness` | multipliers | 1 | 上下后坐/左右随机后坐/枪模后退/随机量倍率，不是直接厘米或角度。 |
-| `<recoil profile>.recovery` | multiplier | 1; .1..4 | 恢复强度；同时改变弹簧刚度、阻尼和相机控制响应。 |
+| `<recoil profile>.recovery` | multiplier | 1; .1..4 | 相机控制响应与后坐热恢复倍率；未填写 model_recovery 时也控制模型弹簧，保持旧配置行为。 |
+| `<recoil profile>.model_recovery` | multiplier | 同姿态 recovery; .1..4 | 仅控制模型弹簧刚度和阻尼，较小值使回落更慢；必须是有限数值，不是秒数，不改变镜头或热恢复。 |
 | `<recoil profile>.model_pitch_degrees / sustained_vertical_fraction` | degrees / fraction | 0 / .35 | 附加模型俯仰/持续竖向贡献比例。 |
 | `weapon_sway.enabled / hip / ads` | bool / objects | true | 鼠标转动造成的枪械摆动开关与腰射/瞄准配置。 |
 | `<sway profile>.input_gain / deadzone / max_angle` | gain / degrees / degrees | hip:9/.18/5.5; ads:4/.06/1.2 | 输入强度/不响应范围/最大摆角；max_angle 必须不小于 deadzone。 |

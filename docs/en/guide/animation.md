@@ -157,7 +157,7 @@ Keep authored weapon and hand channels in the same reference space. `fire_last` 
 
 Use start → repeated loop → end. Commit one shell at its configured loop event. A chamber-start action may commit the first round separately. Pump/bolt actions begin only after their configured delay and must preserve hand ownership through their final frame.
 
-For `tube_per_round`, authored frames are the only mechanical timing source. Do not duplicate them as `insert_commit_ms`, `start_commit_ms`, `empty_chamber_start_commit_ms`, `empty_start_commit_ms`, `rechamber_eject_ms`, or `rechamber_commit_ms`. Runtime converts each frame through the weapon-level `animation_fps` so a dedicated server can keep a real-time mechanical clock without requiring authors to maintain two values.
+For `tube_per_round`, loading commits and legacy implicit pump timing use authored frames. Under `reload_system.events`, do not duplicate them as `insert_commit_ms`, `start_commit_ms`, `empty_chamber_start_commit_ms`, `empty_start_commit_ms`, `rechamber_eject_ms`, or `rechamber_commit_ms`. Runtime derives server milliseconds from the weapon-level `animation_fps`. The independent `cycle_after_shot.events` object described below has its own frame/millisecond interface.
 
 ```jsonc
 "reload_system": {
@@ -190,6 +190,30 @@ For `tube_per_round`, authored frames are the only mechanical timing source. Do 
 `start_commit_frame`, `insert_commit_frame`, `empty_chamber_start_commit_frame`, and `empty_start_commit_frame` map respectively to the start, repeated insert, empty chamber-start, and empty-start clips (including their paired `aim_` states). `rechamber_eject_frame` ejects the casing and `rechamber_commit_frame` chambers the next shell in `fire_rechamber` / `fire_rechamber_ads`. `insert_sound_frame` is an authoring reference; dispatch the actual sound through the render definition's `animation_commands`.
 
 `frame_lengths` records the total frames of each phase and supplies fallback phase duration when a GLB clip duration is unavailable. Keep it synchronized with the exported clips. Shell/follower visibility and `shell_additive_*` are visual state only; they do not replace the mechanical commit frame or authoritative HUD ammunition.
+
+### Independent loading and post-shot cycling
+
+Loading one round at a time does not require a pump after every shot. For a self-loading tube weapon, add this inside its existing `reload_system`:
+
+```jsonc
+"cycle_after_shot": { "enabled": false }
+```
+
+This preserves reload entry, individual insertions, exit and the first empty-chamber load. Firing automatically feeds the next round without creating a post-shot cycling task or its ejection event. Ordinary shot ejection still uses the existing firing-effects configuration. Reload completion readies only ammunition already inserted; it cannot add rounds early. Cadence, cooldown and animation files are not automatically changed.
+
+Compatibility: omitting the entire `cycle_after_shot` object on a tube weapon preserves the implicit pump settings above; omission on a magazine weapon still means no cycle. Inside an explicit object, `enabled` defaults to `false` and must be a JSON boolean. The independent cycle option requires both client and server to upgrade to the new build using network protocol **22**; changing the pack alone is insufficient with an old peer.
+
+For mechanical cycling, tube and magazine weapons use the same object with `enabled: true`:
+
+| Field inside `cycle_after_shot` | Default/unit | Purpose |
+|---|---|---|
+| `clip` | `fire_rechamber` | Post-shot action; pair its ADS variant through `paired_aim_actions` |
+| `delay_ms` | 0 ms | Delay from firing to cycle start |
+| `frame_length` | 1 frame | Fallback cycle duration using the weapon's `animation_fps` |
+| `events.eject_frame / commit_frame` | 0 / frame_length | Casing ejection / next-round chambering frame |
+| `events.eject_ms / commit_ms` | derived from the corresponding frames | Optional overrides; explicit milliseconds take priority rather than adding to frame timing |
+
+Independent cycling does not overwrite reload `clips`, `frame_lengths` or insertion commits. Custom tube cycle states and their ADS variants route through the mechanical action layer. Magazine weapons retain their authored controller-channel `layer` and endpoint policy.
 
 ### Sprint
 

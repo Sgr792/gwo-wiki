@@ -60,6 +60,8 @@ Define transforms independently for first person, third-person pose, offhand sto
 
 Hip and ADS recoil are separate parameter sets. `vertical` and `horizontal` control view recoil; `model_back` controls model-space rearward impulse; `randomness` and `recovery` shape variation and return. `auto_recovery: false` disables automatic view return for weapons that require manual correction.
 
+To slow only model settling, set `model_recovery` independently in `recoil.hip` and `recoil.ads` (finite numbers from 0.1 to 4.0). Smaller values slow the model spring without changing camera-control response or recoil-heat recovery. Keep tuning strength with `model_back` and optional `model_pitch_degrees`. Omission inherits that profile's existing `recovery`, so old configurations need no rewrite. See the [parameter reference](parameters.md).
+
 Weapon Sway is a spring-like location/rotation offset around the authored pose. It must not be baked into animation clips and must be consumed consistently by the weapon, muzzle, tracers, lasers, and magnified-optic path.
 
 ## Muzzle effects and projectiles

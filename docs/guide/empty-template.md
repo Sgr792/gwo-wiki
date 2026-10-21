@@ -93,7 +93,7 @@ my_studio:Training Rifle   路径有大写和空格
 | `assets/<命名空间>/gltf/bullets/` | 整弹、弹壳或弹头 GLB |
 | `assets/<命名空间>/skins/` | 基础色、法线、材质和自发光贴图 |
 | `assets/<命名空间>/textures/item/` | 物品栏图标 |
-| `assets/<命名空间>/textures/gui/hud/` | HUD 图标 |
+| `assets/<命名空间>/textures/gui/hud/` | 可选的枪械专属 HUD 图片；不含模组公共 GUI 图标 |
 | `assets/<命名空间>/sounds/` | OGG 声音 |
 | `assets/<命名空间>/sounds.json` | 声音注册表 |
 | `assets/<命名空间>/lang/` | 中文和英文语言文件 |

@@ -27,6 +27,8 @@ Provide item model JSON, transparent PNG icons, and both `zh_cn.json` and `en_us
 
 Keep a consistent camera angle, silhouette size, margin, shadow, and brightness. Do not brighten assets until their original material color is lost. `icon_texture` supplies item and modification-card artwork; the HUD first tries the live-rendered icon and uses `hud.weapon_icon` only if that render fails, then a built-in fallback if unset. It does not override a successful live icon. The fallback uses a 512×256 image. Validate creative inventory, hotbar, HUD, modification card, and tooltip separately.
 
+Public GUI icons for screen crosshairs, hit feedback, armor HUD, firing modes and tactical stance ship in the mod JAR and do not depend on the default content pack. Weapon, attachment and ammunition item/modification-card icons, plus any weapon-specific HUD artwork, remain in their respective content packs.
+
 ## Modification screen
 
 Weapon class, slot names, and attachment cards must be localized. The base `modify_screen.translation`, `rotation`, and `scale` control the static weapon overview. The model renders behind text and UI cards and must not run `idle` animation. Default parts must attach to their actual nodes in this static pose.

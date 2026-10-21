@@ -33,6 +33,7 @@ Gameplay JSON controls damage, cadence, ammo and server decisions; render JSON c
 | `mechanics.rpm` | rounds/min | 850; 1..3000 | Integer RPM metadata matching fire_interval_ms. |
 | `mechanics.fire_interval_ms` | ms | round(60000/rpm); 1..5000 | Actual firing interval; rejected if it differs from rounded RPM conversion by over 1ms. Desert Eagle: 167/360; Staccato: 462/130. |
 | `mechanics.action_commit_ms.<动作/action>` | ms | 0..60000 | Mechanical commit time for ordinary finite actions, such as updating ammo during reload; distinct from sound and animation duration. |
+| `reload_system.cycle_after_shot.enabled` | bool | false inside an explicit object | Cycle mechanically after each shot. Omitting the whole object keeps the legacy implicit cycle for tubes and no cycle for magazines. See [per-round loading](animation.md#independent-loading-and-post-shot-cycling). |
 | `inaccuracy.stand / move / sneak / lie / aim` | spread coefficient | 5 / 5.75 / 3.5 / 2.5 / .15 | Standing/moving/crouching/prone/fully aimed spread. Larger is wider; not degrees or recoil. One stance is selected per shot. |
 | `ballistics.muzzle_velocity` | blocks/s | 500; 1..4000 | Muzzle speed; higher values shorten travel time. |
 | `ballistics.gravity` | blocks/s² | 9.8; 0..200 | Projectile downward acceleration; zero disables this gravity. |
@@ -100,7 +101,8 @@ Gameplay JSON controls damage, cadence, ammo and server decisions; render JSON c
 | `recoil.recovery_delay_ms / recovery_duration_ms` | ms | 按射速推导 / 0 | Recovery delay after firing / optional duration; zero duration uses spring recovery. |
 | `recoil.hip / recoil.ads` | objects | 各自基础配置 / distinct base profiles | Hip and aimed profiles; the following fields apply to both. |
 | `<recoil profile>.vertical / horizontal / model_back / randomness` | multipliers | 1 | Vertical recoil / horizontal randomness / model backward motion / randomness multipliers, not direct distance or angle. |
-| `<recoil profile>.recovery` | multiplier | 1; .1..4 | Recovery strength; changes spring stiffness, damping and camera response together. |
+| `<recoil profile>.recovery` | multiplier | 1; .1..4 | Camera-control response and recoil-heat recovery multiplier; also controls the model spring when model_recovery is omitted, preserving legacy behavior. |
+| `<recoil profile>.model_recovery` | multiplier | same profile's recovery; .1..4 | Model spring stiffness and damping only; smaller values settle more slowly. Must be finite, is not seconds, and does not change camera or heat recovery. |
 | `<recoil profile>.model_pitch_degrees / sustained_vertical_fraction` | degrees / fraction | 0 / .35 | Additional model pitch / sustained vertical contribution fraction. |
 | `weapon_sway.enabled / hip / ads` | bool / objects | true | Mouse-driven weapon sway enable and hip/ADS profiles. |
 | `<sway profile>.input_gain / deadzone / max_angle` | gain / degrees / degrees | hip:9/.18/5.5; ads:4/.06/1.2 | Input gain / dead zone / maximum angle; maximum must be at least the dead zone. |

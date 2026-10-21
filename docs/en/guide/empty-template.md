@@ -75,7 +75,7 @@ Do not use spaces, uppercase letters, or parentheses in resource IDs. Hyphens ar
 | `assets/<namespace>/gltf/bullets/` | cartridges, casings, and projectiles |
 | `assets/<namespace>/skins/` | base color, normal, material, and emissive maps |
 | `assets/<namespace>/textures/item/` | inventory icons |
-| `assets/<namespace>/textures/gui/hud/` | HUD icons |
+| `assets/<namespace>/textures/gui/hud/` | optional weapon-specific HUD artwork, excluding the mod's public GUI icons |
 | `assets/<namespace>/sounds/` | OGG audio |
 | `assets/<namespace>/sounds.json` | sound registry |
 | `assets/<namespace>/lang/` | localization files |

@@ -332,7 +332,7 @@ M4 的扩容弹匣保留 `xmaglrg`；RM277 的鼓式弹匣动画使用 `drum`，
 - `shell_additive_*` 不能包含护木、手臂或枪身轨道。
 - 装填结束后是否需要 rechamber 由枪械机械流程决定；已经直接入膛时不能重复执行。
 
-`tube_per_round` 的机械时序以动画帧为唯一数据源。内容包只填写 `*_frame`；运行时会按照武器根配置的 `animation_fps` 自动换算服务端使用的毫秒时间，不要再额外填写 `insert_commit_ms`、`start_commit_ms`、`empty_chamber_start_commit_ms`、`empty_start_commit_ms`、`rechamber_eject_ms` 或 `rechamber_commit_ms`。
+`tube_per_round` 的装填提交及旧隐式泵动时序以动画帧为数据源。`reload_system.events` 只填写 `*_frame`；运行时会按照武器根配置的 `animation_fps` 自动换算服务端使用的毫秒时间，不要再额外填写 `insert_commit_ms`、`start_commit_ms`、`empty_chamber_start_commit_ms`、`empty_start_commit_ms`、`rechamber_eject_ms` 或 `rechamber_commit_ms`。下文独立的 `cycle_after_shot.events` 另有自己的帧/毫秒接口。
 
 ```jsonc
 "reload_system": {
@@ -373,6 +373,30 @@ M4 的扩容弹匣保留 `xmaglrg`；RM277 的鼓式弹匣动画使用 `drum`，
 | `insert_sound_frame` | `reload_loop` / `reload_loop_ads` | 装弹声音的作者参考帧；实际声音事件仍在渲染配置的 `animation_commands` 中声明 |
 
 `frame_lengths` 是各阶段动画的总帧数：`start`、`insert`、`end`、`end_rechamber`、`empty_chamber_start`、`empty_start`、`empty_chamber_end`、`rechamber` 分别对应同名 `clips` 阶段。正常情况下运行时优先读取 GLB 剪辑真实时长；这些数值用于缺失时长信息时的阶段持续时间回退，必须与导出的动画长度一致。弹量 HUD 与真正射击判定读取机械提交结果；`shell_additive_*` 和弹壳显隐只负责模型表现，不能代替提交帧。
+
+### 装填与射后循环独立设置
+
+逐枚装填不代表每次开火后都要拉护木。半自动管式武器可在原 `reload_system` 中增加：
+
+```jsonc
+"cycle_after_shot": { "enabled": false }
+```
+
+这保留起手、单枚装入和收尾流程，以及空仓首次入膛动作；开火后自动供入下一发，不创建射后拉栓任务或对应抛壳事件。正常开火抛壳仍由原有射击效果配置控制。换弹结束只能让已装入的弹药就绪，不提前增加弹量。射速、冷却和动画文件不会因此自动修改。
+
+兼容规则：管式完全省略 `cycle_after_shot`，继续使用上例的隐式泵动参数；弹匣式省略时仍不启用循环。显式对象内 `enabled` 缺省为 `false`，且必须使用 JSON 布尔值。独立循环需要客户端和服务端都升级到网络协议 **22** 的新版；不能只改包后继续与旧版混用。
+
+需要机械循环时，管式和弹匣式共用同一对象，设置 `enabled: true` 并填写：
+
+| `cycle_after_shot` 内字段 | 默认/单位 | 作用 |
+|---|---|---|
+| `clip` | `fire_rechamber` | 射后机械动作；瞄准变体通过 `paired_aim_actions` 配对 |
+| `delay_ms` | 0 ms | 开火后开始循环的延迟 |
+| `frame_length` | 1 帧 | 循环动画时长回退，按武器 `animation_fps` 换算 |
+| `events.eject_frame / commit_frame` | 0 / frame_length | 抛壳/下一发入膛的帧 |
+| `events.eject_ms / commit_ms` | 从对应帧换算的毫秒 | 可选覆盖；显式毫秒优先，不与帧值相加 |
+
+这些独立循环参数不覆盖装填的 `clips`、`frame_lengths` 或单枚提交事件。管式自定义循环及其瞄准变体会路由到机械动作层；弹匣式仍按原 controller channel 的 `layer` 和尾帧策略配置。
 
 ### 泵动与栓动 `rechamber`
 
