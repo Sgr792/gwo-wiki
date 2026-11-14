@@ -15,7 +15,7 @@ Correct the field rather than relying on its fallback. Domain-specific ranges st
 
 Use `/gwo reload` to rescan external firearm and ammunition definitions. It does not rebuild uploaded GPU model or material caches. Use resource reload (`F3+T`) for models, textures, sounds, animations, `transparent_nodes`, and other render-material changes. Restart the game whenever a loader, renderer, cache, or binary resource remains resident.
 
-The build adding independent model recovery and per-round/post-shot cycle configuration uses network protocol **22**. Upgrade both client and server to the same GWO build supporting protocol 22; protocol 21 peers are rejected during the handshake. Existing packs retain their behavior when the new options are omitted. Updating only the pack or reloading resources does not upgrade either peer. See [recoil parameters](parameters.md) and [independent post-shot cycling](animation.md#independent-loading-and-post-shot-cycling).
+Current builds supporting editable protected packs use network protocol **23**. Use matching client/server builds; historical artifacts may share the `1.1.1-beta` label. Resource reload does not upgrade a JAR. See [protected-pack configuration](protected-packs.md) for multiplayer exceptions and single-player behavior.
 
 Before upgrading to category-specific firearm item IDs, back up the world and handle any old `gwo:gun` items. There is no automatic saved-item migration. Content-pack weapon IDs and the `/gwo give firearm` command still use the content definition ID; see [firearm categories and migration](./firearms.md).
 
@@ -107,3 +107,11 @@ Command IDs are quoted for the current string argument parser:
 ```
 
 For the current command parser, keep the resource ID in double quotes, including namespaces. Type the command itself, not the Markdown backticks.
+
+## Current configuration and integration guides
+
+- [Animation flicker and hiding](animation-visibility.md): scale inheritance, aligned TRS sampling, CPU visibility limits, and visual acceptance.
+- [Editable protected packs](protected-packs.md): v1/v2 differences, complete extraction, in-place FOV editing, and local/multiplayer checks.
+- [Java API v1](java-api.md): third-party queries, attachment factories, and committed shooting/damage events.
+
+Include the full log, GWO resource diagnostics, exact artifact version/hash, shader status, weapon ID, and reproduction steps in a report. A generic verification message or version label alone cannot identify configuration, damaged media, or peer mismatch.

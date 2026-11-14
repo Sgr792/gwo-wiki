@@ -172,6 +172,59 @@ interrupt 的 ctx 有 active/incoming、active_state/incoming_state、active_gro
 
 旧 JSON 转换时，把七组动画数据改成 Lua table，数组用 array，删掉 render 重复字段，再增加 state_machine。保留动画资源和非动画参数。原有 [JSON 配置示例](config-examples.md)可用于理解字段，不能与 Lua config 重复合并。
 
-每个武器定义共享一个 VM。函数应依据输入上下文决策；不要用全局变量保存单个玩家/物品的变化，目前没有独立实例存储 API。每次加载/调用最多 100 万条指令、最多 64 个导入、单脚本最多 100 万字符、配置深度最多 48 层。无文件、网络、Java、系统命令或调试接口；这些是常见错误限制，不是完整恶意脚本资源隔离。错误包含脚本路径/函数名，发布前必须试加载和进游戏。
+每个武器定义共享一个 VM。函数应依据输入上下文决策；不要用全局变量保存单个玩家/物品的变化，当前可通过下节 `on_action`/`pose` 使用受限客户端姿态记忆，不是任意持久化存储。每次加载/调用最多 100 万条指令、最多 64 个导入、单脚本最多 100 万字符、配置深度最多 48 层。无文件、网络、Java、系统命令或调试接口；这些是常见错误限制，不是完整恶意脚本资源隔离。错误包含脚本路径/函数名，发布前必须试加载和进游戏。
 
 数据/加载测试已经通过；帧率和所有武器视觉表现仍需实际游戏验收，不能承诺迁移到 Lua 会自动提升性能。
+
+## 独立机械循环与姿态记忆
+
+以下可选接口需要支持它们的新版构建；它们不把伤害、输入采集或骨骼求值搬进 Lua。
+
+### 独立循环相位
+
+将 `persistent_loops` 合并到现有 `config.pose_graph`，用于电锯链条等指定骨骼的独立循环：
+
+```lua
+config.pose_graph.persistent_loops = {
+  mechanism = {
+    clip = "weapon_idle",
+    bone_mask = array {"Bone025"},
+    drivers = {
+      swipe_01 = array {array {0, 0}, array {0.5, 1}, array {1, 1}}
+    }
+  }
+}
+```
+
+示例骨名和片段名必须换成实际资源。每行是 `[动作片段时间（秒）, 累计循环片段时间（秒）]`，不是瞬时转速；从 `[0,0]` 开始，时间严格递增，相位有限且非递减，行间线性插值，末端保持。检视按按钮前或停转区间应保持相位不变，不能让整段检视自动连续旋转。
+
+所有驱动共同推进同一个循环，相邻动作、结束、取消、暂停保持相位，无驱动时停止；切换武器或运行时重置清零。循环层最后覆盖明确的局部骨骼遮罩，保留父骨与手臂运动，不要把刀身父骨加入链条遮罩。
+
+### 当前物品姿态记忆
+
+`on_action(status, action, state, ctx)` 可在动作生命周期返回记忆表，`pose(kind, fallback, ctx)` 按记忆选择已配置的待机/奔跑状态：
+
+```lua
+function machine.on_action(status, action, state, ctx)
+  if status == "started" and state == "draw_unsheathed" then
+    return { ["memory.pose"] = "unsheathed" }
+  end
+end
+
+function machine.pose(kind, fallback, ctx)
+  if kind == "idle" and ctx["memory.pose"] == "unsheathed" then
+    return "idle_unsheathed"
+  end
+  return fallback
+end
+```
+
+这是钩子片段，不是完整脚本；需已有 `machine` 和对应状态。`on_action` 状态为 `started/updated/marker/paused/resumed/completed/canceled`，`ctx.progress` 是字符串形式的 0～1。键限定 `memory.[a-z0-9_]{1,48}`，值为最多 128 字符的字符串，总计最多 32 项；返回 nil 不改变记忆，无效表整体拒绝。
+
+记忆按当前物品 identity 与模型/脚本绑定隔离，切换、重载、运行时重置后清空，不写入物品或同步服务端。`pose` 是纯选择函数，kind 包括 `idle/idle_active/enter/loop/exit/super_enter/super_loop/super_exit`；未处理时返回 fallback，不写共享 Lua 全局变量。
+
+### 连击变体与长音效
+
+同一 `melee.combos.<primary|heavy>.attacks[]` 可声明最多 16 个 `variants`，沿用 `animation/duration_ms/commit_ms/chain_open_ms` 等字段，不允许嵌套。含变体的整组 combo 状态名必须唯一。客户端 `select` 的 `ctx.combo_step` 是从 1 开始的字符串，只能选该阶段已声明状态；动作工厂再次调用而未提供 combo_step 时，保留合法 fallback，不能再随机跳到第一刀。
+
+`{type='stop_animation_sounds', time=0}` 是显式停止当前本地 animation 声道的命令，适合放在替代长检视的新动作声音之前。它不停止开火尾音或带 `keep_tail` 的动画尾音，不应放进常驻循环。以上接口不改变未配置它们的旧包规则。

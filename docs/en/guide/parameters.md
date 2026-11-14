@@ -71,7 +71,7 @@ Gameplay JSON controls damage, cadence, ammo and server decisions; render JSON c
 | `gltf_model / animation_sources` | ID / ID array | — / [] | Receiver model / animation libraries; example:foo resolves to assets/example/foo. |
 | `texture / normal / specular / roughness / metallic / emissive` | resource IDs | 可选 / optional | Base color, normal, specular, roughness, metallic and emission textures; Iris channel interpretation also depends on the shader pack. |
 | `specular_strength / roughness_value / metallic_value / emissive_strength` | numbers | 枪/gun: .35 / .55 / 0 / 0 | Material strength or fallback scalar; lower roughness is smoother. Ammo defaults are .35/.45/.8/0 and differ from guns. |
-| `icon_texture / hud.weapon_icon` | IDs | — | Item icon / weapon HUD icon. |
+| `icon_texture / hud.weapon_icon` | IDs | — | Item icon / retained static HUD resource field; the current bottom-right HUD uses the live model icon and stays blank while unavailable, without a static fallback. |
 | `coordinate_system / model_forward_axis` | enums | blender_gun / x | Resource coordinate convention / forward axis; blender_gun requires +X, blender requires a horizontal axis. |
 | `gltf_scale / gltf_translation / gltf_rotation` | number / XYZ / XYZ | 1 / [0,0,0] / [0,0,0] | Global model conversion and transform; rotation uses degrees. Fix model units with gltf_scale. |
 | `first_person / ground / fixed / modify_screen / sprinting` | transform objects | 按场景 / scene-specific | Base transforms for first person, dropped items, frames, refit UI and procedural sprint. |
@@ -171,3 +171,9 @@ Optics, optical nodes and laser zeroing: [attachments and optics](attachments-op
 3. For ammo errors check chamber, installed/replacement magazine, fill order, sampling and masks together.
 4. Validate base color before ordinary/Iris PBR rendering; match channel interpretation to the shader pack.
 5. Do not slow firing to conceal animation interrupts; a legal new shot can restart before previous recovery ends.
+
+## Visibility limits and model FOV
+
+`animation_visibility` stays in render JSON. `hide_position_distance` defaults to 16 and filters CPU triangles using absolute skinned model-space coordinates, not meters. `max_triangle_edge` defaults to 2.5 and `max_edge_stretch` to 8. Calibrate each model across its clips instead of disabling protection globally; see [animation flicker and hiding](animation-visibility.md).
+
+The loader default for `camera.model_fov` remains 70. As of 2026-11-14, the default and Delta Force melee packs use an authored value of 55. Other packs and valid tutorial examples do not change automatically. Model FOV, world FOV, and optic magnification are separate. See [protected-pack configuration](protected-packs.md) for in-place v2 editing and the exact multiplayer display-field exceptions.

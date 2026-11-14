@@ -56,6 +56,9 @@ toc: false
   </div>
 
   <div class="gwo-chapter-grid">
+    <a href="./animation-visibility.html"><b>排错</b><strong>动画闪烁与误隐藏</strong><small>父子缩放、TRS 采样与实际动作范围校准。</small></a>
+    <a href="./protected-packs.html"><b>保护包</b><strong>安装与配置修改</strong><small>v2 原位编辑、完整解压、FOV 与联机校验。</small></a>
+    <a href="./java-api.html"><b>Java API</b><strong>第三方模组集成</strong><small>查询、物品工厂、射击与伤害事件。</small></a>
     <a href="./parameters.html"><b>参数</b><strong>内容包参数作用</strong><small>字段用途、单位、默认值和调参影响。</small></a>
     <a href="./lua-animation.html"><b>Lua</b><strong>内容包动画机</strong><small>脚本接入、通道、混合、分支、打断与下载示例。</small></a>
 

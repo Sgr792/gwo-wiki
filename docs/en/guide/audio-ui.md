@@ -25,7 +25,7 @@ event ID: example:example_rifle_mag_in
 
 Provide item model JSON, transparent PNG icons, and both `zh_cn.json` and `en_us.json` names. Use a consistent visual language across weapons, default parts, optional attachments, and ammunition; the default pack's bright model/shadow style is an example, not a required author style.
 
-Keep a consistent camera angle, silhouette size, margin, shadow, and brightness. Do not brighten assets until their original material color is lost. `icon_texture` supplies item and modification-card artwork; the HUD first tries the live-rendered icon and uses `hud.weapon_icon` only if that render fails, then a built-in fallback if unset. It does not override a successful live icon. The fallback uses a 512×256 image. Validate creative inventory, hotbar, HUD, modification card, and tooltip separately.
+Keep a consistent camera angle, silhouette size, margin, shadow, and brightness. `icon_texture` supplies item/modification-card artwork. The bottom-right HUD uses a generated, cached model icon; while unavailable or failed, it stays blank rather than falling back to `hud.weapon_icon` or a default M4 image. Melee uses the model icon without ammunition/fire-mode panels. Validate each UI context separately.
 
 Public GUI icons for screen crosshairs, hit feedback, armor HUD, firing modes and tactical stance ship in the mod JAR and do not depend on the default content pack. Weapon, attachment and ammunition item/modification-card icons, plus any weapon-specific HUD artwork, remain in their respective content packs.
 
@@ -141,7 +141,13 @@ Provide valid `lang/zh_cn.json` and `lang/en_us.json` objects for localized UI a
 
 Weapon icons, ammunition and armor plate HUD elements scale with window dimensions and GUI scale. The weapon HUD stays anchored at the bottom right; the plate HUD keeps its bottom spacing above the vanilla hotbar when resizing.
 
-Weapon status notifications are no longer sent to the action bar or chat, including laser, optic, zoom, tactical stance, range lock, reload and refit results. Actions and validation still run; instrument readings and persistent HUD displays remain. Legacy animation commands named `show_msg` still parse but display no text.
+Legacy `show_msg` animation commands still parse without text. Current range lock, unlock, and invalid-target operations provide brief action-bar feedback and a quiet click; lens/instrument readings remain visible. Do not assume that every feature-specific status notification is disabled.
 
 
 For field purpose, units, defaults and adjustment effects, see the [parameter reference](parameters.md). For animation control/blending, see [Lua animation machines](lua-animation.md).
+
+## Finding items in the GWO creative tab
+
+GWO items share one vanilla creative tab, with categories for all, firearms, melee, attachments, ammunition, charms, and other items. Category icons use actual items; firearms and attachments expand into subcategories. Search matches localized names, content IDs, pack directory names, and `#tags`; multiple terms are combined.
+
+The funnel beside search filters by the actual folder name or ZIP basename, not a localized alias. Category, pack, and search filters combine. Vanilla slots, hotbar, and item-taking behavior remain; other creative tabs do not show the GWO sidebar. The old item-count/Shift footer hint is no longer displayed.

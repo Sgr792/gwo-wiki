@@ -129,3 +129,11 @@ Test draw, holster, inspection, swing, spatial hit, and optional fatal emphasis 
 ```
 
 Test repeated misses, repeated hits, inspection, sprint, and respawn. Confirm there is no firearm ammunition HUD and no arm handoff jump.
+
+## Assembly and export checks
+
+Current Delta Force melee assembly uses Blender 3.3 at 60 FPS with fps_base=1. Converting a native 30 FPS track doubles its frame numbers while preserving duration in seconds; changing only scene FPS speeds it up. Source-model scale and cube-arm cross-section are separate. The current local arm scale convention is `(1, 0.5, 0.5)`; calibrate grips per weapon and do not apply the scale again to already adapted assets.
+
+Export only the selected rig/meshes and production actions, not every preview scene. Independent arms share bone names, binding, and inverse bind matrices with the weapon; they do not duplicate the full animation library. Encode additive `idle_active` only once while retaining the full source action for editing.
+
+Check inspection props, chains, bells, and hidden states between keys. Use [animation troubleshooting](animation-visibility.md) to distinguish scale, sampling, and distance-filter problems. Enlarging the visibility range is not a fix for exploding geometry.

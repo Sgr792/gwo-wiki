@@ -201,7 +201,7 @@ Loading one round at a time does not require a pump after every shot. For a self
 
 This preserves reload entry, individual insertions, exit and the first empty-chamber load. Firing automatically feeds the next round without creating a post-shot cycling task or its ejection event. Ordinary shot ejection still uses the existing firing-effects configuration. Reload completion readies only ammunition already inserted; it cannot add rounds early. Cadence, cooldown and animation files are not automatically changed.
 
-Compatibility: omitting the entire `cycle_after_shot` object on a tube weapon preserves the implicit pump settings above; omission on a magazine weapon still means no cycle. Inside an explicit object, `enabled` defaults to `false` and must be a JSON boolean. The independent cycle option requires both client and server to upgrade to the new build using network protocol **22**; changing the pack alone is insufficient with an old peer.
+Compatibility: omitting the entire `cycle_after_shot` object on a tube weapon preserves the implicit pump settings above; omission on a magazine weapon still means no cycle. Inside an explicit object, `enabled` defaults to `false` and must be a JSON boolean. Independent cycling was introduced with protocol 22; current builds use protocol **23**, and both peers must match. Updating only a pack is insufficient.
 
 For mechanical cycling, tube and magazine weapons use the same object with `enabled: true`:
 
@@ -277,3 +277,9 @@ These are the documented ownership convention, not a claim that every exporter f
 - Multiple Armatures require one clear owner per target and unified clip name/time. Exporter-specific ownership must be checked rather than guessed.
 - Sample constrained motion into numeric keys; keep quaternion rotations normalized. Scale keys are intentional only when the model needs them.
 - After editing timing, synchronize controller duration, mechanical commits, reload phases, and timed commands. At 30 FPS, milliseconds = frames / 30 × 1000. Tube timing derives from `animation_fps`.
+
+## Timing and current GLB export checks
+
+glTF stores seconds. `animation_fps` interprets frame-based configuration; it does not increase game rendering FPS. Current melee assembly uses 60 FPS, while existing firearm configurations authored at 30 FPS can retain their real time base. A 30-to-60 conversion doubles key/handle times and event frame numbers without changing duration. Verify native sample frequency as `(sample count - 1) / SequenceLength`, not sample count divided by duration.
+
+Export production scenes/actions only. Align each node's T/R/S timestamps, using linear T/S and SLERP rotation, and perform any densification on an export copy. Check intermediate samples through the actual loader. See [animation flicker, snaps, and hiding](animation-visibility.md).

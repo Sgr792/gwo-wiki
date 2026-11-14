@@ -245,15 +245,21 @@ Development builds can display range on the active first-person optic's model sc
 }
 ```
 
-The right/down axes are in GLB model space and require a planar screen mesh. Measurements update about 10 times per second while holding the weapon, including on the physical screen outside ADS, displaying one block as one metre. The nearest block, fluid surface, or pickable entity wins. Sky, out-of-range targets, and unavailable terrain produce `---- m`. Text follows the optic with normal depth testing; third-person synchronization is not included.
+The right/down axes are in GLB model space and require a planar screen mesh. Regular measurements run at most once per two client ticks while holding the weapon, including on the physical screen outside ADS, displaying one block as one metre. The nearest block, fluid surface, or pickable entity wins. Sky, out-of-range targets, and unavailable terrain lose the target, with the short HOLD transition described below. Text follows the optic with normal depth testing; third-person synchronization is not included.
 
-While aiming through a rangefinder optic, press V (the existing weapon-alt key) to lock a valid distance; L marks the locked reading. Press V again while aiming to resume live ranging. Invalid readings cannot be locked. Lowering the sight retains the lock. Outside ADS, the key retains its existing melee action.
+While aiming through a rangefinder optic, press the tactical-stance binding (V by default) to lock a valid distance, and press again to unlock. Missing targets and held stale readings cannot be locked. Lowering ADS retains a lock; weapon/optic changes, world changes, and resource reload clear it.
 
-Red distance digits appear at the upper left inside the scope and on the physical screen, sharing one reading. While aiming, V locks a valid range and adds L to both displays; V again resumes live ranging. Invalid readings show ---- m and cannot be locked. Lowering ADS retains the lock; changing weapons or sights clears it. The scope remains fixed at 8x with its original reticle. Ballistic prediction and the separate holdover marker are not included.
+Lens digits retain their existing placement and share the instrument reading: red LIVE, green LOCK, and gray HOLD. A fixed four-digit area reduces layout jitter. A 0.70-meter integer-boundary hysteresis applies to the same target; changing targets updates immediately. A lost target is held and faded for 200 ms, then replaced by dashes. The stale value cannot be locked.
 
-`rangefinder_screen_stencil` supplies the text plane position, orientation and dimensions; `rangefinder_screen_background` is the physical backplate. Configure the text plane in `transparent_nodes` with `alpha: 0` and `depth_write: false` to exclude its mesh from opaque and transparent drawing while retaining its geometry for text placement. Red full-bright text uses normal occlusion and no extra black rectangle.
+`rangefinder_screen_stencil` supplies the text plane position, orientation and dimensions; `rangefinder_screen_background` is the physical backplate. Configure the text plane in `transparent_nodes` with `alpha: 0` and `depth_write: false` to exclude its mesh from opaque and transparent drawing while retaining its geometry for text placement. Status-colored full-bright text uses normal occlusion and no extra black rectangle.
 
-Range is the straight-line eye-to-surface distance along the player's view, rounded to an integer. Entities use their bounding-box surface. The default maximum is 320 metres, configurable from 1 to 1024, without loading chunks. In-scope digits are clipped to the lens. Shader appearance and visual reticle alignment still require in-game acceptance testing.
+Raw range is the straight-line eye-to-surface distance along the player's view; the displayed integer also uses the hysteresis described above. Entities use their bounding-box surface. The default maximum is 320 metres, configurable from 1 to 1024, without loading chunks. In-scope digits are clipped to the lens. Shader appearance and visual reticle alignment still require in-game acceptance testing.
 
 
 For field purpose, units, defaults and adjustment effects, see the [parameter reference](parameters.md). For animation control/blending, see [Lua animation machines](lua-animation.md).
+
+### Predicted impact marker
+
+While aiming through a rangefinder optic, an amber hollow circle shows the theoretical central trajectory's intersection with the measured-distance plane. LIVE uses the displayed range, LOCK uses the locked range, and target loss fades with HOLD. It is hidden in hip fire, GUI contexts, unknown chunks, or when the range is unreachable/outside the profile limits. Existing reticle and number placement remain.
+
+The calculation resolves current weapon/module/ammunition velocity, drag, water drag, and gravity, starting at the player's eye along the actual firing direction. It does not guarantee a hit or predict target motion, spread, earlier collisions, or penetration, and never steers the shot. There is no new pack-specific marker setting; it uses the existing rangefinder integration.

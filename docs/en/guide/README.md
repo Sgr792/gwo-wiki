@@ -56,6 +56,9 @@ toc: false
   </div>
 
   <div class="gwo-chapter-grid">
+    <a href="./animation-visibility.html"><b>Debug</b><strong>Animation Flicker and Hiding</strong><small>Scale inheritance, TRS sampling, and measured visibility bounds.</small></a>
+    <a href="./protected-packs.html"><b>Packs</b><strong>Editing Protected Packs</strong><small>V2 in-place editing, complete extraction, FOV, and multiplayer checks.</small></a>
+    <a href="./java-api.html"><b>Java API</b><strong>Third-Party Integration</strong><small>Queries, item factories, shooting, and damage events.</small></a>
     <a href="./parameters.html"><b>Fields</b><strong>Parameter reference</strong><small>Purpose, units, defaults and tuning effects.</small></a>
     <a href="./lua-animation.html"><b>Lua</b><strong>Pack animation machines</strong><small>Script setup, channels, blending, branches and interrupts.</small></a>
 

@@ -165,6 +165,59 @@ Default magazine sampling is length × clamp(capacity-ammo,0,capacity)/capacity.
 
 Use the build's content reload entry point or restart the client. File edits are not automatically distributed to server players. To migrate JSON, move the seven groups into Lua tables, use array helpers, remove duplicate render fields and add state_machine. Retain assets and non-animation parameters. [JSON examples](config-examples.md) still explain data but must not be merged alongside duplicate Lua config.
 
-Each weapon definition shares one VM. Derive decisions from input; do not store a player's/item's mutable state in module globals. There is no per-instance storage API. Limits: one million instructions per load/call, 64 imports, one million characters per source and config depth 48. No filesystem/network/Java/system/debug interfaces are exposed. These limits catch common mistakes, not all malicious resource consumption. Errors identify script/function; test loading and gameplay before release.
+Each weapon definition shares one VM. Derive decisions from input; do not store a player's/item's mutable state in module globals. The optional `on_action`/`pose` hooks below provide bounded client pose memory, not arbitrary persistent storage. Limits: one million instructions per load/call, 64 imports, one million characters per source and config depth 48. No filesystem/network/Java/system/debug interfaces are exposed. These limits catch common mistakes, not all malicious resource consumption. Errors identify script/function; test loading and gameplay before release.
 
 Loader/data tests pass, but visual behavior and frame rate still need in-game validation. Lua migration alone is not a performance guarantee.
+
+## Independent mechanism loops and pose memory
+
+These optional interfaces require a build that supports them. Damage, input acquisition, and skeletal evaluation still run in Java.
+
+### Persistent loop phase
+
+Merge `persistent_loops` into the existing `config.pose_graph` for selected mechanism bones such as a chainsaw chain:
+
+```lua
+config.pose_graph.persistent_loops = {
+  mechanism = {
+    clip = "weapon_idle",
+    bone_mask = array {"Bone025"},
+    drivers = {
+      swipe_01 = array {array {0, 0}, array {0.5, 1}, array {1, 1}}
+    }
+  }
+}
+```
+
+Replace example bone/clip names with real resources. Each row is `[driver clip time in seconds, cumulative loop clip time in seconds]`, not instantaneous speed. Start at `[0,0]`; driver time must increase strictly and phase must be finite and nondecreasing. Rows interpolate linearly and hold after the last point. Keep phase unchanged before the inspection button press or during a stopped interval rather than rotating throughout the entire inspection.
+
+Drivers share one phase across action handoffs, completion, cancellation, and pauses; without a driver it stops. Weapon switching/runtime reset clears it. The final loop layer overrides only its explicit local bone mask, preserving parent and arm motion. Do not include the weapon body parent in a chain mask.
+
+### Current-item pose memory
+
+`on_action(status, action, state, ctx)` may return memory updates; `pose(kind, fallback, ctx)` selects configured idle/sprint states:
+
+```lua
+function machine.on_action(status, action, state, ctx)
+  if status == "started" and state == "draw_unsheathed" then
+    return { ["memory.pose"] = "unsheathed" }
+  end
+end
+
+function machine.pose(kind, fallback, ctx)
+  if kind == "idle" and ctx["memory.pose"] == "unsheathed" then
+    return "idle_unsheathed"
+  end
+  return fallback
+end
+```
+
+This is a hook fragment, requiring an existing `machine` and matching states. Status is `started/updated/marker/paused/resumed/completed/canceled`; `ctx.progress` is a string representing 0–1. Keys must match `memory.[a-z0-9_]{1,48}`, values are strings up to 128 characters, and at most 32 entries are allowed. Nil changes nothing; an invalid table is rejected as a whole.
+
+Memory is isolated by current item identity and model/script binding. Switching, reload, or runtime reset clears it; it is neither saved to the item nor synchronized to the server. `pose` is a pure selector for kinds including `idle/idle_active/enter/loop/exit/super_enter/super_loop/super_exit`. Return fallback for unhandled kinds and do not mutate shared Lua globals.
+
+### Combo variants and long sounds
+
+A `melee.combos.<primary|heavy>.attacks[]` entry may declare up to 16 `variants` using the same `animation/duration_ms/commit_ms/chain_open_ms` fields. Nested variants are disallowed. State names must be unique across a combo containing variants. Client `select` receives a string `ctx.combo_step` starting at 1 and may select only states declared for that step. If the action factory calls again without combo_step, preserve the legal fallback rather than rerolling or selecting attack one.
+
+`{type='stop_animation_sounds', time=0}` explicitly stops the local animation audio channel. Place it before sounds of an action replacing a long inspection. It does not stop fire tails or animation tails marked `keep_tail`; do not put it in a persistent loop. Packs that do not configure these features retain their existing rules.

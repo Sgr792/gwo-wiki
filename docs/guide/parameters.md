@@ -71,7 +71,7 @@ category:
 | `gltf_model / animation_sources` | ID / ID array | — / [] | 机匣模型/动画库；example:foo 指 assets/example/foo。 |
 | `texture / normal / specular / roughness / metallic / emissive` | resource IDs | 可选 / optional | 基础色、法线、高光、粗糙度、金属度、发光贴图；Iris 通道含义还取决于光影包。 |
 | `specular_strength / roughness_value / metallic_value / emissive_strength` | numbers | 枪/gun: .35 / .55 / 0 / 0 | 材质强度或缺少对应贴图时的常量；粗糙度越低越光滑。弹药默认为 .35/.45/.8/0，不能混用默认值。 |
-| `icon_texture / hud.weapon_icon` | IDs | — | 物品图标/武器 HUD 图标。 |
+| `icon_texture / hud.weapon_icon` | IDs | — | 物品图标/保留的静态 HUD 资源字段；当前右下角使用实时模型图标，未就绪时留空，不读取静态回退。 |
 | `coordinate_system / model_forward_axis` | enums | blender_gun / x | 资源坐标约定/前向轴；blender_gun 要求 +X，普通 blender 要求水平轴。 |
 | `gltf_scale / gltf_translation / gltf_rotation` | number / XYZ / XYZ | 1 / [0,0,0] / [0,0,0] | 模型整体换算和变换；rotation 为度。修模型单位用 gltf_scale，别只改某个展示场景。 |
 | `first_person / ground / fixed / modify_screen / sprinting` | transform objects | 按场景 / scene-specific | 第一人称/掉落物/展示框/改装界面/程序化奔跑的基础变换。 |
@@ -171,3 +171,9 @@ category:
 3. 弹量错误同时核对膛内、弹匣内、替换弹匣、fill_order、采样与遮罩。
 4. 材质先验证基础色，再检查普通渲染与 Iris 光影；贴图通道解释要匹配光影包。
 5. 不要通过放慢射速来掩盖动画打断问题；合法下一发可以在上一发恢复尚未结束时重播。
+
+## 动画可见性与 FOV 的取值依据
+
+`animation_visibility` 留在 render JSON。`hide_position_distance` 缺省为 16，按蒙皮后模型空间各轴的绝对坐标过滤 CPU 三角形；不是米数。`max_triangle_edge` 缺省 2.5、`max_edge_stretch` 缺省 8。按每个模型全动作范围校准，不建议统一关闭保护，详见[动画闪烁与误隐藏](animation-visibility.md)。
+
+`camera.model_fov` 的加载器缺省值仍为 70；截至 2026-11-14，默认内容包与三角洲近战包的作者调校值是 55。其他包和教程中的合法示例值不会因此自动改变。模型 FOV、世界 FOV、瞄准倍率是不同参数。v2 保护包允许在原路径编辑此字段；联机允许不同的显示字段清单见[保护包配置](protected-packs.md)。
