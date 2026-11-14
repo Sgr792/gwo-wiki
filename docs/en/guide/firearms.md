@@ -5,7 +5,7 @@ category:
   - Content-Pack Authoring
 ---
 
-> **Lua animation API 1:** New animation data lives in pack scripts under `config`. JSON animation fragments below explain the data structure and legacy compatibility; do not duplicate them alongside Lua. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
+> **Lua animation API 1:** Animation configuration belongs in pack scripts under `config`. JSON animation fragments below illustrate field structure; use corresponding Lua tables and `array` values without duplicating those groups in render JSON. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
 
 ## Ammunition
 
@@ -32,7 +32,7 @@ Use `creative_category` to select both the creative-tab group and the weapon-typ
 
 An ordinary firearm's registered item ID also follows its category, such as `gwo:assault_rifle`, `gwo:shotgun`, or `gwo:pistol`. A firearm with `transformation` uses `gwo:transforming_gun` in both forms. Melee weapons still use `gwo:melee_weapon`. The item component continues to identify the particular content-pack weapon, so content definition IDs such as `example:example_rifle` do not change.
 
-The old `gwo:gun` registration has been removed **without automatic migration of saved items**. Back up your world and deal with guns in inventories and containers on the older version before upgrading; afterward, restore them with `/gwo give firearm "<namespace>:<weapon ID>"` or the gunsmith workbench. Workbench `result.id` still takes a content definition ID, not the registered item ID. See the [gunsmith workbench guide](./gunsmith-workbench.md).
+Obtain weapons with `/gwo give firearm "<namespace>:<weapon ID>"` or the gunsmith workbench. Commands and workbench `result.id` use the content definition ID; category registration IDs identify the item type. See the [gunsmith workbench guide](./gunsmith-workbench.md) for recipes.
 
 ### Dual-form firearms
 
@@ -363,6 +363,5 @@ These examples use the same fields as the Chinese reference. Replace resource ID
 Scene-specific scales do not replace correct model units. Static displays should not depend on a moving first-person idle animation.
 
 Material details: base color includes alpha; normals are tangent-space. The non-shaderpack path reads the specular red channel as a highlight mask, while Iris PBR interpretation depends on the shaderpack. Separate `roughness` and `metallic` textures can be used, with `roughness_value` and `metallic_value` as scalar settings when maps are absent. Emissive RGB supplies color, alpha supplies its mask, and `emissive_strength` controls strength. Transparent glass must be a separately named mesh.
-
 
 For independent teaching configurations without default-pack assets, see [Configuration Examples](./config-examples.md). Existing valid fields and explicit defaults should be preserved when merging examples.

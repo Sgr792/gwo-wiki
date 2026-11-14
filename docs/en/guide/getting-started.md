@@ -13,7 +13,7 @@ Start with [Choose Your Workflow](./choose-workflow.md) if you have not selected
 - Blender (the template uses 3.3).
 - [Arm templates: choose a workflow and download](./arm-templates.md).
 - A UTF-8 JSON editor, a PNG editor, and an OGG Vorbis encoder.
-- The [GWO empty content-pack template](/downloads/gwo_empty_content_pack_template.zip), which uses the current directory format and contains no legacy compatibility content.
+- The [GWO empty content-pack template](/downloads/gwo_empty_content_pack_template.zip), which provides the directory structure and base configuration for your own resources.
 
 GWO uses `.glb` for models, `.anim.glb` for animation libraries, `.png` for textures and icons, `.ogg` for sounds, and `.json` for behavior/render definitions. Use lowercase ASCII letters, digits, and underscores in resource paths.
 

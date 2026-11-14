@@ -4,7 +4,7 @@ category:
   - Content-Pack Authoring
 ---
 
-> **Lua animation API 1:** New animation data lives in pack scripts under `config`. JSON animation fragments below explain the data structure and legacy compatibility; do not duplicate them alongside Lua. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
+> **Lua animation API 1:** Animation configuration belongs in pack scripts under `config`. JSON animation fragments below illustrate field structure; use corresponding Lua tables and `array` values without duplicating those groups in render JSON. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
 
 # Configuration examples and integration
 
@@ -154,7 +154,6 @@ Downloads are valid JSON. The first two are **fragments to merge into an existin
 }
 ```
 
-
 1. Supply all referenced clips and matching channels with real durations. Use full exported clip names on the right.
 2. `variants` selects a state by `when`, with higher-priority matching rules first. Here empty reload selects `reload_empty`.
 3. `sequences` splits firing into preparation, shot, and recovery. A `marker` locates a sequence step; it is not a model bone.
@@ -199,7 +198,6 @@ This covers hip-fire teaching branches only. Add ADS, last-round, and dry-fire b
 }
 ```
 
-
 `base_clip` selects the base pose. `channels` selects controller layer categories, not mesh names; `bone_mask` limits affected nodes. This example restricts recoil to `tag_weapon` and requires animations authored for that ownership. Do not use it unchanged for a full firing clip containing arms or bolt motion.
 
 Merge needed layers into an existing graph rather than deleting ADS, sprint, empty-state, or ammo layers. Choose override/additive according to authored reference space, not as a trial fix for jumps. Test layer entry, exit, and interruption.
@@ -227,7 +225,6 @@ Save this [behavior download](/downloads/examples/scope-example.json) as `attach
   "render": "attachments/render/sights/training_scope.render.json"
 }
 ```
-
 
 Save the [render download](/downloads/examples/scope-example.render.json) at its referenced `render` path:
 
@@ -268,7 +265,6 @@ Save the [render download](/downloads/examples/scope-example.render.json) at its
   }
 }
 ```
-
 
 Register the behavior file in the weapon's `modules`. Replace example `tag_scope` with a real installation anchor; it is not a universal anchor for every weapon.
 
@@ -321,7 +317,6 @@ This is a fixed 4× single-mode example, not hybrid flipping or variable magnifi
   }
 }
 ```
-
 
 Create a behavior definition with `type`/`slot` set to `cosmetic`, reference this render file, and add it to weapon `modules`. Model a fixed attachment and connected chain nodes; list real `bones` from attachment toward tip.
 

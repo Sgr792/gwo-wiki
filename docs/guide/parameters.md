@@ -33,7 +33,7 @@ category:
 | `mechanics.rpm` | rounds/min | 850; 1..3000 | 整数射速元数据，与 fire_interval_ms 对应。 |
 | `mechanics.fire_interval_ms` | ms | round(60000/rpm); 1..5000 | 真正开火间隔；与 rpm 换算差超过 1ms 会被拒绝。沙鹰 167/360，Staccato 462/130。 |
 | `mechanics.action_commit_ms.<动作/action>` | ms | 0..60000 | 普通有限动作的机械提交时刻，例如换弹真正更新弹量；不等于声音帧或动画总长。 |
-| `reload_system.cycle_after_shot.enabled` | bool | 显式对象内 false | 是否在每次射击后执行机械循环；管式省略整个对象保留旧隐式泵动，弹匣式省略则不循环。见[逐发装填](animation.md#装填与射后循环独立设置)。 |
+| `reload_system.cycle_after_shot.enabled` | bool | 显式对象内 false | 是否在每次射击后执行机械循环；管式省略整个对象使用隐式泵动，弹匣式省略则不循环。见[逐发装填](animation.md#装填与射后循环独立设置)。 |
 | `inaccuracy.stand / move / sneak / lie / aim` | spread coefficient | 5 / 5.75 / 3.5 / 2.5 / .15 | 站立、移动、蹲伏、趴伏、完全瞄准散布。值越大越散；不是角度或后坐力，每发选一个姿态而非五项相乘。 |
 | `ballistics.muzzle_velocity` | blocks/s | 500; 1..4000 | 枪口初速；提高会缩短飞行时间。 |
 | `ballistics.gravity` | blocks/s² | 9.8; 0..200 | 弹丸下坠加速度；0 表示不施加此下坠。 |
@@ -71,7 +71,7 @@ category:
 | `gltf_model / animation_sources` | ID / ID array | — / [] | 机匣模型/动画库；example:foo 指 assets/example/foo。 |
 | `texture / normal / specular / roughness / metallic / emissive` | resource IDs | 可选 / optional | 基础色、法线、高光、粗糙度、金属度、发光贴图；Iris 通道含义还取决于光影包。 |
 | `specular_strength / roughness_value / metallic_value / emissive_strength` | numbers | 枪/gun: .35 / .55 / 0 / 0 | 材质强度或缺少对应贴图时的常量；粗糙度越低越光滑。弹药默认为 .35/.45/.8/0，不能混用默认值。 |
-| `icon_texture / hud.weapon_icon` | IDs | — | 物品图标/保留的静态 HUD 资源字段；当前右下角使用实时模型图标，未就绪时留空，不读取静态回退。 |
+| `icon_texture` | ID | — | 物品与改装卡片图标；右下角 HUD 使用实时模型图标，未就绪时留空。 |
 | `coordinate_system / model_forward_axis` | enums | blender_gun / x | 资源坐标约定/前向轴；blender_gun 要求 +X，普通 blender 要求水平轴。 |
 | `gltf_scale / gltf_translation / gltf_rotation` | number / XYZ / XYZ | 1 / [0,0,0] / [0,0,0] | 模型整体换算和变换；rotation 为度。修模型单位用 gltf_scale，别只改某个展示场景。 |
 | `first_person / ground / fixed / modify_screen / sprinting` | transform objects | 按场景 / scene-specific | 第一人称/掉落物/展示框/改装界面/程序化奔跑的基础变换。 |
@@ -101,7 +101,7 @@ category:
 | `recoil.recovery_delay_ms / recovery_duration_ms` | ms | 按射速推导 / 0 | 停止射击后的回正延迟/可选回正时长；0 时长使用现有弹簧恢复。 |
 | `recoil.hip / recoil.ads` | objects | 各自基础配置 / distinct base profiles | 分别控制腰射和瞄准；下列参数在两者中均可填写。 |
 | `<recoil profile>.vertical / horizontal / model_back / randomness` | multipliers | 1 | 上下后坐/左右随机后坐/枪模后退/随机量倍率，不是直接厘米或角度。 |
-| `<recoil profile>.recovery` | multiplier | 1; .1..4 | 相机控制响应与后坐热恢复倍率；未填写 model_recovery 时也控制模型弹簧，保持旧配置行为。 |
+| `<recoil profile>.recovery` | multiplier | 1; .1..4 | 相机控制响应与后坐热恢复倍率；未填写 model_recovery 时也控制模型弹簧。 |
 | `<recoil profile>.model_recovery` | multiplier | 同姿态 recovery; .1..4 | 仅控制模型弹簧刚度和阻尼，较小值使回落更慢；必须是有限数值，不是秒数，不改变镜头或热恢复。 |
 | `<recoil profile>.model_pitch_degrees / sustained_vertical_fraction` | degrees / fraction | 0 / .35 | 附加模型俯仰/持续竖向贡献比例。 |
 | `weapon_sway.enabled / hip / ads` | bool / objects | true | 鼠标转动造成的枪械摆动开关与腰射/瞄准配置。 |
@@ -176,4 +176,4 @@ category:
 
 `animation_visibility` 留在 render JSON。`hide_position_distance` 缺省为 16，按蒙皮后模型空间各轴的绝对坐标过滤 CPU 三角形；不是米数。`max_triangle_edge` 缺省 2.5、`max_edge_stretch` 缺省 8。按每个模型全动作范围校准，不建议统一关闭保护，详见[动画闪烁与误隐藏](animation-visibility.md)。
 
-`camera.model_fov` 的加载器缺省值仍为 70；截至 2026-11-14，默认内容包与三角洲近战包的作者调校值是 55。其他包和教程中的合法示例值不会因此自动改变。模型 FOV、世界 FOV、瞄准倍率是不同参数。v2 保护包允许在原路径编辑此字段；联机允许不同的显示字段清单见[保护包配置](protected-packs.md)。
+`camera.model_fov` 的加载器缺省值为 70；默认内容包与三角洲近战包的作者调校值是 55。其他包和教程中的合法示例值不会因此自动改变。模型 FOV、世界 FOV、瞄准倍率是不同参数。v2 保护包允许在原路径编辑此字段；联机允许不同的显示字段清单见[保护包配置](protected-packs.md)。

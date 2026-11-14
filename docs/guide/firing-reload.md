@@ -2,7 +2,7 @@
 title: 射击与换弹进阶
 ---
 
-> **Lua 动画机 API 1：** 新版动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段仍用于说明数据结构和旧包兼容；不要与 Lua 重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
+> **Lua 动画机 API 1：** 动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段用于说明字段结构；在 Lua 中使用对应 table 和 `array` 写法，不要在 render JSON 中重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
 
 # 射击与换弹进阶
 

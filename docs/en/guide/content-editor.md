@@ -9,7 +9,7 @@ The Windows editor opens local content packs to edit configuration, preview weap
 
 Get the installer or portable ZIP from [official releases](https://github.com/Sgr792/gwo-editor-releases/releases/latest). Extract the portable archive and run the editor. Portable updates support signature verification and rollback. Save your edits before upgrading.
 
-The current public release is 0.4.0. This page also documents completed source updates through 0.4.3; check the release version before downloading.
+Check the Release page and the installed editor’s documentation for its available features.
 
 ## Workflow
 
@@ -23,22 +23,11 @@ The current public release is 0.4.0. This page also documents completed source u
 
 Blender bones or Empty objects define mounting positions. The editor displays anchors read-only. Advanced controls can reset existing per-weapon attachment offsets; edit the authored anchor in Blender and export again to change its position.
 
-## Transparency editing (0.4.3)
+## Transparency editing
 
 In the material tool, choose the receiver or an installed attachment and select a mesh. Preview opacity, double-sided rendering, depth writing, and depth testing. Use the save button to write settings; changing tools or restoring the preview discards unsaved transparency changes.
 
 Settings use original GLB node names. Attachment settings can be saved as weapon-specific overrides. Preview materials retain GWO shader behavior.
-
-## Recent changes
-
-| Version | Changes |
-| --- | --- |
-| 0.3.0 | Pose reference spaces, priorities, masks, conditions, progress weights, and animation command playback. |
-| 0.3.1 | Read-only anchor inspection and existing offset reset. |
-| 0.4.0 | Resource navigation, larger central preview, right tool panel, resizable and collapsible panels. |
-| 0.4.1 | Fixed animated first-person receivers incorrectly culled using stale bounds. |
-| 0.4.2 | Added cartridge instances driven by ammunition, chamber state, and reload roles. |
-| 0.4.3 | Added live mesh transparency editing while retaining authored names and shader behavior. |
 
 ## Preview limits
 

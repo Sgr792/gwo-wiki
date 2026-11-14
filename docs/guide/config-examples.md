@@ -4,7 +4,7 @@ category:
   - 内容包制作
 ---
 
-> **Lua 动画机 API 1：** 新版动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段仍用于说明数据结构和旧包兼容；不要与 Lua 重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
+> **Lua 动画机 API 1：** 动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段用于说明字段结构；在 Lua 中使用对应 table 和 `array` 写法，不要在 render JSON 中重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
 
 # 配置示例与接入步骤
 
@@ -154,7 +154,6 @@ category:
 }
 ```
 
-
 接入顺序：
 
 1. 先准备表中全部剪辑，再填写同名通道及真实时长。右侧剪辑名填写完整导出名。
@@ -201,7 +200,6 @@ category:
 }
 ```
 
-
 `base_clip` 是基础姿态；`channels` 选择控制器的 layer 分类，不是模型网格名；`bone_mask` 限定应用范围。本例仅让 recoil 层控制 `tag_weapon`，适用于专门按该所有权制作的示例，不适合直接覆盖带手臂/枪机完整射击动作的现有枪。
 
 已有 `pose_graph.layers` 时应合并需要的层，不能用本例抹掉瞄准、奔跑、空仓和弹量层。`override` 与 `additive` 要匹配动画参考空间，不能为消除跳变随意互换。验收时同时测试层开始、层结束和动作打断。
@@ -229,7 +227,6 @@ category:
   "render": "attachments/render/sights/training_scope.render.json"
 }
 ```
-
 
 渲染文件 [下载](/downloads/examples/scope-example.render.json)，保存到行为文件的 `render` 路径：
 
@@ -270,7 +267,6 @@ category:
   }
 }
 ```
-
 
 主枪的 `modules` 必须收录行为文件。这里的 `tag_scope` 只是示例安装点，改成主枪真实存在的挂点，不能套用到所有枪。
 
@@ -323,7 +319,6 @@ category:
   }
 }
 ```
-
 
 另建配件行为文件（`type`/`slot` 为 `cosmetic`），引用此渲染文件，并加入枪的 `modules`。模型中建立固定挂点和依次相连的链条节点；`bones` 从靠近挂点到末端排列，必须使用真实名称。
 

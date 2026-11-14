@@ -7,7 +7,7 @@ category:
 
 # Download and Use the Empty Template
 
-This page creates a correctly structured GWO content pack. The template contains no weapon, model, animation, texture, sound, or legacy compatibility fields.
+This page creates a correctly structured GWO content pack. The template contains no weapon, model, animation, texture, or sound assets.
 
 ## Download
 
@@ -120,7 +120,7 @@ bullets/
 assets/
 ```
 
-The template targets Minecraft 1.21.1 and the current GWO format. It does not use the removed `guns/` directory or obsolete compatibility fields.
+The template targets Minecraft 1.21.1 and the current GWO format. Put firearms in `weapons/firearms/` and standalone melee weapons in `weapons/melee/`.
 
 Next: [Build Your First Firearm](first-firearm.md).
 

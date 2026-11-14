@@ -5,7 +5,7 @@ category:
   - 零基础入门
 ---
 
-> **Lua 动画机 API 1：** 新版动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段仍用于说明数据结构和旧包兼容；不要与 Lua 重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
+> **Lua 动画机 API 1：** 动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段用于说明字段结构；在 Lua 中使用对应 table 和 `array` 写法，不要在 render JSON 中重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
 
 # 从零制作第一把枪
 
@@ -111,7 +111,7 @@ tutorial:skins/guns/training_rifle.png
 - [Blender 骨架](./blender-skinning.md)：骨架、网格和绑定姿态一致。
 - [Blender Empty](./blender-empty.md)：保留父级 Empty 与子网格，不要求 Armature 或 Skinning。
 
-两条路线都要检查模型方向、比例、节点命名和无用对象。软件操作按对应路线完成，本章不再要求所有作者使用同一种导出器。
+两条路线都要检查模型方向、比例、节点命名和无用对象。软件操作按对应路线完成，按所选工具的导出步骤完成制作。
 
 ### 第一版至少需要的节点
 

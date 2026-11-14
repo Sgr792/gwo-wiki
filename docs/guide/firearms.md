@@ -5,7 +5,7 @@ category:
   - 内容包制作
 ---
 
-> **Lua 动画机 API 1：** 新版动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段仍用于说明数据结构和旧包兼容；不要与 Lua 重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
+> **Lua 动画机 API 1：** 动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段用于说明字段结构；在 Lua 中使用对应 table 和 `array` 写法，不要在 render JSON 中重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
 
 ## 创建弹药
 
@@ -147,7 +147,7 @@ category:
 
 普通枪械的注册物品 ID 也按上述类别区分，例如 `gwo:assault_rifle`、`gwo:shotgun`、`gwo:pistol`。配置了 `transformation` 的枪械使用 `gwo:transforming_gun`，切换形态不会更换物品 ID；近战武器仍是 `gwo:melee_weapon`。具体是哪把枪仍由物品组件中的内容 ID 决定，因此 `example:example_rifle` 这样的内容定义 ID 不需要改成物品注册 ID。
 
-旧 `gwo:gun` 已取消注册，**不会自动迁移旧存档中的物品**。升级前请备份存档，并在旧版本中记录或处理背包、容器里的枪械；升级后用 `/gwo give firearm "<命名空间>:<枪械 ID>"` 或工作台重新取得。不要在内容包配方中把注册物品 ID 当成 `result.id`；工作台的 `result.id` 仍填内容定义 ID。配方写法见[枪械工作台教程](./gunsmith-workbench.md)。
+使用 `/gwo give firearm "<命名空间>:<枪械 ID>"` 或工作台取得枪械。命令和工作台的 `result.id` 使用内容定义 ID；分类注册物品 ID 用于物品类型识别。配方写法见[枪械工作台教程](./gunsmith-workbench.md)。
 
 ### 双形态枪械
 

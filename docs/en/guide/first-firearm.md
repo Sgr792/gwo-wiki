@@ -5,7 +5,7 @@ category:
   - Beginner Course
 ---
 
-> **Lua animation API 1:** New animation data lives in pack scripts under `config`. JSON animation fragments below explain the data structure and legacy compatibility; do not duplicate them alongside Lua. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
+> **Lua animation API 1:** Animation configuration belongs in pack scripts under `config`. JSON animation fragments below illustrate field structure; use corresponding Lua tables and `array` values without duplicating those groups in render JSON. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
 
 # Build Your First Firearm
 
@@ -480,7 +480,7 @@ Add only needed features: first draw; last-round/dry-fire and empty-state poses;
 
 For optional custom arms, configure `arms.model` using the [arm-template guide](./arm-templates.md). Empty independent-arm child support requires a version with the corresponding arm support; the default arms and existing pack configuration do not need changes.
 
-Complete [Debugging, Acceptance, and Release](debugging-release.md), then verify a clean game restart—not only hot reload. Do not ship duplicate packs, absolute local paths, source `.blend` files, diagnostics, caches, backups, or obsolete compatibility data. A release ZIP must expose `pack.mcmeta`, `weapons`, `attachments`, `bullets`, and `assets` at its root.
+Complete [Debugging, Acceptance, and Release](debugging-release.md), then verify a clean game restart—not only hot reload. Do not ship duplicate packs, absolute local paths, source `.blend` files, diagnostics, caches, or backups. A release ZIP must expose `pack.mcmeta`, `weapons`, `attachments`, `bullets`, and `assets` at its root.
 
 Recommended reading order:
 

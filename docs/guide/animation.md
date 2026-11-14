@@ -5,7 +5,7 @@ category:
   - 内容包制作
 ---
 
-> **Lua 动画机 API 1：** 新版动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段仍用于说明数据结构和旧包兼容；不要与 Lua 重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
+> **Lua 动画机 API 1：** 动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段用于说明字段结构；在 Lua 中使用对应 table 和 `array` 写法，不要在 render JSON 中重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
 
 ## 动画导出规范
 
@@ -110,17 +110,17 @@ super_sprint_in / super_sprint_loop / super_sprint_out
 
 #### 直接使用真实剪辑名
 
-当前默认包的 Blender Action、GLB 剪辑和控制器状态使用同一短名称，不添加旧名称别名表。完整清单与迁移步骤见[动画名称规范](./animation-names.md)。通过 `animation_controller.channels` 声明能力，并让每个通道的 `clip` 与通道名一致。
+默认包的 Blender Action、GLB 剪辑和控制器状态使用同一短名称。完整清单与命名检查见[动画名称规范](./animation-names.md)。通过 `animation_controller.channels` 声明能力，并让每个通道的 `clip` 与通道名一致。
 
 M4 的扩容弹匣保留 `xmaglrg`；RM277 的鼓式弹匣动画使用 `drum`，配件资源 ID 不随动画改名。
 
 #### `animation_events` 只声明可派发动作
 
-`animation_events` 把动画状态归类到运行时动作通道，例如 `fire`、`reload`、`inspect`、`aim`、`sprint` 和 `melee`。显式映射仍是当前格式，可以保留；它不是废弃配置。
+`animation_events` 把动画状态归类到运行时动作通道，例如 `fire`、`reload`、`inspect`、`aim`、`sprint` 和 `melee`。使用显式映射将各状态分配到对应的运行时通道。
 
 不要把 `idle`、`bullet_additive`、`empty_additive`、`ads_up_additive` 或 `shell_additive_*` 写进 `animation_events`。这些是基础姿态或附加姿态层，不是可派发事件，应只出现在控制器或姿态图中。事件值必须是 GWO 支持的逻辑事件，不能简单复制任意剪辑名。
 
-默认包不使用 `animation_clips` 别名表；基础与附加姿态通过控制器声明。旧格式解析能力仍存在，但不作为新默认包的命名方案。
+基础与附加姿态通过控制器声明，通道的 `clip` 直接引用 GLB 剪辑名。
 
 #### 基础、装备与展示动画
 
@@ -268,7 +268,7 @@ M4 的扩容弹匣保留 `xmaglrg`；RM277 的鼓式弹匣动画使用 `drum`，
 
 `bullet_additive` / `shell_additive_*` 只控制配置中的弹药节点与 follower，`ads_up` / `ads_down` 只控制 `tag_ads`，`ads_up_additive` 只控制 `tag_weapon`。内容作者修改 `bone_mask` 后，动画通道必须同步服从新的所有权范围。
 
-当前侧瞄由运行时根据 `canted_aim` 配置程序化生成，不需要制作 `canted_aim_in` / `canted_aim_out`。不要用旧侧瞄动画重复旋转 `tag_ads`，否则会与程序化姿态叠加。
+侧瞄由运行时根据 `canted_aim` 配置程序化生成，并从当前姿态直接交接。避免在动作轨道上重复旋转 `tag_ads`，以免与程序化姿态叠加。
 
 ### 基础姿态 `idle`
 
@@ -332,7 +332,7 @@ M4 的扩容弹匣保留 `xmaglrg`；RM277 的鼓式弹匣动画使用 `drum`，
 - `shell_additive_*` 不能包含护木、手臂或枪身轨道。
 - 装填结束后是否需要 rechamber 由枪械机械流程决定；已经直接入膛时不能重复执行。
 
-`tube_per_round` 的装填提交及旧隐式泵动时序以动画帧为数据源。`reload_system.events` 只填写 `*_frame`；运行时会按照武器根配置的 `animation_fps` 自动换算服务端使用的毫秒时间，不要再额外填写 `insert_commit_ms`、`start_commit_ms`、`empty_chamber_start_commit_ms`、`empty_start_commit_ms`、`rechamber_eject_ms` 或 `rechamber_commit_ms`。下文独立的 `cycle_after_shot.events` 另有自己的帧/毫秒接口。
+`tube_per_round` 的装填提交及隐式泵动时序以动画帧为数据源。`reload_system.events` 只填写 `*_frame`；运行时会按照武器根配置的 `animation_fps` 自动换算服务端使用的毫秒时间。下文独立的 `cycle_after_shot.events` 另有自己的帧/毫秒接口。
 
 ```jsonc
 "reload_system": {
@@ -384,7 +384,7 @@ M4 的扩容弹匣保留 `xmaglrg`；RM277 的鼓式弹匣动画使用 `drum`，
 
 这保留起手、单枚装入和收尾流程，以及空仓首次入膛动作；开火后自动供入下一发，不创建射后拉栓任务或对应抛壳事件。正常开火抛壳仍由原有射击效果配置控制。换弹结束只能让已装入的弹药就绪，不提前增加弹量。射速、冷却和动画文件不会因此自动修改。
 
-兼容规则：管式完全省略 `cycle_after_shot`，继续使用上例的隐式泵动参数；弹匣式省略时仍不启用循环。显式对象内 `enabled` 缺省为 `false`，且必须使用 JSON 布尔值。独立循环最初随协议 22 加入；当前构建使用协议 **23**，两端须匹配，不能只改包后继续与旧版混用。
+省略规则：管式完全省略 `cycle_after_shot` 时使用上例的隐式泵动参数；弹匣式省略时不启用循环。显式对象内 `enabled` 缺省为 `false`，且必须使用 JSON 布尔值。客户端与服务端使用配套构建，当前网络协议为 **23**。
 
 需要机械循环时，管式和弹匣式共用同一对象，设置 `enabled: true` 并填写：
 

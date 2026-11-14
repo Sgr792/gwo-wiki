@@ -4,9 +4,9 @@ category:
   - 模组开发
 ---
 
-GWO 已提供实验性 Java API，适用于 **Minecraft 1.21.1、NeoForge 21.1.x、Java 21**。入口是 `com.sgr792.gwo.api.GwoApi`，事件在 `com.sgr792.gwo.api.event`，`GwoApi.API_VERSION` 当前为 `1`。它与内容包 JSON/Lua 接口用途不同，也不是 TaCZ API 的兼容层。
+GWO 提供实验性 Java API，适用于 **Minecraft 1.21.1、NeoForge 21.1.x、Java 21**。入口是 `com.sgr792.gwo.api.GwoApi`，事件在 `com.sgr792.gwo.api.event`，`GwoApi.API_VERSION` 当前为 `1`。Java API 用于第三方模组集成，内容包制作使用 JSON/Lua 接口。
 
-本页按 2026-11-14 已核对实现编写。旧 JAR 也可能叫 `1.1.1-beta`，请确认产物实际包含 API；不要仅靠版本号判断。内部的 `GunData`、模块树、网络消息和渲染类不属于公开接口。
+编译与运行时使用配套的 API 依赖。内部的 `GunData`、模块树、网络消息和渲染类不属于公开接口。
 
 ## 引入与调用时机
 
@@ -30,7 +30,7 @@ ordering="AFTER"
 side="BOTH"
 ```
 
-这段版本范围不能识别同名旧构建。可选集成应隔离 GWO 类型引用，只在确认兼容 GWO 已安装后加载兼容类。
+可选集成应隔离 GWO 类型引用，只在确认兼容 GWO 已安装后加载集成类。
 
 事件监听器注册到 `NeoForge.EVENT_BUS`。在内容加载完成后查询/创建物品，例如服务端命令回调。操作使用所属游戏线程；异步任务先回到 `server.execute(...)`。查询是不可变快照，重载后重新查询，不在每个渲染帧遍历整个目录。
 

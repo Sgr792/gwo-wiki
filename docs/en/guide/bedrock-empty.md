@@ -6,7 +6,7 @@ category:
 
 # GLB and Empty Animation
 
-Gun content packs no longer load Bedrock `.geo.json` models or `.animation.json` animations. `.bbmodel` is an editing source, not a runtime format. Use GLB/glTF models and GLB animation libraries. Skinned GLB and Blender Empty rigid animation remain supported.
+Gun content packs use GLB/glTF models and GLB animation libraries, supporting both skinned bones and Blender Empty rigid animation.
 
 The built-in target and workbench use separate internal readers; their JSON assets are not a gun-pack format.
 
@@ -43,10 +43,8 @@ Animations may also be embedded in the model GLB, in which case no separate `ani
 3. Separate model and animation GLBs must share node names, hierarchy, and initial transforms.
 4. Use unique animated node names. Do not bake the same parent transform into a mesh twice.
 5. Bake constraints, drivers, and authoring-tool effects into transform keyframes.
-6. This update adds the pure rigid, no-Skin path; it does not expand existing multi-Armature or mixed-rig export compatibility.
+6. Use a no-Skin hierarchy for rigid animation and the skeletal skinning workflow for deforming meshes.
 
 ## In-game acceptance
-
-
 
 Before publishing, check idle/draw/fire/reload/inspect, child meshes and moving locators, texture orientation, transparent nodes, normal rendering and Iris, and existing skinned GLB weapons.

@@ -39,7 +39,7 @@ footer: GWO Wiki · Guns Workshop Origins
 ---
 
 <div class="gwo-home-compat" aria-label="Current compatibility">
-  <span>GWO 2.12.87</span>
+  <span>GWO 1.1.1-beta</span>
   <span>Minecraft 1.21.1</span>
   <span>NeoForge 21.1.233</span>
   <span>Blender 3.3</span>

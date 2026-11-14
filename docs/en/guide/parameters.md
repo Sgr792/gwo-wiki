@@ -33,7 +33,7 @@ Gameplay JSON controls damage, cadence, ammo and server decisions; render JSON c
 | `mechanics.rpm` | rounds/min | 850; 1..3000 | Integer RPM metadata matching fire_interval_ms. |
 | `mechanics.fire_interval_ms` | ms | round(60000/rpm); 1..5000 | Actual firing interval; rejected if it differs from rounded RPM conversion by over 1ms. Desert Eagle: 167/360; Staccato: 462/130. |
 | `mechanics.action_commit_ms.<动作/action>` | ms | 0..60000 | Mechanical commit time for ordinary finite actions, such as updating ammo during reload; distinct from sound and animation duration. |
-| `reload_system.cycle_after_shot.enabled` | bool | false inside an explicit object | Cycle mechanically after each shot. Omitting the whole object keeps the legacy implicit cycle for tubes and no cycle for magazines. See [per-round loading](animation.md#independent-loading-and-post-shot-cycling). |
+| `reload_system.cycle_after_shot.enabled` | bool | false inside an explicit object | Cycle mechanically after each shot. Omitting the whole object uses the implicit cycle for tubes and no cycle for magazines. See [per-round loading](animation.md#independent-loading-and-post-shot-cycling). |
 | `inaccuracy.stand / move / sneak / lie / aim` | spread coefficient | 5 / 5.75 / 3.5 / 2.5 / .15 | Standing/moving/crouching/prone/fully aimed spread. Larger is wider; not degrees or recoil. One stance is selected per shot. |
 | `ballistics.muzzle_velocity` | blocks/s | 500; 1..4000 | Muzzle speed; higher values shorten travel time. |
 | `ballistics.gravity` | blocks/s² | 9.8; 0..200 | Projectile downward acceleration; zero disables this gravity. |
@@ -71,7 +71,7 @@ Gameplay JSON controls damage, cadence, ammo and server decisions; render JSON c
 | `gltf_model / animation_sources` | ID / ID array | — / [] | Receiver model / animation libraries; example:foo resolves to assets/example/foo. |
 | `texture / normal / specular / roughness / metallic / emissive` | resource IDs | 可选 / optional | Base color, normal, specular, roughness, metallic and emission textures; Iris channel interpretation also depends on the shader pack. |
 | `specular_strength / roughness_value / metallic_value / emissive_strength` | numbers | 枪/gun: .35 / .55 / 0 / 0 | Material strength or fallback scalar; lower roughness is smoother. Ammo defaults are .35/.45/.8/0 and differ from guns. |
-| `icon_texture / hud.weapon_icon` | IDs | — | Item icon / retained static HUD resource field; the current bottom-right HUD uses the live model icon and stays blank while unavailable, without a static fallback. |
+| `icon_texture` | ID | — | Item and modification-card artwork. The bottom-right HUD uses a live model icon and stays blank while unavailable. |
 | `coordinate_system / model_forward_axis` | enums | blender_gun / x | Resource coordinate convention / forward axis; blender_gun requires +X, blender requires a horizontal axis. |
 | `gltf_scale / gltf_translation / gltf_rotation` | number / XYZ / XYZ | 1 / [0,0,0] / [0,0,0] | Global model conversion and transform; rotation uses degrees. Fix model units with gltf_scale. |
 | `first_person / ground / fixed / modify_screen / sprinting` | transform objects | 按场景 / scene-specific | Base transforms for first person, dropped items, frames, refit UI and procedural sprint. |
@@ -101,7 +101,7 @@ Gameplay JSON controls damage, cadence, ammo and server decisions; render JSON c
 | `recoil.recovery_delay_ms / recovery_duration_ms` | ms | 按射速推导 / 0 | Recovery delay after firing / optional duration; zero duration uses spring recovery. |
 | `recoil.hip / recoil.ads` | objects | 各自基础配置 / distinct base profiles | Hip and aimed profiles; the following fields apply to both. |
 | `<recoil profile>.vertical / horizontal / model_back / randomness` | multipliers | 1 | Vertical recoil / horizontal randomness / model backward motion / randomness multipliers, not direct distance or angle. |
-| `<recoil profile>.recovery` | multiplier | 1; .1..4 | Camera-control response and recoil-heat recovery multiplier; also controls the model spring when model_recovery is omitted, preserving legacy behavior. |
+| `<recoil profile>.recovery` | multiplier | 1; .1..4 | Camera-control response and recoil-heat recovery multiplier; also controls the model spring when model_recovery is omitted. |
 | `<recoil profile>.model_recovery` | multiplier | same profile's recovery; .1..4 | Model spring stiffness and damping only; smaller values settle more slowly. Must be finite, is not seconds, and does not change camera or heat recovery. |
 | `<recoil profile>.model_pitch_degrees / sustained_vertical_fraction` | degrees / fraction | 0 / .35 | Additional model pitch / sustained vertical contribution fraction. |
 | `weapon_sway.enabled / hip / ads` | bool / objects | true | Mouse-driven weapon sway enable and hip/ADS profiles. |
@@ -176,4 +176,4 @@ Optics, optical nodes and laser zeroing: [attachments and optics](attachments-op
 
 `animation_visibility` stays in render JSON. `hide_position_distance` defaults to 16 and filters CPU triangles using absolute skinned model-space coordinates, not meters. `max_triangle_edge` defaults to 2.5 and `max_edge_stretch` to 8. Calibrate each model across its clips instead of disabling protection globally; see [animation flicker and hiding](animation-visibility.md).
 
-The loader default for `camera.model_fov` remains 70. As of 2026-11-14, the default and Delta Force melee packs use an authored value of 55. Other packs and valid tutorial examples do not change automatically. Model FOV, world FOV, and optic magnification are separate. See [protected-pack configuration](protected-packs.md) for in-place v2 editing and the exact multiplayer display-field exceptions.
+The loader default for `camera.model_fov` is 70; the default and Delta Force melee packs use an authored value of 55. Other packs and valid tutorial examples do not change automatically. Model FOV, world FOV, and optic magnification are separate. See [protected-pack configuration](protected-packs.md) for in-place v2 editing and the exact multiplayer display-field exceptions.

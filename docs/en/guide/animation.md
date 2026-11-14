@@ -5,7 +5,7 @@ category:
   - Content-Pack Authoring
 ---
 
-> **Lua animation API 1:** New animation data lives in pack scripts under `config`. JSON animation fragments below explain the data structure and legacy compatibility; do not duplicate them alongside Lua. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
+> **Lua animation API 1:** Animation configuration belongs in pack scripts under `config`. JSON animation fragments below illustrate field structure; use corresponding Lua tables and `array` values without duplicating those groups in render JSON. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
 
 ## Animation library contract
 
@@ -33,17 +33,17 @@ Only export actions that the weapon actually uses.
 
 ### Use authored clip names directly
 
-The current default pack uses the same short name for each Blender Action, GLB clip, and controller state, without legacy aliases. See [Animation Names](./animation-names.md) for the inventory and migration steps. Declare capabilities in `animation_controller.channels` and use the same name in each channel’s `clip`.
+The default pack uses the same short name for each Blender Action, GLB clip, and controller state. See [Animation Names](./animation-names.md) for the inventory and naming checks. Declare capabilities in `animation_controller.channels` and use the same name in each channel’s `clip`.
 
 M4 extended-magazine clips retain `xmaglrg`; RM277 drum clips use `drum`. Attachment resource IDs are independent of clip names.
 
 ### `animation_events` is only for dispatchable actions
 
-`animation_events` classifies animation states into runtime action channels such as `fire`, `reload`, `inspect`, `aim`, `sprint`, and `melee`. Explicit mappings remain part of the current format and may be retained; they are not deprecated.
+`animation_events` classifies animation states into runtime action channels such as `fire`, `reload`, `inspect`, `aim`, `sprint`, and `melee`. Use explicit mappings to assign each state to the intended runtime channel.
 
 Do not place `idle`, `bullet_additive`, `empty_additive`, `ads_up_additive`, or `shell_additive_*` in `animation_events`. They are base or additive pose layers rather than dispatchable events and belong in the controller or pose graph. Event values must be supported GWO logical events, not arbitrary copied clip names.
 
-The default pack does not use an `animation_clips` alias table. Declare base and additive poses in the controller. Legacy parsing support remains available, but is not the naming scheme used by the current default pack.
+Declare base and additive poses in the controller, with each channel’s `clip` referencing its GLB clip name directly.
 
 ### Base, equip, and display
 
@@ -145,7 +145,7 @@ Not every weapon needs every state. A correctly named but unreferenced clip is n
 
 `ads_up` and `ads_down` own the transition. An additive ADS action must contain only its correction channels and must use a stable reference pose. Do not duplicate the same correction on `tag_ads`, `tag_weapon`, and the hands.
 
-Programmatic tactical stance is configured with `canted_aim`; it does not require `canted_aim_in` or `canted_aim_out` clips. Do not layer legacy canted or NVG ADS animations on top of the runtime transform.
+Tactical stance is generated from `canted_aim` and transitions directly from the current pose. Avoid rotating `tag_ads` again in an animation track, which would compound the runtime transform.
 
 ### Fire and reload
 
@@ -157,7 +157,7 @@ Keep authored weapon and hand channels in the same reference space. `fire_last` 
 
 Use start → repeated loop → end. Commit one shell at its configured loop event. A chamber-start action may commit the first round separately. Pump/bolt actions begin only after their configured delay and must preserve hand ownership through their final frame.
 
-For `tube_per_round`, loading commits and legacy implicit pump timing use authored frames. Under `reload_system.events`, do not duplicate them as `insert_commit_ms`, `start_commit_ms`, `empty_chamber_start_commit_ms`, `empty_start_commit_ms`, `rechamber_eject_ms`, or `rechamber_commit_ms`. Runtime derives server milliseconds from the weapon-level `animation_fps`. The independent `cycle_after_shot.events` object described below has its own frame/millisecond interface.
+For `tube_per_round`, loading commits and implicit pump timing use authored frames. Under `reload_system.events`, specify `*_frame` values; runtime derives server milliseconds from the weapon-level `animation_fps`. The independent `cycle_after_shot.events` object described below has its own frame/millisecond interface.
 
 ```jsonc
 "reload_system": {
@@ -201,7 +201,7 @@ Loading one round at a time does not require a pump after every shot. For a self
 
 This preserves reload entry, individual insertions, exit and the first empty-chamber load. Firing automatically feeds the next round without creating a post-shot cycling task or its ejection event. Ordinary shot ejection still uses the existing firing-effects configuration. Reload completion readies only ammunition already inserted; it cannot add rounds early. Cadence, cooldown and animation files are not automatically changed.
 
-Compatibility: omitting the entire `cycle_after_shot` object on a tube weapon preserves the implicit pump settings above; omission on a magazine weapon still means no cycle. Inside an explicit object, `enabled` defaults to `false` and must be a JSON boolean. Independent cycling was introduced with protocol 22; current builds use protocol **23**, and both peers must match. Updating only a pack is insufficient.
+Omitting the entire `cycle_after_shot` object on a tube weapon uses the implicit pump settings above; omission on a magazine weapon means no cycle. Inside an explicit object, `enabled` defaults to `false` and must be a JSON boolean. Use matching client and server builds; the current network protocol is **23**.
 
 For mechanical cycling, tube and magazine weapons use the same object with `enabled: true`:
 

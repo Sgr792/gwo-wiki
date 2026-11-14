@@ -22,28 +22,10 @@ Start from the [empty template](empty-template.md). The table names typical file
 | Drum magazine (`drummag`, model/module definition) | `attachments/magazines/rm277_drummag.json` | `attachments/render/magazines/rm277_drummag.render.json` |
 | Ammunition | `bullets/5_56x45.json` | Same file contains model/material declarations |
 
-Paths are relative to the current default content pack. The public Wiki provides an asset-free empty template so the guide does not depend on a removed or version-mismatched example link. Current Wiki rules and loader validation are authoritative.
+Paths are relative to the current default content pack. The public Wiki provides an asset-free empty template; use the parameter reference and loader validation to check fields and structure.
 
-## Legacy fields not to use
-
-The following names are ignored or explicitly removed legacy syntax. Do not add them to new packs; retain current fields and explicitly authored defaults.
-
-| Legacy field | Current form |
-|---|---|
-| `hud_icon_texture` | `hud.weapon_icon` |
-| `camera.recoil_pitch`, `camera.recoil_yaw`, `camera.recoil_recovery`, `recoil.handRotPivot`, `recoil_animation` | Current `recoil` block |
-| `arms.arm_poses` | Current `arms`, animation controller, and `pose_graph` |
-| Module `default_enabled`, `built_in`, `incompatible_with` | `default_installed`, `embedded`, `conflicts_with` |
-| Sight `reticle_attach_node`, `lense_hide_node` | `reticle_node`, `lens_hide_node` |
-| Flat `reticle_preview.u/v/width/height` | `reticle_preview.crop.u/v/width/height` |
-| Top-level `rpm`, `shot_cooldown_*`, `automatic_interval_*` | `mechanics.rpm` and `mechanics.fire_interval_ms` |
-| `animation_state_rules`, `animation_interrupt_rules` | `animation_machine` |
-| `melee.impact_frame`, `melee.impact_time` | Timing fields in `melee.combos.*.attacks[]` |
-| `sight.hybrid` | `sight.optic` |
-
-Do not classify explicit current defaults or valid identity animation mappings as legacy. Remove only obsolete names or formats that the loader explicitly rejects.
+## Configuration and field reference
 
 For independent teaching configurations without default-pack assets, see [Configuration Examples](./config-examples.md). Existing valid fields and explicit defaults should be preserved when merging examples.
-
 
 For field purpose, units, defaults and adjustment effects, see the [parameter reference](parameters.md). For animation control/blending, see [Lua animation machines](lua-animation.md).

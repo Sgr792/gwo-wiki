@@ -44,7 +44,7 @@ Setting the distance to `0` disables only this distance filter. It is not a gene
 3. Measure `M = max(abs(x), abs(y), abs(z))` after skinning. Per-bone bounds can provide a conservative upper bound; also verify the previously failing triangle samples.
 4. Leave measured headroom. Recalibrate after replacing the model rather than copying one value to every weapon.
 
-The 2026-11-14 Delta Force melee adjustment used `ceil((M × 1.25 + 4) / 4) × 4` as a tuning rule, **not a loader default**. Chainsaw uses 48, both Dark Star forms 40, Reborn 36, ShadowKiller 28, and the other entries addressed in that pass 32. Greedy already had a separate fix; H5Z01 blade trails use special rules and must be evaluated separately.
+One optional starting point is `ceil((M × 1.25 + 4) / 4) × 4`: add 25% plus four model units of headroom, then round up to a multiple of four. This is an authoring heuristic, **not a loader default**. Validate it against the final model, action blends, and effect geometry.
 
 ## Parent scale and TRS timestamps
 
@@ -54,6 +54,6 @@ For the current export workflow, use the union of each node's translation, rotat
 
 ## Verification limits
 
-The configuration regression covered 18 weapon entries, 272 clips, and 1,088 peak/half-weight blend poses. All 119 previously positive hiding samples were cleared. These are loader and CPU geometry results, not GPU, shader, hand-contact, or sound acceptance.
+Offline checks should cover keys, intermediate samples, and blended poses across every clip, using the actual skinned triangles. Loader and CPU geometry checks still require separate in-game verification of GPU rendering, shaders, hand contact, and sound.
 
 Restart Minecraft and test with shaders on and off, in first person, third person, and display contexts. Record any remaining clip/time-specific defect. See [animation authoring](animation.md) and [debugging and release](debugging-release.md).

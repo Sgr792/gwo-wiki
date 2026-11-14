@@ -41,7 +41,7 @@ toc: false
     <a href="./empty-template.html">
       <span>02</span>
       <strong>Download the Empty Template</strong>
-      <small>Begin with the current directory structure and no removed compatibility fields.</small>
+      <small>Begin with the required directory structure and base configuration.</small>
     </a>
     <a href="./first-firearm.html">
       <span>03</span>
@@ -73,8 +73,8 @@ toc: false
     <a href="./melee.html"><b>Melee</b><strong>Standalone Melee</strong><small>Attack sets, combos, hit windows, interruption, and sound events.</small></a>
     <a href="./audio-ui.html"><b>Interface</b><strong>Audio and UI</strong><small>Sound events, language files, item icons, HUD, and modification-screen assets.</small></a>
     <a href="./debugging-release.html"><b>Validation</b><strong>Debugging and Release</strong><small>Common failures, performance checks, full acceptance, and ZIP release.</small></a>
-    <a href="./reference.html"><b>Reference</b><strong>Current Format Reference</strong><small>Typical filenames, active fields, removed fields, and troubleshooting entry points.</small></a>
+    <a href="./reference.html"><b>Reference</b><strong>Current Format Reference</strong><small>Typical filenames, current fields, and troubleshooting entry points.</small></a>
   </div>
 </div>
 
-[Animation Names and Complete Inventory](./animation-names.md): current default-pack names, migration script, and the six weapon clip inventories.
+[Animation Names and Complete Inventory](./animation-names.md): current default-pack names, export checks, and the six weapon clip inventories.

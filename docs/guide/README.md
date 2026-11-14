@@ -41,7 +41,7 @@ toc: false
     <a href="./empty-template.html">
       <span>02</span>
       <strong>下载空内容包模板</strong>
-      <small>取得当前目录结构正确、没有旧兼容字段的干净起点。</small>
+      <small>取得目录结构正确、带基础配置的制作起点。</small>
     </a>
     <a href="./first-firearm.html">
       <span>03</span>
@@ -73,8 +73,8 @@ toc: false
     <a href="./melee.html"><b>近战</b><strong>独立近战武器</strong><small>动作集合、连段、命中窗口、打断和声音事件。</small></a>
     <a href="./audio-ui.html"><b>界面</b><strong>声音、图标与界面</strong><small>声音事件、语言文件、物品图标、HUD 和改装界面资源。</small></a>
     <a href="./debugging-release.html"><b>验收</b><strong>调试、验收与发布</strong><small>常见故障、性能检查、完整验收和 ZIP 发布。</small></a>
-    <a href="./reference.html"><b>参考</b><strong>当前格式参考</strong><small>典型文件名称、有效字段、已废弃字段和排错入口。</small></a>
+    <a href="./reference.html"><b>参考</b><strong>当前格式参考</strong><small>典型文件名称、当前字段和排错入口。</small></a>
   </div>
 </div>
 
-[动画名称规范与完整清单](./animation-names.md)：当前默认包的命名、迁移脚本与六把枪的实际剪辑。
+[动画名称规范与完整清单](./animation-names.md)：当前默认包的命名规则、导出检查与六把枪的实际剪辑。

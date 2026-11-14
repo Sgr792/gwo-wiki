@@ -8,6 +8,6 @@ GWO 空内容包模板 / GWO Empty Content Pack Template
 6. 开发时保留文件夹形式；发布时再压缩，ZIP 根目录必须直接看到 pack.mcmeta。
 7. 完整步骤：https://wiki.playgwo.com/guide/first-firearm.html
 
-This template intentionally contains no weapon, model, texture, animation, sound, or legacy
-compatibility data. Empty folders contain .gitkeep files only; they may be deleted
+This template contains the directory structure and base configuration for your own resources.
+It includes no weapon, model, texture, animation, or sound assets. Empty folders contain .gitkeep files only; they may be deleted
 after adding real content.

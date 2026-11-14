@@ -17,7 +17,7 @@ category:
 - 能保存 UTF-8 无 BOM JSON 的编辑器，例如 VS Code。
 - PNG 图片编辑工具。
 - 能输出 OGG Vorbis 的音频工具。
-- [GWO 空内容包模板](/downloads/gwo_empty_content_pack_template.zip)，用于从当前目录格式开始制作，不包含旧兼容内容。
+- [GWO 空内容包模板](/downloads/gwo_empty_content_pack_template.zip)，提供内容包目录和基础配置，供作者添加自己的资源。
 
 GWO 使用以下主要资源格式：
 

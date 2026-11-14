@@ -4,9 +4,9 @@ category:
   - Content-Pack Authoring
 ---
 
-## Version and responsibilities
+## Interface and responsibilities
 
-This page describes **Lua animation API 1**, integrated on 2026-09-30. Use a build containing this interface: the version label 2.12.87 alone does not distinguish older JARs. Legacy JSON machines remain readable; the migrated default and sci-fi packs use Lua.
+This page describes **Lua animation API 1**. Pack scripts declare animation data and selection policies; the default and sci-fi packs use this interface.
 
 Lua selects states, branches, timelines, interrupts, sprint-phase clips and ammo sampling. Java evaluates GLB bones, skins/renders models and executes existing mechanical rules. Damage, firing intervals, ammunition and real reload commits remain gameplay JSON/server concerns. Animation duration does not automatically set firing cadence.
 
@@ -39,7 +39,7 @@ The download contains teaching timings and no models, sounds or animation assets
 | pose_graph | Base/overlay composition, conditions and weights |
 | animation_events | Classify dispatchable states into supported logical events |
 | paired_aim_actions | Same-time hip/ADS clip pairs |
-| animation_clips | Legacy clip aliases; new default content uses actual short names |
+| animation_clips | Optional clip aliases; omit when channels reference GLB clip names directly |
 | animation_commands | Timed sound, magazine-role and presentation commands |
 
 Remove those seven groups from render JSON when Lua supplies them. Keep animation_fps, fire_animation, reload_system, reload_phases, resources and mechanics in their existing JSON locations. Damage/mechanics in Lua config are rejected.
@@ -161,17 +161,17 @@ interrupt context has active/incoming, active_state/incoming_state, active_group
 
 Default magazine sampling is length × clamp(capacity-ammo,0,capacity)/capacity. Per-round sampling uses zero while nonempty and the last frame minus one frame when empty. Sampling changes only the pose; slots/chamber classification and masks must also be correct.
 
-## Reloading, migration and limits
+## Reloading and runtime limits
 
-Use the build's content reload entry point or restart the client. File edits are not automatically distributed to server players. To migrate JSON, move the seven groups into Lua tables, use array helpers, remove duplicate render fields and add state_machine. Retain assets and non-animation parameters. [JSON examples](config-examples.md) still explain data but must not be merged alongside duplicate Lua config.
+Use the content reload entry point or restart the client. File edits are not automatically distributed to server players. [Configuration examples](config-examples.md) illustrate field structure in JSON; use Lua tables and `array` values in `config`, keeping those animation groups out of render JSON.
 
 Each weapon definition shares one VM. Derive decisions from input; do not store a player's/item's mutable state in module globals. The optional `on_action`/`pose` hooks below provide bounded client pose memory, not arbitrary persistent storage. Limits: one million instructions per load/call, 64 imports, one million characters per source and config depth 48. No filesystem/network/Java/system/debug interfaces are exposed. These limits catch common mistakes, not all malicious resource consumption. Errors identify script/function; test loading and gameplay before release.
 
-Loader/data tests pass, but visual behavior and frame rate still need in-game validation. Lua migration alone is not a performance guarantee.
+Check frame rate, every action, and blended handoffs before release. Successful Lua loading alone does not verify in-game visuals or performance.
 
 ## Independent mechanism loops and pose memory
 
-These optional interfaces require a build that supports them. Damage, input acquisition, and skeletal evaluation still run in Java.
+The optional interfaces below control presentation. Damage, input acquisition, and skeletal evaluation run in Java.
 
 ### Persistent loop phase
 
@@ -220,4 +220,4 @@ Memory is isolated by current item identity and model/script binding. Switching,
 
 A `melee.combos.<primary|heavy>.attacks[]` entry may declare up to 16 `variants` using the same `animation/duration_ms/commit_ms/chain_open_ms` fields. Nested variants are disallowed. State names must be unique across a combo containing variants. Client `select` receives a string `ctx.combo_step` starting at 1 and may select only states declared for that step. If the action factory calls again without combo_step, preserve the legal fallback rather than rerolling or selecting attack one.
 
-`{type='stop_animation_sounds', time=0}` explicitly stops the local animation audio channel. Place it before sounds of an action replacing a long inspection. It does not stop fire tails or animation tails marked `keep_tail`; do not put it in a persistent loop. Packs that do not configure these features retain their existing rules.
+`{type='stop_animation_sounds', time=0}` explicitly stops the local animation audio channel. Place it before sounds of an action replacing a long inspection. It does not stop fire tails or animation tails marked `keep_tail`; do not put it in a persistent loop. These optional features apply only when configured.

@@ -3,25 +3,25 @@ title: 动画名称规范与完整清单
 order: 3.1
 ---
 
-> **Lua 动画机 API 1：** 新版动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段仍用于说明数据结构和旧包兼容；不要与 Lua 重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
+> **Lua 动画机 API 1：** 动画配置放在内容包 Lua 脚本的 `config` 中。下文 JSON 动画片段用于说明字段结构；在 Lua 中使用对应 table 和 `array` 写法，不要在 render JSON 中重复定义。接入、函数和动画参数见 [Lua 动画机](lua-animation.md)，其他字段作用见 [参数参考](parameters.md)。
 
-本页对应 2026-09-10 的默认内容包迁移。采用 COD 风格短名称；每把枪保留自己的动作后缀，射击与换弹的瞄准版本统一把 `ads` 放在末尾。这是 GWO 的统一规则，不表示原始 COD 表中所有名称都完全一致。
+默认内容包采用短名称；每把枪保留自己的动作后缀，射击与换弹的瞄准版本统一把 `ads` 放在末尾。下表说明各名称的用途。
 
-Blender Action、导出 GLB 剪辑、控制器通道及其 `clip` 使用相同名字。默认包直接使用这些名字，不通过旧名称别名映射。模组 JAR、动画 GLB 和内容包配置需要配套更新。
+Blender Action、导出 GLB 剪辑、控制器通道及其 `clip` 使用相同名字。修改动画名称时同步更新对应的控制器与动作配置。
 
 ## 命名规则
 
-| 原名称 | 当前名称 |
+| 用途 | 名称 |
 |---|---|
-| `static_idle` | `idle` |
-| `draw / draw_first` | `raise / raise_first` |
-| `holster / holster_empty` | `drop / drop_empty` |
-| `aim_in / aim_out` | `ads_up / ads_down` |
-| `aim_fire / ads_fire` | `fire_ads` |
-| `ads_fire_last` | `fire_last_ads` |
-| `aim_fire_rechamber` | `fire_rechamber_ads` |
-| `aim_reload_empty_barcomp` | `reload_empty_barcomp_ads` |
-| `switch_to_semi / switch_to_auto` | `selectsemi_on / selectsemi_off` |
+| 基础待机 | `idle` |
+| 普通／首次掏出 | `raise` / `raise_first` |
+| 收起／空仓收起 | `drop` / `drop_empty` |
+| 进入／退出瞄准 | `ads_up` / `ads_down` |
+| 瞄准射击 | `fire_ads` |
+| 瞄准最后一发 | `fire_last_ads` |
+| 瞄准拉栓 | `fire_rechamber_ads` |
+| 带补偿器的瞄准空仓换弹 | `reload_empty_barcomp_ads` |
+| 切到半自动／全自动 | `selectsemi_on` / `selectsemi_off` |
 
 `ads_up`、`ads_down`、`ads_up_additive` 是瞄准过渡或附加层，保留 `ads` 前缀。RM277 保留 `down_settle`、`*_drum`；MG338 保留 `bullets`；M200 保留 `bullet_additive_5`；M590A1 保留 `gun_butt_*_barmini`。M590A1、M200、MG338、Staccato 的超级冲刺循环为 `super_sprint_loop_proto`，须在 `phase_states` 中引用真实名称。
 
@@ -59,14 +59,12 @@ Blender Action、导出 GLB 剪辑、控制器通道及其 `clip` 使用相同�
 }
 ```
 
-## 迁移 Blender 源文件
+## 命名与导出检查
 
-1. 在 Blender 打开对应枪械源文件，将[改名脚本](/downloads/blender-cod-animation-names.py)的 `WEAPON` 设置为下面的枪械 ID 后运行。脚本只改 Action 名称，不自动保存、不修改关键帧；遇到目标重名会停止。
-2. 检查 Action 与 NLA 引用，保存源文件并重新导出动画库。
-3. 同步控制器、动作机、配对瞄准动作、配件动画覆盖与事件状态键，删除默认包旧别名表。声音事件值按语义保留。
-4. 验证普通/首次掏枪、腰射/瞄准开火、所有弹匣换弹、冲刺和待机交接。
-
-[下载旧名与新名对照表（TSV）](/downloads/cod-animation-names.tsv)。对照表用于离线迁移，不是运行时映射。
+1. 检查 Blender Action 与 NLA 引用，每个需要导出的动作使用唯一名称。
+2. 导出动画库后，核对 GLB 中的实际剪辑名。
+3. 对齐控制器、动作机、配对瞄准动作、配件动画覆盖与事件状态键。
+4. 验证普通／首次掏枪、腰射／瞄准开火、所有换弹变体、冲刺和待机交接。
 
 ## 六把枪的实际 GLB 清单
 

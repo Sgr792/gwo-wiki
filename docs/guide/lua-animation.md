@@ -4,9 +4,9 @@ category:
   - 内容包制作
 ---
 
-## 适用版本与职责
+## 接口与职责
 
-本页对应 **Lua 动画机 API 1**，接入日期为 2026-09-30。需使用包含此接口的模组构建；只看 `2.12.87` 版本号不能判断旧 JAR 是否已有 Lua。旧 JSON 动画机仍有兼容解析，新版默认包与科幻包使用 Lua。
+本页介绍 **Lua 动画机 API 1**。通过内容包脚本声明动画数据与选择策略，默认包与科幻包均使用此接口。
 
 Lua 负责选动作、分支、时间线、打断、奔跑阶段选片及弹量采样。Java 负责 GLB 骨骼求值、蒙皮和渲染，并执行既有机械判定。伤害、射速、扣弹、换弹真正提交仍在逻辑 JSON 与服务端。改变动画长度不会自动改变机械射速。
 
@@ -35,7 +35,7 @@ render JSON 增加：
 
 教学时长不是通用调校值，脚本没有模型、声音和动画资产。提供其中全部真实剪辑，并同步配置机械提交、音效与遮罩后才能进游戏验证。
 
-## 哪些字段移入 Lua
+## Lua config 字段
 
 | Lua `config` 字段 | 作用 |
 |---|---|
@@ -44,7 +44,7 @@ render JSON 增加：
 | `pose_graph` | 基础与叠加层的组合、条件和权重 |
 | `animation_events` | 将可派发状态归类到已支持的逻辑事件 |
 | `paired_aim_actions` | 腰射动作到瞄准动作的同时间配对 |
-| `animation_clips` | 兼容剪辑别名；新默认包使用真实短名称，不必新建别名表 |
+| `animation_clips` | 可选的剪辑别名映射；通道直接引用 GLB 剪辑名时无需配置 |
 | `animation_commands` | 动画帧上的声音、弹匣角色与表现命令 |
 
 这七组字段由 Lua 提供时，render JSON 不能再重复定义。`animation_fps`、`fire_animation`、`reload_system`、`reload_phases`、机械参数和资源引用仍保留原位置。不要把 `damage` 或 `mechanics` 塞进 Lua config，加载器会拒绝。
@@ -166,19 +166,19 @@ interrupt 的 ctx 有 active/incoming、active_state/incoming_state、active_gro
 
 共享默认 sample 对弹匣使用 `length × clamp(capacity-ammo,0,capacity)/capacity`。逐发弹量姿态非空时采第 0 秒，空时采末尾前 1 帧。它只改变姿态；必须配合正确的槽位、膛内分类和遮罩。
 
-## 重载、迁移与限制
+## 重载与运行限制
 
 修改后使用当前版本的内容包重载入口；不确定时重启客户端。配置重载会重新加载 Lua，不会把文件变化自动推送到服务器玩家。
 
-旧 JSON 转换时，把七组动画数据改成 Lua table，数组用 array，删掉 render 重复字段，再增加 state_machine。保留动画资源和非动画参数。原有 [JSON 配置示例](config-examples.md)可用于理解字段，不能与 Lua config 重复合并。
+[配置示例](config-examples.md)用 JSON 展示字段结构；放入 Lua `config` 时使用 table 和 `array`，并保持 render JSON 中没有重复定义的动画组。
 
 每个武器定义共享一个 VM。函数应依据输入上下文决策；不要用全局变量保存单个玩家/物品的变化，当前可通过下节 `on_action`/`pose` 使用受限客户端姿态记忆，不是任意持久化存储。每次加载/调用最多 100 万条指令、最多 64 个导入、单脚本最多 100 万字符、配置深度最多 48 层。无文件、网络、Java、系统命令或调试接口；这些是常见错误限制，不是完整恶意脚本资源隔离。错误包含脚本路径/函数名，发布前必须试加载和进游戏。
 
-数据/加载测试已经通过；帧率和所有武器视觉表现仍需实际游戏验收，不能承诺迁移到 Lua 会自动提升性能。
+发布前检查实际帧率、所有动作和混合衔接。Lua 脚本加载成功不代表游戏中的视觉表现或性能已经通过验证。
 
 ## 独立机械循环与姿态记忆
 
-以下可选接口需要支持它们的新版构建；它们不把伤害、输入采集或骨骼求值搬进 Lua。
+以下可选接口用于表现层。伤害、输入采集和骨骼求值仍由 Java 负责。
 
 ### 独立循环相位
 
@@ -227,4 +227,4 @@ end
 
 同一 `melee.combos.<primary|heavy>.attacks[]` 可声明最多 16 个 `variants`，沿用 `animation/duration_ms/commit_ms/chain_open_ms` 等字段，不允许嵌套。含变体的整组 combo 状态名必须唯一。客户端 `select` 的 `ctx.combo_step` 是从 1 开始的字符串，只能选该阶段已声明状态；动作工厂再次调用而未提供 combo_step 时，保留合法 fallback，不能再随机跳到第一刀。
 
-`{type='stop_animation_sounds', time=0}` 是显式停止当前本地 animation 声道的命令，适合放在替代长检视的新动作声音之前。它不停止开火尾音或带 `keep_tail` 的动画尾音，不应放进常驻循环。以上接口不改变未配置它们的旧包规则。
+`{type='stop_animation_sounds', time=0}` 是显式停止当前本地 animation 声道的命令，适合放在替代长检视的新动作声音之前。它不停止开火尾音或带 `keep_tail` 的动画尾音，不应放进常驻循环。这些可选接口仅在配置后生效。

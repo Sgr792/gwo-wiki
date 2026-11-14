@@ -4,9 +4,9 @@ category:
   - Mod Development
 ---
 
-GWO provides an experimental Java API for **Minecraft 1.21.1, NeoForge 21.1.x, and Java 21**. The entry point is `com.sgr792.gwo.api.GwoApi`; events are under `com.sgr792.gwo.api.event`. `GwoApi.API_VERSION` is currently `1`. This is separate from content-pack JSON/Lua and is not a TaCZ compatibility layer.
+GWO provides an experimental Java API for **Minecraft 1.21.1, NeoForge 21.1.x, and Java 21**. The entry point is `com.sgr792.gwo.api.GwoApi`; events are under `com.sgr792.gwo.api.event`. `GwoApi.API_VERSION` is currently `1`. Use the Java API for third-party mod integration and JSON/Lua for content-pack authoring.
 
-This page was checked against the implementation on 2026-11-14. Older JARs may also say `1.1.1-beta`; verify that the actual artifact contains the API. Internal GunData, module-tree, network, and rendering classes are not public contracts.
+Use matching API dependencies for compilation and runtime. Internal GunData, module-tree, network, and rendering classes are not public contracts.
 
 ## Dependency and lifecycle
 
@@ -30,7 +30,7 @@ ordering="AFTER"
 side="BOTH"
 ```
 
-The version range alone cannot distinguish older identically named builds. Optional integrations must isolate GWO type references in a compatibility class loaded only after a compatible GWO build is confirmed.
+Optional integrations must isolate GWO type references in an integration class loaded only after a compatible GWO build is confirmed.
 
 Register listeners on `NeoForge.EVENT_BUS`. Query or create items after content loading, such as in server command callbacks. Use the owning game thread; return from asynchronous work through `server.execute(...)`. Results are immutable snapshots: query again after content reload and avoid catalog enumeration every render frame.
 

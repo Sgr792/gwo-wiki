@@ -25,7 +25,7 @@ event ID: example:example_rifle_mag_in
 
 Provide item model JSON, transparent PNG icons, and both `zh_cn.json` and `en_us.json` names. Use a consistent visual language across weapons, default parts, optional attachments, and ammunition; the default pack's bright model/shadow style is an example, not a required author style.
 
-Keep a consistent camera angle, silhouette size, margin, shadow, and brightness. `icon_texture` supplies item/modification-card artwork. The bottom-right HUD uses a generated, cached model icon; while unavailable or failed, it stays blank rather than falling back to `hud.weapon_icon` or a default M4 image. Melee uses the model icon without ammunition/fire-mode panels. Validate each UI context separately.
+Keep a consistent camera angle, silhouette size, margin, shadow, and brightness. `icon_texture` supplies item/modification-card artwork. The bottom-right HUD uses a generated, cached model icon; while unavailable or failed, it stays blank. Melee uses the model icon without ammunition/fire-mode panels. Validate each UI context separately.
 
 Public GUI icons for screen crosshairs, hit feedback, armor HUD, firing modes and tactical stance ship in the mod JAR and do not depend on the default content pack. Weapon, attachment and ammunition item/modification-card icons, plus any weapon-specific HUD artwork, remain in their respective content packs.
 
@@ -88,7 +88,7 @@ Add this fragment inside the same `modify_screen` object:
 
 Values use the 960×540 UI design coordinates and scale with the interface. Array form `"translation": [0, 80, 0]` is also supported; omitting the setting keeps these defaults. For example, `{"x": -20, "y": 100, "z": 0}` places the preview 20 units left and 100 below the receiver.
 
-Size follows the in-gun cartridge scale chain, including the weapon, magazine, marker, and ammunition's own scale, rather than fitting the preview area. This translation changes neither weapon placement nor cartridge size or orientation. Missing usable `models.cartridge` data displays a missing-model message. Use a mod version that supports these fields; adding them to a pack does not enable the feature in older versions.
+Size follows the in-gun cartridge scale chain, including the weapon, magazine, marker, and ammunition's own scale, rather than fitting the preview area. This translation changes neither weapon placement nor cartridge size or orientation. Missing usable `models.cartridge` data displays a missing-model message.
 
 ## Configuration examples
 
@@ -136,13 +136,11 @@ Default modules need behavior/render files, module registration, default install
 
 Provide valid `lang/zh_cn.json` and `lang/en_us.json` objects for localized UI and names. Inline display names can be used initially; no comments or trailing commas belong in runtime JSON.
 
-
 ### HUD scaling and status notifications
 
 Weapon icons, ammunition and armor plate HUD elements scale with window dimensions and GUI scale. The weapon HUD stays anchored at the bottom right; the plate HUD keeps its bottom spacing above the vanilla hotbar when resizing.
 
-Legacy `show_msg` animation commands still parse without text. Current range lock, unlock, and invalid-target operations provide brief action-bar feedback and a quiet click; lens/instrument readings remain visible. Do not assume that every feature-specific status notification is disabled.
-
+Range lock, unlock, and invalid-target operations provide brief action-bar feedback and a quiet click; lens and instrument readings remain visible.
 
 For field purpose, units, defaults and adjustment effects, see the [parameter reference](parameters.md). For animation control/blending, see [Lua animation machines](lua-animation.md).
 
@@ -150,4 +148,4 @@ For field purpose, units, defaults and adjustment effects, see the [parameter re
 
 GWO items share one vanilla creative tab, with categories for all, firearms, melee, attachments, ammunition, charms, and other items. Category icons use actual items; firearms and attachments expand into subcategories. Search matches localized names, content IDs, pack directory names, and `#tags`; multiple terms are combined.
 
-The funnel beside search filters by the actual folder name or ZIP basename, not a localized alias. Category, pack, and search filters combine. Vanilla slots, hotbar, and item-taking behavior remain; other creative tabs do not show the GWO sidebar. The old item-count/Shift footer hint is no longer displayed.
+The funnel beside search filters by the actual folder name or ZIP basename, not a localized alias. Category, pack, and search filters combine. Vanilla slots, hotbar, and item-taking behavior remain; other creative tabs do not show the GWO sidebar.

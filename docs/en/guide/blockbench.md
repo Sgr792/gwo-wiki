@@ -1,11 +1,11 @@
 ---
-title: Blockbench format support removed
+title: Preparing Blockbench Sources for GLB
 ---
 
-# Blockbench format support removed
+# Preparing Blockbench Sources for GLB
 
-GWO gun packs no longer load Bedrock geometry or animation JSON. Existing `.bbmodel` files can remain authoring sources, but saving or renaming them does not convert them into GLB.
+GWO gun packs use GLB/glTF models and GLB animation libraries. A Blockbench `.bbmodel` is an authoring source; export or convert it to GLB before integration. Changing its file extension does not convert its format.
 
-Export or convert assets to GLB and check node names, hierarchy, UVs, pivots, and animation clips before using them. Conversion is not automatic and may require reworking animations.
+Check node names, hierarchy, UVs, pivots, and clips after conversion, then arrange the model according to GWO's rig and attachment-anchor requirements.
 
 Continue with [Blender skinning](./blender-skinning.md), [Blender Empty](./blender-empty.md), and [format configuration](./bedrock-empty.md).

@@ -3,25 +3,25 @@ title: Animation Names and Complete Inventory
 order: 3.1
 ---
 
-> **Lua animation API 1:** New animation data lives in pack scripts under `config`. JSON animation fragments below explain the data structure and legacy compatibility; do not duplicate them alongside Lua. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
+> **Lua animation API 1:** Animation configuration belongs in pack scripts under `config`. JSON animation fragments below illustrate field structure; use corresponding Lua tables and `array` values without duplicating those groups in render JSON. See [Lua animation machines](lua-animation.md) and the [parameter reference](parameters.md).
 
-This page describes the default-pack migration of 2026-09-10. It uses short COD-style names, preserving weapon-specific suffixes while placing `ads` last for ADS fire and reload clips. This is a GWO convention, not a claim that every original COD table uses identical names.
+The default pack uses short clip names, preserving weapon-specific suffixes and placing `ads` last for ADS fire and reload clips. The table below describes their roles.
 
-Use the same name for the Blender Action, exported GLB clip, controller channel, and its `clip`. The default pack uses these names directly without legacy aliases. Update the mod JAR, animation GLBs, and pack configuration together.
+Use the same name for the Blender Action, exported GLB clip, controller channel, and its `clip`. Keep controller and action references aligned whenever a clip name changes.
 
 ## Naming rules
 
-| Previous name | Current name |
+| Role | Name |
 |---|---|
-| `static_idle` | `idle` |
-| `draw / draw_first` | `raise / raise_first` |
-| `holster / holster_empty` | `drop / drop_empty` |
-| `aim_in / aim_out` | `ads_up / ads_down` |
-| `aim_fire / ads_fire` | `fire_ads` |
-| `ads_fire_last` | `fire_last_ads` |
-| `aim_fire_rechamber` | `fire_rechamber_ads` |
-| `aim_reload_empty_barcomp` | `reload_empty_barcomp_ads` |
-| `switch_to_semi / switch_to_auto` | `selectsemi_on / selectsemi_off` |
+| Base idle | `idle` |
+| Normal / first equip | `raise` / `raise_first` |
+| Holster / empty holster | `drop` / `drop_empty` |
+| Enter / leave ADS | `ads_up` / `ads_down` |
+| ADS fire | `fire_ads` |
+| ADS last round | `fire_last_ads` |
+| ADS cycling | `fire_rechamber_ads` |
+| ADS empty reload with compensator | `reload_empty_barcomp_ads` |
+| Select semi-auto / full-auto | `selectsemi_on` / `selectsemi_off` |
 
 Keep the `ads` prefix for ADS transitions/additive layers: `ads_up`, `ads_down`, and `ads_up_additive`. RM277 retains `down_settle` and `*_drum`; MG338 retains `bullets`; M200 retains `bullet_additive_5`; M590A1 retains `gun_butt_*_barmini`. M590A1, M200, MG338, and Staccato use `super_sprint_loop_proto`, which must be referenced by its real name in `phase_states`.
 
@@ -59,14 +59,12 @@ These are the current M4 base and active-idle channels. The additive `idle_activ
 }
 ```
 
-## Migrate Blender sources
+## Naming and export checks
 
-1. Open the weapon source in Blender. Set `WEAPON` in the [rename script](/downloads/blender-cod-animation-names.py) to the ID below and run it. It changes Action names only, does not save automatically or edit keyframes, and stops on destination-name conflicts.
-2. Check Action/NLA references, save the source, and export the animation library again.
-3. Update controller, action-machine, paired ADS actions, attachment overrides, and event state keys. Remove the default pack’s old alias table; preserve semantic sound event values.
-4. Check normal/first equip, hip/ADS fire, every magazine reload, sprint, and idle handoffs.
-
-[Download the previous/current name table (TSV)](/downloads/cod-animation-names.tsv). This is an offline migration record, not a runtime mapping.
+1. Check Blender Action and NLA references. Give each exported action a unique name.
+2. Export the animation library and inspect its actual GLB clip names.
+3. Align controller, action-machine, paired ADS actions, attachment overrides, and event state keys.
+4. Verify normal/first equip, hip/ADS fire, every reload variant, sprint, and idle handoffs.
 
 ## Actual GLB inventory
 

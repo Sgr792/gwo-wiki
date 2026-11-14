@@ -4,9 +4,7 @@ category:
   - Content-Pack Authoring
 ---
 
-The current editable protected-pack format is **v2**, requiring a compatible GWO build. Legacy v1 packs remain readable under their original strict integrity rules. Installing a newer JAR does not convert v1 into an editable pack; its publisher must repack it.
-
-Several historical builds used the same `1.1.1-beta` label. Use the publisher's exact matching JAR/pack and checksums rather than relying only on that version string.
+Editable protected packs use the **v2** format. Install the publisher's matching GWO JAR and complete pack, and verify the files against the supplied checksums.
 
 ## ZIP or complete extracted folder
 
@@ -54,7 +52,7 @@ This does not exempt whole render files. Recoil, magnification, damage, capacity
 Distinguish local configuration errors, server configuration errors, gameplay mismatches, and protected-media failures. Keep the full log and the text copied from GWO Resource Status, then check:
 
 1. Duplicate ZIP/folder installations or duplicate packs.
-2. Editable v2 versus strict v1, and the matching JAR.
+2. A matching editable protected pack and GWO JAR, with the expected file checksums.
 3. JSON/Lua validity, editor backup files, missing entries, and folder layout.
 4. Changes to authoritative settings or protected media.
 

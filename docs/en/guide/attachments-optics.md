@@ -104,7 +104,7 @@ Tactical stance belongs in the firearm render definition rather than an optic an
 }
 ```
 
-The player holds ADS and presses V to toggle normal ADS/tactical stance for that weapon identity. Magnified and hybrid optics disable the toggle; iron sights, reflex sights, and holographic sights may use it. No laser attachment is required. A temporary first-person canted laser is scoped to one stance session: manually turning it off during that session is respected instead of being forced on again on the next frame. `pose_node` and `pivot_node` must exist in the weapon GLB. Rotation/translation define the target pose, response/damping shape the transition, and a `fov_multiplier` of `1.0` releases optic magnification. Do not bind legacy canted or NVG ADS clips to this route.
+The player holds ADS and presses V to toggle normal ADS/tactical stance for that weapon identity. Magnified and hybrid optics disable the toggle; iron sights, reflex sights, and holographic sights may use it. No laser attachment is required. A temporary first-person canted laser is scoped to one stance session: manually turning it off during that session is respected instead of being forced on again on the next frame. `pose_node` and `pivot_node` must exist in the weapon GLB. Rotation/translation define the target pose, response/damping shape the transition, and a `fov_multiplier` of `1.0` releases optic magnification. Do not bind canted or NVG ADS clips to this route.
 
 ## Charms
 
@@ -254,7 +254,6 @@ Lens digits retain their existing placement and share the instrument reading: re
 `rangefinder_screen_stencil` supplies the text plane position, orientation and dimensions; `rangefinder_screen_background` is the physical backplate. Configure the text plane in `transparent_nodes` with `alpha: 0` and `depth_write: false` to exclude its mesh from opaque and transparent drawing while retaining its geometry for text placement. Status-colored full-bright text uses normal occlusion and no extra black rectangle.
 
 Raw range is the straight-line eye-to-surface distance along the player's view; the displayed integer also uses the hysteresis described above. Entities use their bounding-box surface. The default maximum is 320 metres, configurable from 1 to 1024, without loading chunks. In-scope digits are clipped to the lens. Shader appearance and visual reticle alignment still require in-game acceptance testing.
-
 
 For field purpose, units, defaults and adjustment effects, see the [parameter reference](parameters.md). For animation control/blending, see [Lua animation machines](lua-animation.md).
 
