@@ -6,11 +6,11 @@ category:
 
 GWO provides an experimental Java API for **Minecraft 1.21.1, NeoForge 21.1.x, and Java 21**. The entry point is `com.sgr792.gwo.api.GwoApi`; events are under `com.sgr792.gwo.api.event`. `GwoApi.API_VERSION` is currently `1`. Use the Java API for third-party mod integration and JSON/Lua for content-pack authoring.
 
-Use matching API dependencies for compilation and runtime. Internal GunData, module-tree, network, and rendering classes are not public contracts.
+GWO's mod source code is not currently public. Third-party mods can integrate through the API documented here without access to the mod source. Use matching API dependencies for compilation and runtime; internal implementation classes are not public contracts.
 
 ## Dependency and lifecycle
 
-Compile against the complete API-enabled runtime JAR. Source JARs are for IDE use, not installation. No public Maven coordinate is provided here.
+Use the released, complete API-enabled runtime JAR for compilation and runtime; no source JAR is required. No public Maven coordinate is provided here.
 
 ```groovy
 dependencies {

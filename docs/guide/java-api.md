@@ -6,11 +6,11 @@ category:
 
 GWO 提供实验性 Java API，适用于 **Minecraft 1.21.1、NeoForge 21.1.x、Java 21**。入口是 `com.sgr792.gwo.api.GwoApi`，事件在 `com.sgr792.gwo.api.event`，`GwoApi.API_VERSION` 当前为 `1`。Java API 用于第三方模组集成，内容包制作使用 JSON/Lua 接口。
 
-编译与运行时使用配套的 API 依赖。内部的 `GunData`、模块树、网络消息和渲染类不属于公开接口。
+GWO 模组本体源码暂不公开。第三方模组可通过本页公开的 API 接入，无需获取模组源码。编译与运行时使用配套的 API 依赖；内部实现类不属于公开接口。
 
 ## 引入与调用时机
 
-使用带 API 的完整运行时 JAR 作为编译依赖；源码包只供 IDE 查看，不装入游戏。当前没有可在这里直接填写的公共 Maven 坐标。
+使用发布的、带 API 的完整运行时 JAR 作为编译和运行依赖，不需要源码包。当前没有可在这里直接填写的公共 Maven 坐标。
 
 ```groovy
 dependencies {
