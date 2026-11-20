@@ -10,6 +10,14 @@ category:
 
 **时间单位不要混用：** `_ms` 是毫秒，`_ticks` 是游戏 tick，`_frame` 按 `animation_fps` 换算，`fade_in/out` 是秒。响应/阻尼系数不是时长。正常 20TPS 时 1 tick=50ms，`帧 / FPS × 1000` 得到毫秒。
 
+## 数值越界时会怎样
+
+| 字段 | 填写示例 | 游戏中的结果 |
+|---|---|---|
+| 枪械逻辑 JSON 的 `range` | `512` 或 `513` | `512` 是有效的基础射程上限。填 `513` 时，这一条枪械定义加载失败，同包其他条目继续加载。 |
+| 配件的 `laser.range` | `128`、`256` 或 `300` | 激光距离的默认值是 64 格。加载器将距离限制在 0.5 至 256 格，三个示例的生效值分别是 128、256、256 格。配件仍能加载。 |
+| 枪械的 `mechanics.rpm` 与 `mechanics.fire_interval_ms` | 省略间隔，射速填 `10`、`12` 或 `3000` | 10 RPM 换算为 6000 毫秒，超过 5000 毫秒上限，这条枪械定义加载失败。12 RPM 对应 5000 毫秒，3000 RPM 对应 20 毫秒，两者均可加载。 |
+
 ## 枪械逻辑 JSON
 
 | 参数 | 类型/单位 | 默认/限制 | 作用及调整影响 |
@@ -31,8 +39,8 @@ category:
 | `ammo.default` | ID | — | 默认弹种，并自动加入精确接受列表。 |
 | `ammo.accepted / ammo.accepted_families` | ID arrays | [] | 接受特定弹种/接受整个口径族；family 不是显示名称。 |
 | `mechanics.dual_wield` | 布尔值 | `false` | 启用分侧扳机和弹量。`fire_modes` 填 `["semi"]`，`magazine_size` 填两侧总容量，取 2 至 1000 的偶数。见[双持手枪](./dual-wield.md)。 |
-| `mechanics.rpm` | rounds/min | 850; 1..3000 | 整数射速元数据，与 fire_interval_ms 对应。 |
-| `mechanics.fire_interval_ms` | ms | round(60000/rpm); 1..5000 | 真正开火间隔；与 rpm 换算差超过 1ms 会被拒绝。沙鹰 167/360，Staccato 462/130。 |
+| `mechanics.rpm` | 发/分钟 | 默认 850，实际可用 12–3000 | 填整数。加载器同时校验射速和开火间隔。 |
+| `mechanics.fire_interval_ms` | 毫秒 | 默认 `round(60000 / rpm)`，范围 1–5000 | 手动填写时，与换算值最多相差 1 毫秒。默认沙鹰为 167 RPM / 360 毫秒，Staccato 为 462 RPM / 130 毫秒。 |
 | `mechanics.action_commit_ms.<动作/action>` | ms | 0..60000 | 普通有限动作的机械提交时刻，例如换弹真正更新弹量；不等于声音帧或动画总长。 |
 | `reload_system.cycle_after_shot.enabled` | bool | 显式对象内 false | 是否在每次射击后执行机械循环；管式省略整个对象使用隐式泵动，弹匣式省略则不循环。见[逐发装填](animation.md#装填与射后循环独立设置)。 |
 | `inaccuracy.stand / move / sneak / lie / aim` | spread coefficient | 5 / 5.75 / 3.5 / 2.5 / .15 | 站立、移动、蹲伏、趴伏、完全瞄准散布。值越大越散；不是角度或后坐力，每发选一个姿态而非五项相乘。 |

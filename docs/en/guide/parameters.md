@@ -10,6 +10,14 @@ Gameplay JSON controls damage, cadence, ammo and server decisions; render JSON c
 
 **Keep time units separate:** `_ms` means milliseconds, `_ticks` means game ticks, `_frame` uses `animation_fps`, and `fade_in/out` use seconds. Response/damping coefficients are not durations. At normal 20 TPS one tick is 50ms; `frames / FPS × 1000` gives milliseconds.
 
+## What happens to out-of-range values?
+
+| Field | Example inputs | In-game result |
+|---|---|---|
+| Firearm gameplay `range` | `512` or `513` | `512` is valid and is the maximum base range. At `513` the firearm definition fails to load. Other entries in the pack continue loading. |
+| Attachment `laser.range` | `128`, `256` or `300` | The default is 64 blocks. The loader clamps the distance to 0.5–256 blocks, so the three inputs yield 128, 256 and 256 blocks respectively. The attachment still loads. |
+| Firearm `mechanics.rpm` and `mechanics.fire_interval_ms` | Omit the interval and set RPM to `10`, `12` or `3000` | At 10 RPM the interval is 6000 ms, above the 5000 ms limit, so the firearm definition fails to load. Both 12 RPM (5000 ms) and 3000 RPM (20 ms) load successfully. |
+
 ## Weapon gameplay JSON
 
 | Field | Type/unit | Default/limit | Purpose and adjustment effect |
@@ -31,8 +39,8 @@ Gameplay JSON controls damage, cadence, ammo and server decisions; render JSON c
 | `ammo.default` | ID | — | Default ammunition; automatically included in the exact accepted list. |
 | `ammo.accepted / ammo.accepted_families` | ID arrays | [] | Accept specific ammo IDs / entire cartridge families; family is not a display name. |
 | `mechanics.dual_wield` | boolean | `false` | Enables two independent triggers and ammo counts. Use `fire_modes: ["semi"]` and an even `magazine_size` from 2 to 1000 for the pair. [Dual-wield pistols](./dual-wield.md) |
-| `mechanics.rpm` | rounds/min | 850; 1..3000 | Integer RPM metadata matching fire_interval_ms. |
-| `mechanics.fire_interval_ms` | ms | round(60000/rpm); 1..5000 | Actual firing interval; rejected if it differs from rounded RPM conversion by over 1ms. Desert Eagle: 167/360; Staccato: 462/130. |
+| `mechanics.rpm` | rounds/min | Default 850, effective range 12–3000 | Use an integer. The loader checks both RPM and the firing interval. |
+| `mechanics.fire_interval_ms` | ms | Default `round(60000 / rpm)`, range 1–5000 | An explicit interval must be within 1 ms of the rounded value. The default Desert Eagle uses 167 RPM / 360 ms and the Staccato uses 462 RPM / 130 ms. |
 | `mechanics.action_commit_ms.<动作/action>` | ms | 0..60000 | Mechanical commit time for ordinary finite actions, such as updating ammo during reload; distinct from sound and animation duration. |
 | `reload_system.cycle_after_shot.enabled` | bool | false inside an explicit object | Cycle mechanically after each shot. Omitting the whole object uses the implicit cycle for tubes and no cycle for magazines. See [per-round loading](animation.md#independent-loading-and-post-shot-cycling). |
 | `inaccuracy.stand / move / sneak / lie / aim` | spread coefficient | 5 / 5.75 / 3.5 / 2.5 / .15 | Standing/moving/crouching/prone/fully aimed spread. Larger is wider; not degrees or recoil. One stance is selected per shot. |
