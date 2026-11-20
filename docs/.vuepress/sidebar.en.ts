@@ -24,6 +24,7 @@ export default {
         "firing-reload",
         "config-examples",
         "firearms",
+        "dual-wield",
         "gunsmith-workbench",
         "attachments-optics",
         "melee",

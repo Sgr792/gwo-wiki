@@ -34,6 +34,10 @@ An ordinary firearm's registered item ID also follows its category, such as `gwo
 
 Obtain weapons with `/gwo give firearm "<namespace>:<weapon ID>"` or the gunsmith workbench. Commands and workbench `result.id` use the content definition ID; category registration IDs identify the item type. See the [gunsmith workbench guide](./gunsmith-workbench.md) for recipes.
 
+### Dual-wield pistols
+
+A dual-wield firearm is one item with two triggers and two magazine counts. For controls, capacity, side-specific reloads and paired attachments, see [Dual-wield pistols](./dual-wield.md).
+
 ### Dual-form firearms
 
 Two firearm definitions must point `transformation.target` at each other: form A targets `example:form_b`, and form B targets `example:form_a`. `state` names that direction's transform animation, `duration_ms` is the logical lock duration (100–10000 ms), and `display_root` defaults to `tag_weapon`. Both definitions must use the same magazine capacity, ammo settings, module tree, and model reference. They are two forms of one item, retaining its ammunition. Validate animation, reload, ADS, and audio in both directions.

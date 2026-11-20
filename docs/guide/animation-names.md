@@ -7,7 +7,7 @@ order: 3.1
 
 默认内容包采用短名称；每把枪保留自己的动作后缀，射击与换弹的瞄准版本统一把 `ads` 放在末尾。下表说明各名称的用途。
 
-Blender Action、导出 GLB 剪辑、控制器通道及其 `clip` 使用相同名字。修改动画名称时同步更新对应的控制器与动作配置。
+控制器通道的 `clip` 填 GLB 中实际的剪辑名。默认 M4 和 RM277 的 `firemode_semi_static`、`firemode_auto_static` 是快慢机姿势状态，分别在 `selectsemi_on`、`selectsemi_off` 剪辑中采样指定帧。制作时导出这两段选择器剪辑，再让状态引用对应帧。
 
 ## 命名规则
 
@@ -66,13 +66,16 @@ Blender Action、导出 GLB 剪辑、控制器通道及其 `clip` 使用相同�
 3. 对齐控制器、动作机、配对瞄准动作、配件动画覆盖与事件状态键。
 4. 验证普通／首次掏枪、腰射／瞄准开火、所有换弹变体、冲刺和待机交接。
 
-## 六把枪的实际 GLB 清单
+## 默认包 17 把枪的 GLB 清单
 
-下列名称直接从当前动画 GLB 读取，共 249 个剪辑；不是必须为每把新枪全部制作的通用列表。
+默认包的 17 把枪在各自的动画库中合计有 654 段剪辑，按枪分别计数。两款双持各有 48 段，名称相同，在此合并列出。展开枪械条目即可查看控制器能引用的剪辑名。
 
-### M4 — 47
+### M4 — 45
 
 `m4`
+
+<details>
+<summary>展开剪辑名</summary>
 
 ```text
 ads_down
@@ -88,8 +91,6 @@ fire_ads
 fire_last
 fire_last_ads
 fire_settle
-firemode_auto_static
-firemode_semi_static
 idle
 idle_active
 inspect
@@ -124,9 +125,14 @@ super_sprint_loop
 super_sprint_out
 ```
 
-### RM277 — 48
+</details>
+
+### RM277 — 46
 
 `rm277`
+
+<details>
+<summary>展开剪辑名</summary>
 
 ```text
 ads_down
@@ -141,8 +147,6 @@ fire_last
 fire_last_ads
 fire_pre
 fire_settle
-firemode_auto_static
-firemode_semi_static
 idle
 idle_active
 inspect
@@ -179,9 +183,14 @@ super_sprint_loop
 super_sprint_out
 ```
 
+</details>
+
 ### M590A1 — 45
 
 `m590a1`
+
+<details>
+<summary>展开剪辑名</summary>
 
 ```text
 ads_down
@@ -231,9 +240,14 @@ super_sprint_loop_proto
 super_sprint_out
 ```
 
+</details>
+
 ### CheyTac M200 — 36
 
 `cheytac_m200`
+
+<details>
+<summary>展开剪辑名</summary>
 
 ```text
 ads_down
@@ -274,9 +288,14 @@ super_sprint_loop_proto
 super_sprint_out
 ```
 
+</details>
+
 ### MG338 — 34
 
 `mg338`
+
+<details>
+<summary>展开剪辑名</summary>
 
 ```text
 ads_down
@@ -315,9 +334,14 @@ super_sprint_loop_proto
 super_sprint_out
 ```
 
+</details>
+
 ### Staccato 2011 P — 39
 
 `staccato_2011_p`
+
+<details>
+<summary>展开剪辑名</summary>
 
 ```text
 ads_down
@@ -360,3 +384,486 @@ super_sprint_in
 super_sprint_loop_proto
 super_sprint_out
 ```
+
+</details>
+
+### Staccato 2011 P 双持与沙漠之鹰双持 — 各 48 段
+
+`staccato_2011_p_dual` 和 `desert_eagle_dual` 各自在本枪骨架上使用下面这些剪辑名。`reload_empty_left` 与 `reload_left_empty` 的选用条件见[双持手枪](./dual-wield.md)。
+
+<details>
+<summary>展开剪辑名</summary>
+
+```text
+drop
+drop_left
+drop_right
+empty_left
+empty_right
+fire_last_left
+fire_last_right
+fire_left
+fire_right
+idle
+idle_active
+idle_left
+idle_right
+inspect
+inspect_empty
+inspect_empty_left
+inspect_empty_right
+inspect_left
+inspect_left_empty
+inspect_right
+inspect_right_empty
+melee_fatal_01
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+raise_first_left
+raise_first_right
+raise_left
+raise_right
+reload
+reload_empty
+reload_empty_left
+reload_empty_right
+reload_left
+reload_left_empty
+reload_right
+reload_right_empty
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### AK-103 — 40
+
+`ak103`
+
+<details>
+<summary>展开剪辑名</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+ads_up_additive
+bullet_additive_30
+drop
+empty_additive
+fire
+fire_ads
+fire_last
+fire_last_ads
+fire_settle
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+selectsemi_off
+selectsemi_off_ads
+selectsemi_on
+selectsemi_on_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### AUG A3 — 39
+
+`aug_a3`
+
+<details>
+<summary>展开剪辑名</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+bullet_additive
+drop
+empty_additive
+fire
+fire_ads
+fire_last
+fire_last_ads
+fire_settle
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+selectsemi_off
+selectsemi_off_ads
+selectsemi_on
+selectsemi_on_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### 弩 — 27
+
+`crossbow`
+
+<details>
+<summary>展开剪辑名</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+drop
+empty_additive
+fire
+fire_ads
+fire_ads_scope
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_hit_01
+melee_hit_02
+melee_miss_01
+melee_miss_02
+raise
+raise_first
+reload
+reload_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### 沙漠之鹰 — 33
+
+`desert_eagle`
+
+<details>
+<summary>展开剪辑名</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+bullet_additive
+drop
+empty_additive
+fire
+fire_ads
+fire_last
+fire_last_ads
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### GM6 Lynx — 33
+
+`gm6_lynx`
+
+<details>
+<summary>展开剪辑名</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+bullet_additive
+drop
+fire
+fire_ads
+fire_last
+fire_last_ads
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### Milkor MGL — 30
+
+`milkor_mgl`
+
+<details>
+<summary>展开剪辑名</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+drop
+fire
+fire_ads
+fire_last
+fire_last_ads
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_empty
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### MP7 — 39
+
+`mp7`
+
+<details>
+<summary>展开剪辑名</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+ads_up_additive
+bullet_additive_40
+drop
+empty_additive
+fire
+fire_ads
+fire_last_ads
+fire_settle
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+selectsemi_off
+selectsemi_off_ads
+selectsemi_on
+selectsemi_on_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### Superi 46 — 38
+
+`superi_46`
+
+<details>
+<summary>展开剪辑名</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+bullet_additive_30rnd
+drop
+empty_additive
+fire
+fire_ads
+fire_last
+fire_last_ads
+fire_settle
+idle
+idle_active
+inspect
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+selectsemi_off
+selectsemi_off_ads
+selectsemi_on
+selectsemi_on_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### Vepr-12 — 34
+
+`vepr_12`
+
+<details>
+<summary>展开剪辑名</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+bullet_additive
+drop
+empty_additive
+fire
+fire_ads
+fire_last
+fire_last_ads
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>

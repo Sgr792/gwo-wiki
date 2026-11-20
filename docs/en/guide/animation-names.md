@@ -7,7 +7,7 @@ order: 3.1
 
 The default pack uses short clip names, preserving weapon-specific suffixes and placing `ads` last for ADS fire and reload clips. The table below describes their roles.
 
-Use the same name for the Blender Action, exported GLB clip, controller channel, and its `clip`. Keep controller and action references aligned whenever a clip name changes.
+Use the exported GLB clip name in each controller channel’s `clip` field. On the default M4 and RM277, the `firemode_semi_static` and `firemode_auto_static` states sample frames of `selectsemi_on` and `selectsemi_off` respectively. Export those two selector clips and reference their frames from the states.
 
 ## Naming rules
 
@@ -68,11 +68,14 @@ These are the current M4 base and active-idle channels. The additive `idle_activ
 
 ## Actual GLB inventory
 
-The following 249 clip names were read from the current six animation GLBs. They are an inventory, not a mandatory list for every new weapon.
+The 17 firearm definitions in the default pack reference 654 clips across their animation libraries. Counts are per weapon. The two dual-wield pistols share the same 48 names and are listed together. Expand a weapon to see the names you can use in its controller.
 
-### M4 — 47
+### M4 — 45
 
 `m4`
+
+<details>
+<summary>Show clip names</summary>
 
 ```text
 ads_down
@@ -88,8 +91,6 @@ fire_ads
 fire_last
 fire_last_ads
 fire_settle
-firemode_auto_static
-firemode_semi_static
 idle
 idle_active
 inspect
@@ -124,9 +125,14 @@ super_sprint_loop
 super_sprint_out
 ```
 
-### RM277 — 48
+</details>
+
+### RM277 — 46
 
 `rm277`
+
+<details>
+<summary>Show clip names</summary>
 
 ```text
 ads_down
@@ -141,8 +147,6 @@ fire_last
 fire_last_ads
 fire_pre
 fire_settle
-firemode_auto_static
-firemode_semi_static
 idle
 idle_active
 inspect
@@ -179,9 +183,14 @@ super_sprint_loop
 super_sprint_out
 ```
 
+</details>
+
 ### M590A1 — 45
 
 `m590a1`
+
+<details>
+<summary>Show clip names</summary>
 
 ```text
 ads_down
@@ -231,9 +240,14 @@ super_sprint_loop_proto
 super_sprint_out
 ```
 
+</details>
+
 ### CheyTac M200 — 36
 
 `cheytac_m200`
+
+<details>
+<summary>Show clip names</summary>
 
 ```text
 ads_down
@@ -274,9 +288,14 @@ super_sprint_loop_proto
 super_sprint_out
 ```
 
+</details>
+
 ### MG338 — 34
 
 `mg338`
+
+<details>
+<summary>Show clip names</summary>
 
 ```text
 ads_down
@@ -315,9 +334,14 @@ super_sprint_loop_proto
 super_sprint_out
 ```
 
+</details>
+
 ### Staccato 2011 P — 39
 
 `staccato_2011_p`
+
+<details>
+<summary>Show clip names</summary>
 
 ```text
 ads_down
@@ -360,3 +384,486 @@ super_sprint_in
 super_sprint_loop_proto
 super_sprint_out
 ```
+
+</details>
+
+### Dual Staccato 2011 P and Dual Desert Eagle — 48 each
+
+`staccato_2011_p_dual` and `desert_eagle_dual` bind these names to their own skeletons. See [Dual-wield pistols](./dual-wield.md) for the difference between `reload_empty_left` and `reload_left_empty`.
+
+<details>
+<summary>Show clip names</summary>
+
+```text
+drop
+drop_left
+drop_right
+empty_left
+empty_right
+fire_last_left
+fire_last_right
+fire_left
+fire_right
+idle
+idle_active
+idle_left
+idle_right
+inspect
+inspect_empty
+inspect_empty_left
+inspect_empty_right
+inspect_left
+inspect_left_empty
+inspect_right
+inspect_right_empty
+melee_fatal_01
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+raise_first_left
+raise_first_right
+raise_left
+raise_right
+reload
+reload_empty
+reload_empty_left
+reload_empty_right
+reload_left
+reload_left_empty
+reload_right
+reload_right_empty
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### AK-103 — 40
+
+`ak103`
+
+<details>
+<summary>Show clip names</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+ads_up_additive
+bullet_additive_30
+drop
+empty_additive
+fire
+fire_ads
+fire_last
+fire_last_ads
+fire_settle
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+selectsemi_off
+selectsemi_off_ads
+selectsemi_on
+selectsemi_on_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### AUG A3 — 39
+
+`aug_a3`
+
+<details>
+<summary>Show clip names</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+bullet_additive
+drop
+empty_additive
+fire
+fire_ads
+fire_last
+fire_last_ads
+fire_settle
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+selectsemi_off
+selectsemi_off_ads
+selectsemi_on
+selectsemi_on_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### Crossbow — 27
+
+`crossbow`
+
+<details>
+<summary>Show clip names</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+drop
+empty_additive
+fire
+fire_ads
+fire_ads_scope
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_hit_01
+melee_hit_02
+melee_miss_01
+melee_miss_02
+raise
+raise_first
+reload
+reload_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### Desert Eagle — 33
+
+`desert_eagle`
+
+<details>
+<summary>Show clip names</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+bullet_additive
+drop
+empty_additive
+fire
+fire_ads
+fire_last
+fire_last_ads
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### GM6 Lynx — 33
+
+`gm6_lynx`
+
+<details>
+<summary>Show clip names</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+bullet_additive
+drop
+fire
+fire_ads
+fire_last
+fire_last_ads
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### Milkor MGL — 30
+
+`milkor_mgl`
+
+<details>
+<summary>Show clip names</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+drop
+fire
+fire_ads
+fire_last
+fire_last_ads
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_empty
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### MP7 — 39
+
+`mp7`
+
+<details>
+<summary>Show clip names</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+ads_up_additive
+bullet_additive_40
+drop
+empty_additive
+fire
+fire_ads
+fire_last_ads
+fire_settle
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+selectsemi_off
+selectsemi_off_ads
+selectsemi_on
+selectsemi_on_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### Superi 46 — 38
+
+`superi_46`
+
+<details>
+<summary>Show clip names</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+bullet_additive_30rnd
+drop
+empty_additive
+fire
+fire_ads
+fire_last
+fire_last_ads
+fire_settle
+idle
+idle_active
+inspect
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+selectsemi_off
+selectsemi_off_ads
+selectsemi_on
+selectsemi_on_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>
+
+### Vepr-12 — 34
+
+`vepr_12`
+
+<details>
+<summary>Show clip names</summary>
+
+```text
+ads_down
+ads_down_settle
+ads_up
+bullet_additive
+drop
+empty_additive
+fire
+fire_ads
+fire_last
+fire_last_ads
+idle
+idle_active
+inspect
+inspect_empty
+melee_fatal_01
+melee_fatal_02
+melee_hit_01
+melee_hit_02
+melee_hit_03
+melee_miss_01
+melee_miss_02
+melee_miss_03
+raise
+raise_first
+reload
+reload_ads
+reload_empty
+reload_empty_ads
+sprint_in
+sprint_loop
+sprint_out
+super_sprint_in
+super_sprint_loop
+super_sprint_out
+```
+
+</details>

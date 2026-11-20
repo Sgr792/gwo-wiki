@@ -45,7 +45,7 @@ v2 将以下已有文本条目标记为可编辑：
 | `first_person`、`ground`、`fixed`、`modify_screen`、`sprinting`、`offhand_stowed` | 各对象直接包含的 `translation`、`rotation`、`scale` |
 | `third_person_pose.gun.lowered`、`third_person_pose.gun.raised` | `translation`、`rotation`、`scale` |
 
-不是整份 render JSON 都免校验。后坐力、倍率、伤害、容量、射速、动画时序和 `animation_visibility` 等设置仍需与服务器一致。当前相关构建使用协议 **23**，客户端和服务端应使用匹配版本。
+不是整份 render JSON 都免校验。后坐力、倍率、伤害、容量、射速、动画时序和 `animation_visibility` 等设置仍需与服务器一致。当前相关构建使用协议 **24**，客户端和服务端应使用匹配版本。
 
 ## 提示验证失败时
 

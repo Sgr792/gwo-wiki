@@ -15,7 +15,7 @@ Correct the field rather than relying on its fallback. Domain-specific ranges st
 
 Use `/gwo reload` to rescan external firearm and ammunition definitions. It does not rebuild uploaded GPU model or material caches. Use resource reload (`F3+T`) for models, textures, sounds, animations, `transparent_nodes`, and other render-material changes. Restart the game whenever a loader, renderer, cache, or binary resource remains resident.
 
-The current network protocol is **23**. Use matching client and server builds. Resource reload updates resources only; install the JAR separately and restart the game. See [protected-pack configuration](protected-packs.md) for multiplayer exceptions and single-player behavior.
+The current network protocol is **24**. Use matching client and server builds. Resource reload updates resources only; install the JAR separately and restart the game. See [protected-pack configuration](protected-packs.md) for multiplayer exceptions and single-player behavior.
 
 Command arguments use content definition IDs; category registration IDs identify item types. See [firearm categories](./firearms.md).
 

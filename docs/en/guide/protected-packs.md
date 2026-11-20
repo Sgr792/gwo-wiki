@@ -45,7 +45,7 @@ Multiplayer compares canonical JSON and Lua. Whitespace, JSON object-key order, 
 | `first_person`, `ground`, `fixed`, `modify_screen`, `sprinting`, `offhand_stowed` | Direct `translation`, `rotation`, `scale` |
 | `third_person_pose.gun.lowered`, `third_person_pose.gun.raised` | `translation`, `rotation`, `scale` |
 
-This does not exempt whole render files. Recoil, magnification, damage, capacity, cadence, animation timing, and `animation_visibility` still need to match the server. These builds use network protocol **23**; use matching client and server builds.
+This does not exempt whole render files. Recoil, magnification, damage, capacity, cadence, animation timing, and `animation_visibility` still need to match the server. These builds use network protocol **24**; use matching client and server builds.
 
 ## Verification failures
 

@@ -149,6 +149,10 @@ category:
 
 使用 `/gwo give firearm "<命名空间>:<枪械 ID>"` 或工作台取得枪械。命令和工作台的 `result.id` 使用内容定义 ID；分类注册物品 ID 用于物品类型识别。配方写法见[枪械工作台教程](./gunsmith-workbench.md)。
 
+### 双持手枪
+
+一件双持武器有两套扳机和独立弹量。操作方式、容量填写、单侧与双侧换弹、配件联动见[双持手枪](./dual-wield.md)。
+
 ### 双形态枪械
 
 两份枪械定义相互指定 `transformation.target`；例如形态 A 指向 `example:form_b`，形态 B 指回 `example:form_a`。`state` 是该方向的变形动作名，`duration_ms` 为逻辑锁定时长（100～10000 毫秒），`display_root` 默认 `tag_weapon`。两个形态必须使用相同的弹匣容量、弹药设置、模块树及模型引用，不能把它们写成互不相关的两把枪。切换后保留同一件物品和弹量；请分别验证两个方向的动画、换弹、瞄准与声音。

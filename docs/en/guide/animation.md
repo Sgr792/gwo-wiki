@@ -13,7 +13,7 @@ For first-shot preparation, recovery, replacement magazines, and belts, see [Adv
 
 This page focuses on skinned GLB authoring. See [GLB and Empty Animation](./bedrock-empty.md) for the new development-build workflows. GWO state names and event configuration remain shared.
 
-Export the static weapon model separately from the animation-only `.anim.glb`. Both files must use the same skeleton names, hierarchy, bind pose, and coordinate space. Frame 0 is valid; configuration event frames must match the exported clip.
+For a separate static model and animation library, export the latter as `.anim.glb` and match the skeleton names, hierarchy, bind pose and coordinate space. A combined GLB can serve both roles. The default Milkor MGL points `gltf_model` and its `animation_sources` entry to `gwo:gltf/guns/milkor_mgl/milkor_mgl.glb`. Frame 0 is valid. Match event frames to the exported clip.
 
 ## Common action names
 
@@ -33,7 +33,7 @@ Only export actions that the weapon actually uses.
 
 ### Use authored clip names directly
 
-The default pack uses the same short name for each Blender Action, GLB clip, and controller state. See [Animation Names](./animation-names.md) for the inventory and naming checks. Declare capabilities in `animation_controller.channels` and use the same name in each channel’s `clip`.
+In `animation_controller.channels`, set `clip` to the exported GLB name. A state may reuse a clip or hold a single frame of it. See [Animation Names](./animation-names.md) for the selector example and the verified inventories.
 
 M4 extended-magazine clips retain `xmaglrg`; RM277 drum clips use `drum`. Attachment resource IDs are independent of clip names.
 
@@ -201,7 +201,7 @@ Loading one round at a time does not require a pump after every shot. For a self
 
 This preserves reload entry, individual insertions, exit and the first empty-chamber load. Firing automatically feeds the next round without creating a post-shot cycling task or its ejection event. Ordinary shot ejection still uses the existing firing-effects configuration. Reload completion readies only ammunition already inserted; it cannot add rounds early. Cadence, cooldown and animation files are not automatically changed.
 
-Omitting the entire `cycle_after_shot` object on a tube weapon uses the implicit pump settings above; omission on a magazine weapon means no cycle. Inside an explicit object, `enabled` defaults to `false` and must be a JSON boolean. Use matching client and server builds; the current network protocol is **23**.
+Omitting the entire `cycle_after_shot` object on a tube weapon uses the implicit pump settings above; omission on a magazine weapon means no cycle. Inside an explicit object, `enabled` defaults to `false` and must be a JSON boolean. Use matching client and server builds; the current network protocol is **24**.
 
 For mechanical cycling, tube and magazine weapons use the same object with `enabled: true`:
 
@@ -218,6 +218,10 @@ Independent cycling does not overwrite reload `clips`, `frame_lengths` or insert
 ### Sprint
 
 Enter, loop, and exit endpoints must match. Composite sprint clips must be baked on every required frame after all source layers are combined; do not leave source IK layers unresolved.
+
+The two default dual-wield pistols use six clips. When switching from normal sprint to super sprint, the current loop keeps moving while it blends into `super_sprint_in`, then `super_sprint_loop` takes over. Switching back blends directly into `sprint_loop`. These routes work with the six standard clips.
+
+Jumping during a sprint loop carries the stride forward from the takeoff pose. Over 0.12 seconds, playback eases to one-quarter speed and the swing contracts to about one-third around that pose. Landing restores the ground gait over 0.18 seconds from the current stride. Procedural running uses the same easing. This is automatic for all weapons and requires no jump clip or Lua setting. Test both switches and jump from different points in the loop so a pause or grip shift is easy to spot.
 
 ## Arms, camera, and multi-armature export
 

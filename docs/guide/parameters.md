@@ -30,6 +30,7 @@ category:
 | `charge_damage_bonus` | damage points | 15 | 蓄力伤害增量参数；不改变普通射击动画长度。 |
 | `ammo.default` | ID | — | 默认弹种，并自动加入精确接受列表。 |
 | `ammo.accepted / ammo.accepted_families` | ID arrays | [] | 接受特定弹种/接受整个口径族；family 不是显示名称。 |
+| `mechanics.dual_wield` | 布尔值 | `false` | 启用分侧扳机和弹量。`fire_modes` 填 `["semi"]`，`magazine_size` 填两侧总容量，取 2 至 1000 的偶数。见[双持手枪](./dual-wield.md)。 |
 | `mechanics.rpm` | rounds/min | 850; 1..3000 | 整数射速元数据，与 fire_interval_ms 对应。 |
 | `mechanics.fire_interval_ms` | ms | round(60000/rpm); 1..5000 | 真正开火间隔；与 rpm 换算差超过 1ms 会被拒绝。沙鹰 167/360，Staccato 462/130。 |
 | `mechanics.action_commit_ms.<动作/action>` | ms | 0..60000 | 普通有限动作的机械提交时刻，例如换弹真正更新弹量；不等于声音帧或动画总长。 |
@@ -58,6 +59,7 @@ category:
 | `ballistics.headshot_multiplier` | multiplier | 1 | 弹种对爆头倍率的进一步修正。 |
 | `ballistics.max_entity_hits` | integer | 0; 0..16 | 0 继承枪械，正数替换枪械穿透数量。 |
 | `ballistics.speed_retention_multiplier / damage_retention_multiplier` | multipliers | 1 | 进一步修正穿透后的速度/伤害保留比例。 |
+| `ballistics.explosion` | 对象 | 可选 | 配置游戏内命中爆炸。`damage`、`radius` 指定范围伤害与半径（方块），`damage_curve` 按距离缩放伤害，`damage_blocks` 控制是否破坏方块。默认包 `gwo:grenade_40mm` 的配置为半径 5 格、关闭方块破坏。 |
 | `tracer.count_interval` | integer | 0; -1..127 | -1 禁用弹种尾迹，0 每发，正数每 (count_interval+1) 发显示一次；还受枪的 bullet_tracer.enabled 控制。 |
 | `tracer.color` | color | #FFFFEBA0 | 支持 #RRGGBB / #AARRGGBB。 |
 | `tracer.size_multiplier / length_multiplier` | multipliers | 1 / 1 | 尾迹粗细/长度；不改变命中或弹速。 |

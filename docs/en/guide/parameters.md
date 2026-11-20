@@ -30,6 +30,7 @@ Gameplay JSON controls damage, cadence, ammo and server decisions; render JSON c
 | `charge_damage_bonus` | damage points | 15 | Charge damage bonus parameter; does not change ordinary animation length. |
 | `ammo.default` | ID | — | Default ammunition; automatically included in the exact accepted list. |
 | `ammo.accepted / ammo.accepted_families` | ID arrays | [] | Accept specific ammo IDs / entire cartridge families; family is not a display name. |
+| `mechanics.dual_wield` | boolean | `false` | Enables two independent triggers and ammo counts. Use `fire_modes: ["semi"]` and an even `magazine_size` from 2 to 1000 for the pair. [Dual-wield pistols](./dual-wield.md) |
 | `mechanics.rpm` | rounds/min | 850; 1..3000 | Integer RPM metadata matching fire_interval_ms. |
 | `mechanics.fire_interval_ms` | ms | round(60000/rpm); 1..5000 | Actual firing interval; rejected if it differs from rounded RPM conversion by over 1ms. Desert Eagle: 167/360; Staccato: 462/130. |
 | `mechanics.action_commit_ms.<动作/action>` | ms | 0..60000 | Mechanical commit time for ordinary finite actions, such as updating ammo during reload; distinct from sound and animation duration. |
@@ -58,6 +59,7 @@ Gameplay JSON controls damage, cadence, ammo and server decisions; render JSON c
 | `ballistics.headshot_multiplier` | multiplier | 1 | Additional ammunition headshot multiplier. |
 | `ballistics.max_entity_hits` | integer | 0; 0..16 | Zero inherits the gun value; positive values replace the entity hit count. |
 | `ballistics.speed_retention_multiplier / damage_retention_multiplier` | multipliers | 1 | Further modify penetration speed/damage retention. |
+| `ballistics.explosion` | object | optional | Configures an in-game blast on impact. `damage` and `radius` set area damage and range in blocks. `damage_curve` scales it by distance. `damage_blocks` controls block destruction. The default `gwo:grenade_40mm` uses a five-block radius with block damage disabled. |
 | `tracer.count_interval` | integer | 0; -1..127 | Minus one disables ammo tracers, zero requests every shot, positive values show one in every (count_interval+1) shots; weapon tracer enable still applies. |
 | `tracer.color` | color | #FFFFEBA0 | Accepts #RRGGBB or #AARRGGBB. |
 | `tracer.size_multiplier / length_multiplier` | multipliers | 1 / 1 | Tracer thickness/length; does not change hits or projectile speed. |
